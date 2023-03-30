@@ -1,21 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   putstr.c                                           :+:      :+:    :+:   */
+/*   string.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/23 11:27:42 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/02/23 11:27:45 by fraqioui         ###   ########.fr       */
+/*   Created: 2022/10/05 13:58:39 by fraqioui          #+#    #+#             */
+/*   Updated: 2023/02/26 11:47:04 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../headers/minishell.h"
+#include"ft_printf.h"
 
-void	ft_putstr_fd(char *s, int fd)
+void	ft_putchar(char c)
 {
+	write(2, &c, 1);
+}
+
+int	ft_putstr(char *s)
+{
+	int	len;
+
+	len = 0;
 	if (!s)
-		return ;
+	{
+		write(2, "(null)", 6);
+		return (6);
+	}
 	while (*s)
-		write(fd, s++, 1);
+	{
+		len++;
+		write(2, s++, 1);
+	}
+	return (len);
 }

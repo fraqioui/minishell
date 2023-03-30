@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/23 10:50:49 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/02/25 11:22:14 by fraqioui         ###   ########.fr       */
+/*   Created: 2023/03/26 15:38:39 by fraqioui          #+#    #+#             */
+/*   Updated: 2023/03/28 16:36:07 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../headers/minishell.h"
+#include"../../headers/minishell.h"
 
-char	**free_2d(char **arr)
+static char	**ft_alloc_fail(char **arr)
 {
 	unsigned int	i;
 
@@ -23,53 +23,38 @@ char	**free_2d(char **arr)
 	return (NULL);
 }
 
-static	int	incre(char c, char d)
-{
-	if (c == '|' || c == '>' || c == '<')
-		return (1);
-	else if ((c == '>' && d == '>') || (c == '<'
-			&& d == '<') || (c == '|' && d == '|') || (c == '&'
-			&& d == '&') || (c == '>' && d == '&'))
-		return (0);
-	return (2);
-}
-
-static int	ft_words(const char *s2)
+static int	ft_words(const char *s2, char c)
 {
 	int	i;
 	int	word;
-// || && | > < >> << >&
+
 	i = 0;
 	word = 0;
 	while (s2[i])
 	{
-		if (incre(s2[i], 0) == 1)
+		if (s2[i] == c)
 			i++;
-		else if (!incre(s2[i], s2[i + 1]))
-			i += 2;
 		else
 		{
 			word++;
-			while (incre(s2[i], s2[i + 1]) == 2 && s2[i])
+			while (s2[i] != c && s2[i])
 				i++;
 		}
 	}
 	return (word);
 }
 
-static char	*ft_fillout(const char *s1, int *j)
+static char	*ft_fillout(const char *s1, int *j, char c)
 {
 	char	*new;
 	size_t	len;
 	int		i;
 
 	len = 0;
-	while (incre(s1[*j], 0) == 1)
+	while (s1[*j] == c)
 		(*j)++;
-	while (!incre(s1[*j], s1[*j + 1]))
-			(*j) += 2;
 	i = *j;
-	while (s1[i] && incre(s1[i], s1[i + 1]) == 2)
+	while (s1[i] && s1[i] != c)
 	{
 		len++;
 		i++;
@@ -78,13 +63,13 @@ static char	*ft_fillout(const char *s1, int *j)
 	if (!new)
 		return (NULL);
 	i = 0;
-	while (s1[*j] && incre(s1[*j], s1[*j + 1]) == 2)
+	while (s1[*j] && s1[*j] != c)
 		new[i++] = s1[(*j)++];
 	new[i] = '\0';
 	return (new);
 }
 
-char	**ft_split(char const *s)
+char	**ft_split(char const *s, char c)
 {
 	char	**t_arr;
 	int		i;
@@ -95,15 +80,15 @@ char	**ft_split(char const *s)
 	j = 0;
 	if (!s)
 		return (NULL);
-	wc = ft_words(s);
+	wc = ft_words(s, c);
 	t_arr = malloc(sizeof(char *) * (wc + 1));
 	if (!t_arr)
 		return (NULL);
 	while (j < wc)
 	{
-		t_arr[j] = ft_fillout(s, &i);
+		t_arr[j] = ft_fillout(s, &i, c);
 		if (!t_arr[j])
-			return (free_2d(t_arr));
+			return (ft_alloc_fail(t_arr));
 		j++;
 	}
 	t_arr[j] = 0;

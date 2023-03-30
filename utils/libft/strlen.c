@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   node_creation.c                                    :+:      :+:    :+:   */
+/*   strlen.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/23 11:37:39 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/02/23 12:40:14 by fraqioui         ###   ########.fr       */
+/*   Created: 2023/02/23 10:32:56 by fraqioui          #+#    #+#             */
+/*   Updated: 2023/03/28 16:36:14 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../headers/minishell.h"
+#include"../../headers/minishell.h"
 
-t_tree	node_creation(char **cmd)
+size_t	ft_strlen(const char *s)
 {
-	t_tree	*node;
+	const char	*end;
 
-	node = malloc(sizeof(t_tree));
-	if (!node)
-	{
-		//tree clear
-		ft_putstr_fd("allocation failed\n", 2);
-		return (NULL);
-	}
-	node->left = NULL;
-	node->right = NULL;
+	end = s;
+	while (*end)
+		end++;
+	return (end - s);
 }

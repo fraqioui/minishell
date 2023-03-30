@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:34:46 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/02/24 11:01:49 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/03/28 16:38:02 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,29 @@
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include"../utils/ft_printf/ft_printf.h"
 
 typedef enum e_token
 {
 	PIPE,
 	HEREDOC,
+	LPR,
+	RPR,
 	AND,
 	OR,
 	APPEND,
 	OUT,
-	IN
+	IN,
+	NOT,
+	END
 }t_token;
 
-typedef struct s_tree
+typedef struct s_node
 {
-	char			**str;
+	char			**cmd;
 	t_token			tok;
-	struct s_tree	*left;
-	struct s_tree	*right;
-}t_tree;
+	struct s_node	*lchild;
+	struct s_node	*rchild;
+}t_node;
 
 #endif

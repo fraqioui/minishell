@@ -1,23 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strlen.c                                           :+:      :+:    :+:   */
+/*   node_creation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/23 10:32:56 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/02/23 10:33:06 by fraqioui         ###   ########.fr       */
+/*   Created: 2023/02/23 11:37:39 by fraqioui          #+#    #+#             */
+/*   Updated: 2023/03/28 16:36:33 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../headers/minishell.h"
+#include"../../headers/minishell.h"
 
-size_t	ft_strlen(const char *s)
+t_node	*node_creation(char **s, t_token tok)
 {
-	const char	*end;
+	t_node	*node;
 
-	end = s;
-	while (*end)
-		end++;
-	return (end - s);
+	node = malloc(sizeof(t_node));
+	if (!node)
+	{
+		ft_putstr_fd("allocation failed\n", 2);
+		return (NULL);
+	}
+	node->tok = tok;
+	node->cmd = s;
+	node->lchild = NULL;
+	node->rchild = NULL;
+	return (node);
 }

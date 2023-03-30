@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 14:01:45 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/02/23 10:54:46 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/03/21 07:51:21 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,11 @@ int	main(int ac, char **av, char **env)
 	(void)env;
 	while (1)
 	{
-		input = readline("minibash$ ");
-		tokenize(input);
+		input = readline("\033[0;32mminibash$\033[0;37m ");
+		if (!input)
+			break ;
+		printf("--%s--\n", input);
+		parsing(input);
 		free(input);
 	}
 }

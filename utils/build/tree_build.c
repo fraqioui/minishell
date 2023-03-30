@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strcmp.c                                           :+:      :+:    :+:   */
+/*   tree_build.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/25 10:30:17 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/02/25 10:33:17 by fraqioui         ###   ########.fr       */
+/*   Created: 2023/02/23 12:41:35 by fraqioui          #+#    #+#             */
+/*   Updated: 2023/03/30 13:38:55 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../headers/minishell.h"
+#include"../../headers/minishell.h"
 
-int	ft_strcmp(char *s1, char *s2)
+t_node	*list_to_tree(t_node *head)
 {
-	while (*s1 && *s2 && *s1 == *s2)
-	{
-		s1++;
-		s2++;
-	}
-	return (*s1 - *s2);
+    
 }
