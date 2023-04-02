@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 13:08:36 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/03/30 13:31:29 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/03/30 17:35:59 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,15 +84,27 @@ static	int	check_tok_syntax(t_token tok, char *s, int *i, int *par)
 	return (1);
 }
 
+static	int	check_pre(t_token tok)
+{
+	if (tok == IN || tok == OUT || tok == APPEND || tok == HEREDOC)
+		return (1);
+	if (tok == PIPE)
+		return (2);
+	if (tok == OR || tok == AND)
+		return (3);
+}
+
 static	int	which_token_(t_node **head, char *s, int *i, int *par)
 {
 	t_token	tok;
 	t_node	*node;
 	char	**str;
+	int		precedence;
 
 	tok = check_token(s[*i], s[(*i) + 1]);
 	if (tok != NOT)
 	{
+		precedence = check_pre(tok);
 		str = NULL;
 		if (!check_tok_syntax(tok, s, i, par))
 			return (0);
@@ -100,10 +112,11 @@ static	int	which_token_(t_node **head, char *s, int *i, int *par)
 	else
 	{
 		str = cmd_prepa(s, i);
+		precedence = 0;
 		if (!str)
 			return (0);
 	}
-	node = node_creation(str, tok);
+	node = node_creation(str, tok, precedence);
 	if (!node)
 		return (0);
 	list_build(head, node);

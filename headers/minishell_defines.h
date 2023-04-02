@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:34:46 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/03/28 16:38:02 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/03/30 17:30:32 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_node
 {
 	char			**cmd;
 	t_token			tok;
+	int				precedence;
 	struct s_node	*lchild;
 	struct s_node	*rchild;
 }t_node;

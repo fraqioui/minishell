@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:49:47 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/03/30 13:54:14 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/03/31 08:46:05 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ t_node	*parsing(char *input)
 	head = tokenize(s);
 	if (!head)
 		return (NULL);
-	head = re_order_command(head);
-	head = list_to_tree(head);
+	head = re_order_command(&head);
+	// while (head->rchild)
+	// 	head = head->rchild;
+	// head = list_to_tree(head);
 	// while (head)
 	// {
 	// 	if (head->cmd)
