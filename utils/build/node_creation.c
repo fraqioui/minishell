@@ -25,6 +25,7 @@ t_node	*node_creation(char **s, t_token tok, int precedence)
 	node->tok = tok;
 	node->cmd = s;
 	node->precedence = precedence;
+	node->flg = 0;
 	node->lchild = NULL;
 	node->rchild = NULL;
 	return (node);

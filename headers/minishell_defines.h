@@ -20,6 +20,8 @@
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+// #include "/usr/include/readline/readline.h"
+// #include "/usr/include/readline/history.h"
 # include"../utils/ft_printf/ft_printf.h"
 
 typedef enum e_token
@@ -42,6 +44,7 @@ typedef struct s_node
 	char			**cmd;
 	t_token			tok;
 	int				precedence;
+	int				flg;
 	struct s_node	*lchild;
 	struct s_node	*rchild;
 }t_node;

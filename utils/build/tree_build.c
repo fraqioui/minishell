@@ -12,12 +12,27 @@
 
 #include"../../headers/minishell.h"
 
-t_node	*list_to_tree(t_node *head)
+t_node	*list_to_tree(t_node *root)
 {
-	if (head->tok != NOT)
+	printf("--%d\n", root->tok);
+	if (root->tok != NOT)
 	{
-		head->rchild = list_to_tree(head->lchild);
-		head->lchild = list_to_tree(head->lchild);
+		root->lchild = list_to_tree(root->rchild);
+		root->rchild = list_to_tree(root->rchild);
+		printf("ret: %d\n", root->tok);
 	}
-	return (head);
+	if (root->tok == NOT)
+	{
+		if (root->lchild && root->rchild)
+		{
+			root->lchild->rchild = root->rchild;
+			root->rchild->lchild = root->lchild;
+			if (root->lchild->lchild)
+				root->rchild->lchild = root->lchild->lchild;
+		}
+		root->rchild = NULL;
+		root->lchild = NULL;
+	}
+	return (root);
 }
+//heredoc: /dev/null

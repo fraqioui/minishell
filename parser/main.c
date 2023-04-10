@@ -31,11 +31,11 @@ int	main(int ac, char **av, char **env)
 	(void)env;
 	while (1)
 	{
-		input = readline("\033[0;32mminibash$\033[0;37m ");
+		input = readline("minibash$ ");
 		if (!input)
 			break ;
 		printf("--%s--\n", input);
-		parsing(input);
+		executing(parsing(input));
 		free(input);
 	}
 }

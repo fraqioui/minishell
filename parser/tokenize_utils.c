@@ -49,7 +49,10 @@ static	void	_push_(t_node **top, t_node *to_add)
 	if (!to_add)
 		return ;
 	else if (!*top)
+	{
+		to_add->rchild = NULL;
 		*top = to_add;
+	}
 	else
 	{
 		(*top)->lchild = to_add;
@@ -61,19 +64,14 @@ static	void	_push_(t_node **top, t_node *to_add)
 static	void	push(t_node **a_head, t_node **b_head)
 {
 	t_node	*sep;
-	int		flg;
 
-	flg = 0;
-	if (!b_head || !(*b_head))
+	if (!a_head || !(*a_head))
 		return ;
-	if (!(*a_head)->rchild)
-		flg = 1;
 	sep = *a_head;
 	*a_head = (*a_head)->rchild;
-	(*a_head)->lchild = NULL;
+	if (*a_head)
+		(*a_head)->lchild = NULL;
 	_push_(b_head, sep);
-	if (flg)
-		*a_head = NULL;
 }
 
 static	void	pop(t_node **tok_s)
@@ -96,14 +94,15 @@ t_node	*re_order_command(t_node **head)
 			push(head, &new_stack);
 		else if ((*head)->tok != LPR && (*head)->tok != RPR)
 		{
-			while (tok_stack->precedence >= (*head)->precedence)
+			while (tok_stack && tok_stack->precedence >= (*head)->precedence)
 				push(&tok_stack, &new_stack);
 			push(head, &tok_stack);
 		}
-		if ((*head)->tok == LPR)
+		else if ((*head)->tok == LPR)
 			push(head, &tok_stack);
-		if ((*head)->tok == RPR)
+		else if ((*head)->tok == RPR)
 		{
+			pop(head);
 			while (tok_stack->tok != LPR)
 				push(&tok_stack, &new_stack);
 			pop(&tok_stack);

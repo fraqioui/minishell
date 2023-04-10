@@ -74,3 +74,14 @@ int	check_rpr(char *s, int i)
 	ft_putstr_fd("syntax error: unclosed parentheses\n", 2);
 	return (-1);
 }
+
+int	check_pre(t_token tok)
+{
+	if (tok == IN || tok == OUT || tok == APPEND || tok == HEREDOC)
+		return (4);
+	if (tok == PIPE)
+		return (3);
+	if (tok == OR || tok == AND)
+		return (2);
+	return (1);
+}

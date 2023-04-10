@@ -21,6 +21,7 @@ FILES = parser/main \
 		parser/tokenize \
 		parser/syntax \
 		parser/tokenize_utils \
+		executor/execution/start \
 		utils/libft/strtrim \
 		utils/libft/putstr \
 		utils/libft/strlen \
@@ -28,6 +29,7 @@ FILES = parser/main \
 		utils/libft/split \
 		utils/build/list_build \
 		utils/build/node_creation \
+		utils/build/tree_build \
 		utils/ft_printf/hex \
 		utils/ft_printf/number \
 		utils/ft_printf/string \
@@ -39,10 +41,10 @@ FOBJ = ${FILES:=.o}
 all: ${NAME}
 
 ${NAME}: ${FOBJ} ${HEADER}
-	${CC} ${FALGS} -lreadline ${FOBJ} -o $@
+	${CC} ${FALGS} ${FOBJ} -lreadline -lncurses -o $@
 
 %.o: %.c
-	${CC} ${FALGS} -c $< -o $@
+	${CC} ${FALGS} -I /usr/include/readline -c $< -o $@
 
 clean:
 	${RM} ${FOBJ}

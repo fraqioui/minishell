@@ -69,10 +69,10 @@ static	int	check_tok_syntax(t_token tok, char *s, int *i, int *par)
 		if (!*par)
 			*par = *i;
 		*par = check_rpr(&s[*par], *par) + 1;
-		if (*par == -1)
+		if (!*par)
 			return (0);
 	}
-	else if (tok == RPR && ((*i) - 1) > *par)
+	else if (tok == RPR && *i > *par)
 	{
 		ft_putstr_fd("bash: syntax error near unexpected token `)'\n", 2);
 		return (0);
@@ -82,16 +82,6 @@ static	int	check_tok_syntax(t_token tok, char *s, int *i, int *par)
 	if (!check_syntax(tok, &s[*i]))
 		return (0);
 	return (1);
-}
-
-static	int	check_pre(t_token tok)
-{
-	if (tok == IN || tok == OUT || tok == APPEND || tok == HEREDOC)
-		return (1);
-	if (tok == PIPE)
-		return (2);
-	if (tok == OR || tok == AND)
-		return (3);
 }
 
 static	int	which_token_(t_node **head, char *s, int *i, int *par)

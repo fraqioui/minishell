@@ -12,6 +12,20 @@
 
 #include"../headers/minishell.h"
 
+static void	print(t_node *root)
+{
+	if (root->tok != NOT)
+	{
+		print(root->lchild);
+		print(root->rchild);
+	}
+	if (root->tok == NOT)
+		printf("%d\t%s\n", root->tok, root->cmd[0]);
+	else
+		printf("%d\n", root->tok);
+	return ;
+}
+
 t_node	*parsing(char *input)
 {
 	char	*s;
@@ -20,49 +34,34 @@ t_node	*parsing(char *input)
 
 	s = ft_strtrim(input, " \t\n\v\r\f");
 	if (!s)
-		return ;
+		return (NULL);
 	tok = check_token(s[0], s[1]);
 	if (tok == OR || tok == AND)
 	{
 		ft_printf("bash: syntax error near unexpected token `%c%c'\n", s[0], s[1]);
-		return ;
+		return (NULL);
 	}
 	else if (tok == PIPE || tok == RPR)
 	{
 		ft_printf("bash: syntax error near unexpected token `%c'\n", s[0]);
-		return ;
+		return (NULL);
 	}
 	head = tokenize(s);
 	if (!head)
 		return (NULL);
 	head = re_order_command(&head);
-	// while (head->rchild)
-	// 	head = head->rchild;
-	// head = list_to_tree(head);
-	// while (head)
-	// {
-	// 	if (head->cmd)
-	// 	{
-	// 		for(int k = 0; head->cmd[k]; k++)
-	// 			printf("s:      %s\n", head->cmd[k]);
-	// 	}
-	// 	printf("tok:      %d\n", head->tok);
-	// 	head = head->rchild;
-	// }
+	t_node *trav;
+	trav = head;
+	puts("list:  ");
+	while (trav)
+	{
+		printf("%d ", trav->tok);
+		trav = trav->rchild;
+	}
+	puts("\n");
+	head = list_to_tree(head);
+	puts("here\n");
+	exit(0);
+	print(head);
+	return (head);
 }
-
-/*
-1.  While there are tokens to be read:
-2.        Read a token
-3.        If it's a number add it to queue
-4.        If it's an operator
-5.               While there's an operator on the top of the stack with greater precedence:
-6.                       Pop operators from the stack onto the output queue
-7.               Push the current operator onto the stack
-8.        If it's a left bracket push it onto the stack
-9.        If it's a right bracket 
-10.            While there's not a left bracket at the top of the stack:
-11.                     Pop operators from the stack onto the output queue.
-12.             Pop the left bracket from the stack and discard it
-13. While there are operators on the stack, pop them to the queue
-*/
