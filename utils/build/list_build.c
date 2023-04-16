@@ -6,18 +6,18 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 12:08:59 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/03/30 08:28:48 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/04/16 11:34:25 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../../headers/minishell.h"
 
-void	list_build(t_node **head, t_node *add)
+int	list_build_cmd(t_node **head, t_node *add)
 {
 	t_node	*trav;
 
 	if (!head || !add)
-		return ;
+		return (0);
 	if (!*head)
 		*head = add;
 	else
@@ -28,4 +28,24 @@ void	list_build(t_node **head, t_node *add)
 		trav->rchild = add;
 		add->lchild = trav;
 	}
+	return (1);
+}
+
+int	list_build_redir(t_redir **head, t_redir *add)
+{
+	t_redir	*trav;
+
+	if (!head || !add)
+		return (0);
+	if (!*head)
+		*head = add;
+	else
+	{
+		trav = *head;
+		while (trav->rchild)
+			trav = trav->rchild;
+		trav->rchild = add;
+		add->lchild = trav;
+	}
+	return (1);
 }

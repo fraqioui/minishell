@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:45:59 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/03/30 13:27:25 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/04/15 10:36:09 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	check_syntax(t_token tok, char *s)
 			return (1);
 	}
 	if (next == END)
-		ft_printf("syntax error: incomplete command\n");
+		ft_printf("bash: syntax error near unexpected token `newline'\n");
 	else if (next == AND || next == OR || next == APPEND || next == HEREDOC)
 		ft_printf("bash: syntax error near unexpected token `%c%c'\n", *s, *(s + 1));
 	else

@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:34:46 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/03/30 17:30:32 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/04/15 11:07:55 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <signal.h>
+# include <limits.h>
+# include <errno.h>
 # include <sys/wait.h>
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-// #include "/usr/include/readline/readline.h"
-// #include "/usr/include/readline/history.h"
 # include"../utils/ft_printf/ft_printf.h"
 
 typedef enum e_token
@@ -39,12 +39,20 @@ typedef enum e_token
 	END
 }t_token;
 
+typedef struct s_redir
+{
+	t_token			tok;
+	char			*file;
+	struct s_redir	*lchild;
+	struct s_redir	*rchild;
+}t_redir;
+
 typedef struct s_node
 {
 	char			**cmd;
 	t_token			tok;
 	int				precedence;
-	int				flg;
+	t_redir			*redirections;
 	struct s_node	*lchild;
 	struct s_node	*rchild;
 }t_node;

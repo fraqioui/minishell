@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 12:41:35 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/03/30 15:29:12 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/04/13 09:27:22 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 t_node	*list_to_tree(t_node *root)
 {
 	printf("--%d\n", root->tok);
+	if (!root)
+		return (NULL);
 	if (root->tok != NOT)
 	{
-		root->lchild = list_to_tree(root->rchild);
-		root->rchild = list_to_tree(root->rchild);
+		root->rchild = list_to_tree(root->lchild);
+		root->lchild = list_to_tree(root->lchild);
 		printf("ret: %d\n", root->tok);
 	}
 	if (root->tok == NOT)
@@ -27,12 +29,11 @@ t_node	*list_to_tree(t_node *root)
 		{
 			root->lchild->rchild = root->rchild;
 			root->rchild->lchild = root->lchild;
-			if (root->lchild->lchild)
-				root->rchild->lchild = root->lchild->lchild;
+			if (root->rchild->rchild)
+				root->lchild->rchild = root->rchild->rchild;
 		}
 		root->rchild = NULL;
 		root->lchild = NULL;
 	}
 	return (root);
 }
-//heredoc: /dev/null

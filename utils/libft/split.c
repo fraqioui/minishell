@@ -6,13 +6,13 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:38:39 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/03/28 16:36:07 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/04/14 14:22:46 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../../headers/minishell.h"
 
-static char	**ft_alloc_fail(char **arr)
+char	**ft_alloc_fail(char **arr)
 {
 	unsigned int	i;
 

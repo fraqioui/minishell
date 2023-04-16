@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   putstr.c                                           :+:      :+:    :+:   */
+/*   start.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/23 11:27:42 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/04/12 21:56:06 by fraqioui         ###   ########.fr       */
+/*   Created: 2023/04/12 13:11:22 by fraqioui          #+#    #+#             */
+/*   Updated: 2023/04/12 13:11:47 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../../headers/minishell.h"
 
-void	ft_putstr_fd(char *s, int fd)
+void	executing(t_node *root)
 {
-	if (!s)
+	if (!root)
 		return ;
-	while (*s)
-		write(fd, s++, 1);
+	return ;
 }

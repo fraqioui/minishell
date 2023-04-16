@@ -6,7 +6,7 @@
 #    By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/18 14:02:45 by fraqioui          #+#    #+#              #
-#    Updated: 2023/03/29 09:11:43 by fraqioui         ###   ########.fr        #
+#    Updated: 2023/04/12 13:24:12 by fraqioui         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ FILES = parser/main \
 		parser/tokenize \
 		parser/syntax \
 		parser/tokenize_utils \
-		executor/execution/start \
+		executor/executor/start \
 		utils/libft/strtrim \
 		utils/libft/putstr \
 		utils/libft/strlen \
@@ -41,10 +41,10 @@ FOBJ = ${FILES:=.o}
 all: ${NAME}
 
 ${NAME}: ${FOBJ} ${HEADER}
-	${CC} ${FALGS} ${FOBJ} -lreadline -lncurses -o $@
+	${CC} ${FALGS} -lreadline ${FOBJ} -o $@
 
 %.o: %.c
-	${CC} ${FALGS} -I /usr/include/readline -c $< -o $@
+	${CC} ${FALGS} -c $< -o $@
 
 clean:
 	${RM} ${FOBJ}
