@@ -6,30 +6,30 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:45:59 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/04/15 10:36:09 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/04/18 10:35:22 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../headers/minishell.h"
 
-int	check_syntax(t_token tok, char *s)
+static	int	check_syntax_help(t_token tok, t_token next)
 {
-	t_token	next;
-
-	next = check_token(*s, *(s + 1));
 	if (tok == OR || tok == AND || tok == PIPE)
 	{
-		if (next == NOT || next == IN || next == OUT || next == APPEND || next == LPR)
+		if (next == NOT || next == IN || next == OUT
+			|| next == APPEND || next == LPR)
 			return (1);
 	}
 	if (tok == LPR)
 	{
-		if (next == NOT || next == IN || next == OUT || next == APPEND || next == LPR)
+		if (next == NOT || next == IN || next == OUT
+			|| next == APPEND || next == LPR)
 			return (1);
 	}
 	if (tok == RPR)
 	{
-		if (next == AND || next == OR || next == PIPE || next == RPR || next == END)
+		if (next == AND || next == OR || next == PIPE
+			|| next == RPR || next == END)
 			return (1);
 	}
 	if (tok == IN || tok == OUT || tok == APPEND || tok == HEREDOC)
@@ -37,23 +37,34 @@ int	check_syntax(t_token tok, char *s)
 		if (next == NOT)
 			return (1);
 	}
+	return (0);
+}
+
+int	check_syntax(t_token tok, char *s)
+{
+	t_token	next;
+
+	next = check_token(*s, *(s + 1));
+	if (check_syntax_help(tok, next))
+		return (1);
 	if (next == END)
 		ft_printf("bash: syntax error near unexpected token `newline'\n");
 	else if (next == AND || next == OR || next == APPEND || next == HEREDOC)
-		ft_printf("bash: syntax error near unexpected token `%c%c'\n", *s, *(s + 1));
+		ft_printf("bash: syntax error near unexpected token `%c%c'\n",
+			*s, *(s + 1));
 	else
 		ft_printf("bash: syntax error near unexpected token `%c'\n", *s);
 	return (0);
 }
 
-int	check_next_quote(char *s)
+int	check_next_quote(char *s, char c)
 {
 	int	i;
 
 	i = 0;
 	while (*s)
 	{
-		if (*s == 34 || *s == 39)
+		if (*s == c)
 			return (i);
 		i++;
 		s++;

@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:37:39 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/04/16 11:36:51 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/04/16 20:24:11 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_node	*node_creation_cmd(char **s, t_redir *redir, t_token tok, int precedence)
 	return (node);
 }
 
-t_redir	*node_creation_redir(char *s, t_token tok)
+t_redir	*node_creation_redir(char **s, t_token tok)
 {
 	t_redir	*node;
 
@@ -44,7 +44,7 @@ t_redir	*node_creation_redir(char *s, t_token tok)
 		return (NULL);
 	}
 	node->tok = tok;
-	node->file = s;
+	node->file = s[0];
 	node->lchild = NULL;
 	node->rchild = NULL;
 	return (node);

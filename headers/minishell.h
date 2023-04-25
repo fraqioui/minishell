@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 14:02:38 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/04/16 11:37:23 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/04/25 10:57:54 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,28 +21,39 @@ t_node	*tokenize(char *input);
 void	*ft_calloc(size_t count, size_t size);
 t_token	check_token(char c1, char c2);
 int		check_syntax(t_token tok, char *s);
+t_node	*which_token_2(char	*s, t_token tok, int *i);
+int	check_tok_syntax(t_token tok, char *s, int *i, int *par);
+int	check_true(t_token tok);
 //executing
 void	executing(t_node *root);
 //tree
 t_node	*re_order_command(t_node **head);
 t_node	*list_to_tree(t_node *root);
 t_node	*node_creation_cmd(char **s, t_redir *redir, t_token tok, int precedence);
-t_redir	*node_creation_redir(char *s, t_token tok);
+t_redir	*node_creation_redir(char **s, t_token tok);
 int 	list_build_cmd(t_node **head, t_node *add);
 int 	list_build_redir(t_redir **head, t_redir *add);
-t_node	*handle_redirections(t_node *head);
-int		check_next_quote(char *s);
+int	check_next_quote(char *s, char c);
 int		check_rpr(char *s, int i);
 int		check_spaces(char c);
 char	**fill_cmd(char *s, int l, int *k, int flg);
 char	*cmd_help(char *s, int l, int *k, int flg);
 int		check_pre(t_token tok);
-t_node *final_cmd(t_node *head);
+int	choose_str(char c, int flg);
+int	not_len(char *s, int i, int flg);
 void	push(t_node **a_head, t_node **b_head, int flg);
 //builtins
 //points to a string containing an ``='' character.
 int		_cd_(char *path, char **env);
 int		_pwd_(void);
+int     _and_(t_node *root);
+int     _or_(t_node *root);
+int     _pipe_(t_node *root);
+int     exec_cmd(t_node *root);
+int 	_expanding_(t_node *node);
+char	*eliminate_quotes(char **s);
+int	var_c(char c);
+int	calc_len(char **s);
 //utils
 void	ft_putstr_fd(char *s, int fd);
 char	*ft_strtrim(char const *s1, char const *set);
@@ -51,5 +62,7 @@ char	**ft_split(char const *s, char c);
 char	**ft_alloc_fail(char **arr);
 int		ft_strcmp(char *s1, char *s2);
 char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+int 	num_words(const char *s2, char c);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:38:39 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/04/14 14:22:46 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/04/25 10:57:37 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	**ft_alloc_fail(char **arr)
 	return (NULL);
 }
 
-static int	ft_words(const char *s2, char c)
+int	num_words(const char *s2, char c)
 {
 	int	i;
 	int	word;
@@ -80,7 +80,7 @@ char	**ft_split(char const *s, char c)
 	j = 0;
 	if (!s)
 		return (NULL);
-	wc = ft_words(s, c);
+	wc = num_words(s, c);
 	t_arr = malloc(sizeof(char *) * (wc + 1));
 	if (!t_arr)
 		return (NULL);
