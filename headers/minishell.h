@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 14:02:38 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/04/25 10:57:54 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/04/28 13:01:47 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ t_node	*which_token_2(char	*s, t_token tok, int *i);
 int	check_tok_syntax(t_token tok, char *s, int *i, int *par);
 int	check_true(t_token tok);
 //executing
-void	executing(t_node *root);
+int	executing(t_node *root);
 //tree
 t_node	*re_order_command(t_node **head);
 t_node	*list_to_tree(t_node *root);
-t_node	*node_creation_cmd(char **s, t_redir *redir, t_token tok, int precedence);
+t_node	*node_creation_cmd(char *s, t_redir *redir, t_token tok, int precedence);
 t_redir	*node_creation_redir(char **s, t_token tok);
 int 	list_build_cmd(t_node **head, t_node *add);
 int 	list_build_redir(t_redir **head, t_redir *add);
@@ -51,13 +51,12 @@ int     _or_(t_node *root);
 int     _pipe_(t_node *root);
 int     exec_cmd(t_node *root);
 int 	_expanding_(t_node *node);
-char	*eliminate_quotes(char **s);
+char	**eliminate_quotes(char *s);
 int	var_c(char c);
-int	calc_len(char **s);
 //utils
 void	ft_putstr_fd(char *s, int fd);
 char	*ft_strtrim(char const *s1, char const *set);
-size_t	ft_strlen(const char *s);
+int	ft_strlen(const char *s);
 char	**ft_split(char const *s, char c);
 char	**ft_alloc_fail(char **arr);
 int		ft_strcmp(char *s1, char *s2);
@@ -65,4 +64,12 @@ char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int 	num_words(const char *s2, char c);
 
+int	num_args(char **s);
+int	check_var(char *s, int *l);
+int	look_for_quo(char *s, int *i, char c);
+int	analy_var(char *s, int *i, int *l);
+char    *expand_var(char *s, int *i);
+int	is_identifier(int c);
+int	var_len(char *s);
+int	inside_quo(char *s, int *i);
 #endif

@@ -6,121 +6,19 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 14:02:04 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/04/25 13:46:49 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/04/28 13:46:58 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../../headers/minishell.h"
-
-// int	var_c(char c)
-// {
-// 	return ((c >= 32 && c <= 47) || (c >= 58 && c <= 64)
-// 		|| (c >= 91 && c <= 94) || c == 96
-// 		|| (c <= 123 && c >= 126));
-// }
-
-// static	int	look_for_quo(char *s, char c)
-// {
-// 	int		l;
-// 	int		i;
-// 	int		l_var;
-
-// 	l = 0;
-// 	if (c == 39)
-// 	{
-// 		while (*s)
-// 		{
-// 			s++;
-// 			if (*s == c)
-// 				return (l);
-// 			l++;
-// 		}
-// 	}
-// 	else
-// 	{
-// 		while (s[i])
-// 		{
-// 			i++;
-// 			if (s[i] == '$')
-// 			{
-// 				l_var = expand_var(s, &i);
-// 				if (l_var < 0)
-// 					return (-1);
-// 				l += l_var;
-// 			}
-// 			if (s[i] == c)
-// 				return (l);
-// 			l++;
-// 		}		
-// 	}
-// 	return (0);
-// }
-
-// int	calc_len(char *s)
-// {
-// 	int	l;
-// 	int	i;
-// 	int	l_var;
-
-// 	l = 0;
-// 	while (*s)
-// 	{
-// 		if (*s == 39)
-// 		{
-// 			i = look_for_quo(s, 39);
-// 			l += i;
-// 			s += i + 2;
-// 		}
-// 		else if (*s == 34)
-// 		{
-// 			i = look_for_quo(s, 34);
-// 			l += i;
-// 			s += i + 2;
-// 		}
-// 		else
-// 		{
-// 			if (*s == '$')
-// 			{
-// 				if (*(s + 1) != 39 && *(s + 1) != 34)
-// 				{
-// 					l_var = expand_var(s, &i);
-// 					if (l_var < 0)
-// 						return (-1);
-// 					l += l_var;
-// 				}
-// 			}
-// 			s++;
-// 			l++;
-// 		}
-// 	}
-// 	return (l);
-// }
 
 int	is_identifier(int c)
 {
 	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
 		|| (c >= '0' && c <= '9') || c == '_');
 }
-// static	int	expand_var(char *s, int *i)
-// {
-// 	int		keep;
-// 	int		l;
-// 	char	*var;
 
-// 	keep = *i;
-// 	l = 0;
-// 	while (s[keep] && !var_c(s[keep]))
-// 	{
-// 		keep++;
-// 		l++;
-// 	}
-// 	var = getenv(ft_substr(s, i, l));
-// 	*i += keep;
-// 	if (!var)
-// 		return (-1);
-// 	return (ft_strlen(var));
-// }
-int	expand_var(char *s, int *i)
+char	*expand_var(char *s, int *i)
 {
 	int		keep;
 	char	*var;
@@ -131,69 +29,92 @@ int	expand_var(char *s, int *i)
 	keep -= *i;
 	var = getenv(ft_substr(s, *i, keep));
 	if (!var)
-		return (-1);
-	return (num_words(var, ' '));
+		return (NULL);
+	*i += keep;
+	printf("var: %s\n", var);
+	return (var);
 }
 
-void	analy_var(char *s, int *i, int *l)
+int	look_for_quo(char *s, int *i, char c)
 {
-	int	sv;
+	int	l;
 
+	l = 0;
 	while (s[*i])
 	{
-		if (s[*i] == '$')
+		(*i)++;
+		l++;
+		if (s[*i] == c)
 		{
-			sv = expand_var(s, i);
-			if (sv > 1)
-				l += sv - 1;
+			(*i)++;
+			l++;
+			printf("single quo: %d\n", l);
+			return (l);
 		}
-		*i++;
 	}
+	return (-1);
 }
 
-int	look_for_quo(char *s)
+int	inside_quo(char *s, int *i)
 {
-	int	l;
+	int		l;
+	char	*var;
 
 	l = 0;
-	while (*s++)
-		l++;
-	return (l);
-}
-
-void	check_var(char *s, int *l)
-{
-	int	i;
-
-	i = 0;
-	while (s)
+	while (s[*i])
 	{
-		if (s[i] == 39 || s[i] == 34)
-			i += look_for_quo(&s[i]);
+		if (s[*i] == '$' && is_identifier(s[(*i) + 1]))
+		{
+			(*i)++;
+			var = expand_var(s, i);
+			if (!var)
+				break ;
+			l += ft_strlen(var);
+		}
+		else if (s[*i] == 34)
+		{
+			(*i)++;
+			l++;
+			printf("double: %d\n", l);
+			return (l);
+		}
 		else
-			analy_var(&s[i], &i, l);
+		{
+			(*i)++;
+			l++;
+		}
 	}
+	return (-1);
 }
 
-int	num_args(char **s)
+int	var_len(char *s)
 {
-	int	l;
+	int			l;
+	int			i;
+	char		*var;
 
 	l = 0;
-	while (*s++)
-		l++;
-	return (l);
-}
-
-int	calc_len(char **s)
-{
-	int	l;
-
-	l = num_args(s);
-	while (*s)
+	i = 0;
+	while (s[i])
 	{
-		check_var(*s, &l);
-		*s++;
+		if (s[i] == 39)
+			l += look_for_quo(s, &i, s[i]);
+		else if (s[i] == 34)
+			l += inside_quo(s, &i);
+		else if (s[i] == '$' && is_identifier(s[i + 1]))
+		{
+			i++;
+			var = expand_var(s, &i);
+			if (!var)
+				return (-1);
+			l += ft_strlen(var);
+		}
+		else
+		{
+			i++;
+			l++;
+		}
 	}
+	printf("last len: %d\n", l);
 	return (l);
 }

@@ -6,13 +6,13 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:37:39 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/04/16 20:24:11 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/04/28 09:52:41 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../../headers/minishell.h"
 
-t_node	*node_creation_cmd(char **s, t_redir *redir, t_token tok, int precedence)
+t_node	*node_creation_cmd(char *s, t_redir *redir, t_token tok, int precedence)
 {
 	t_node	*node;
 
@@ -22,8 +22,9 @@ t_node	*node_creation_cmd(char **s, t_redir *redir, t_token tok, int precedence)
 		ft_putstr_fd("allocation failed\n", 2);
 		return (NULL);
 	}
+	node->pre_cmd = s;
+	node->cmd = NULL;
 	node->tok = tok;
-	node->cmd = s;
 	node->precedence = precedence;
 	node->redirections = redir;
 	node->lchild = NULL;

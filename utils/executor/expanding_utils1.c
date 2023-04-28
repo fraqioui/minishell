@@ -6,73 +6,142 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:18:14 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/04/25 12:44:48 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/04/28 14:27:02 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include"../../headers/minishell.h"
-#include<stdio.h>
-#include<stdlib.h>
+#include"../../headers/minishell.h"
 
-static	int	fill_arr_help(char *ret, char *s, int *i, char c)
+static void	replace_cmd(char *ret, char *s)
+{
+	static int	i;
+	char		*var;
+
+	while (s[i])
+	{
+		if (s[i] == 39)
+		{
+			while (s[i])
+			{
+				*ret++ = s[i++];
+				if (s[i] == 39)
+				{
+					*ret++ = s[i++];
+					*ret = '\0';
+					break ;
+				}
+			}
+		}
+		else if (s[i] == 34)
+		{
+			*ret++ = s[i++];
+			while (s[i])
+			{
+				if (s[i] == '$' && is_identifier(s[i + 1]))
+				{
+					i++;
+					var = expand_var(s, &i);
+					if (!var)
+						return ;
+					while (*var)
+						*ret++ = *var++;
+				}
+				else if (s[i] == 34)
+				{
+					*ret++ = s[i++];
+					*ret = '\0';
+					break ;
+				}
+				else
+					*ret++ = s[i++];
+			}
+		}
+		else if (s[i] == '$' && is_identifier(s[i + 1]))
+		{
+			i++;
+			var = expand_var(s, &i);
+			if (!var)
+				return ;
+			while (*var)
+				*ret++ = *var++;
+			*ret = '\0';
+		}
+		else
+			*ret++ = s[i++];
+	}
+	*ret = '\0';
+}
+
+static	int calc_len(char *s)
 {
 	int	l;
-	int	l_var;
-
+	
 	l = 0;
-	s++;
-	l++;
 	while (*s)
 	{
-		if (*s == '$')
-		{
-			l_var = expand_var(s, &i);
-			l += l_var;
-		}
-		if (*s == c)
-		{
-			s++;
-			l++;
-			break ;
-		}
-		ret[(*i)++] = *s++;
+		if (*s == 34 || *s == 39)
+			continue ;
+		s++;
 		l++;
 	}
 	return (l);
 }
 
-char	*fill_arr(char *ret, char *s)
+static	char *new_cmd(char *s)
 {
-	int	i;
+	char	*new;
+	int		l;
 
-	i = 0;
+	l = calc_len(s);
+	new = malloc(sizeof(char) * (l + 1));
+	if (!new)
+		return (NULL);
+	l = 0;
 	while (*s)
 	{
-		if (*s == 39)
-			s += fill_arr_help(ret, s, &i, 39);
-		else if (*s == 34)
-			s += fill_arr_help(ret, s, &i, 34);
-		else
-			ret[i++] = *s++;
+		if (*s == 34 || *s == 39)
+		{
+			s++;
+			continue;
+		}
+		new[l++] = *s++;
 	}
-	ret[i] = '\0';
-	return (ret);
+	new[l] = '\0';
+	printf("==%s\n", new);
+	return (new);
 }
 
-char	*eliminate_quotes(char **s)
+static	void	eliminate_quotes_phase(char **args)
 {
-	char	**ret;
-int l = calc_len(s);
-printf("l: %d\n", l);
-	ret = malloc(sizeof(char *) * (l + 1));
-	if (!ret)
-		return (NULL);
-	return (fill_arr(ret, s));
+	while (*args)
+	{
+		*args = new_cmd(*args);
+		args++;
+	}
 }
-# include <readline/readline.h>
-# include <readline/history.h>
-int main()
+
+char	**eliminate_quotes(char *s)
 {
-	char *s = readline("$ ");
-	printf("%s\n", eliminate_quotes(s));
+	int		l;
+	char	*cmd;
+	char	**args;
+	int		i;
+
+	i = 0;
+	l = var_len(s);
+	printf("l: %d\n", l);
+	cmd = malloc(sizeof(char) * (l + 1));
+	if (!cmd)
+		return (NULL);
+	replace_cmd(cmd, s);
+	printf("%s\n", cmd);
+	args = fill_cmd(cmd, l, &i, 1);
+	i =0;
+	while (args[i])
+		printf("%s\n", args[i++]);
+	eliminate_quotes_phase(args);
+	i =0;
+	while (args[i])
+		printf("%s\n", args[i++]);
+	return (args);
 }

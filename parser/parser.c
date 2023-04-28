@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:49:47 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/04/16 21:25:30 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/04/28 13:05:27 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	print(t_node *root)
 		print(root->rchild);
 	}
 	if (root->tok == NOT)
-		printf("%d\t%s\n", root->tok, root->cmd[0]);
+		printf("%d\t%s\n", root->tok, root->pre_cmd);
 	else
 		printf("%d\n", root->tok);
 	return ;

@@ -1,15 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   substr.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 07:40:41 by fraqioui          #+#    #+#             */
-/*   Updated: 2022/10/18 17:14:48 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/04/26 08:20:24 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include"libft.h"
+
+#include"../../headers/minishell.h"
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {

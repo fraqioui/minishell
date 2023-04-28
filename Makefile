@@ -6,7 +6,7 @@
 #    By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/18 14:02:45 by fraqioui          #+#    #+#              #
-#    Updated: 2023/04/17 11:11:30 by fraqioui         ###   ########.fr        #
+#    Updated: 2023/04/28 12:13:33 by fraqioui         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,22 +22,14 @@ FILES = parser/main \
 		parser/syntax \
 		parser/re_order \
 		executor/executor/start \
-		executor/executor/and_or \
 		executor/executor/cmd \
-		executor/executor/pipe \
-		executor/builtins/cd \
-		executor/builtins/echo \
-		executor/builtins/env \
-		executor/builtins/exit \
-		executor/builtins/export \
-		executor/builtins/pwd \
-		executor/builtins/unset \
 		executor/expander/expanding \
 		utils/libft/strtrim \
 		utils/libft/putstr \
 		utils/libft/strlen \
 		utils/libft/calloc \
 		utils/libft/split \
+		utils/libft/substr \
 		utils/build/list_build \
 		utils/build/node_creation \
 		utils/build/tree_build \
@@ -48,7 +40,18 @@ FILES = parser/main \
 		utils/tokenize/tokenize_utils_1 \
 		utils/tokenize/tokenize_utils_2 \
 		utils/tokenize/tokenize_utils_3 \
+		utils/executor/expanding_utils1 \
+		utils/executor/expanding_utils2 \
 		#minishell_utils/strcmp \
+		executor/executor/and_or \
+		executor/executor/pipe \
+		executor/builtins/cd \
+		executor/builtins/echo \
+		executor/builtins/env \
+		executor/builtins/exit \
+		executor/builtins/export \
+		executor/builtins/pwd \
+		executor/builtins/unset \
 
 FOBJ = ${FILES:=.o}
 

@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 13:08:36 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/04/16 21:08:46 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/04/28 11:30:33 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,28 +46,23 @@ t_node	*tokenize(char *s)
 		if (!which_token_1(&head, s, &i, &par))
 			return (NULL);
 	}
-	t_node *trav = head;
-	while (trav)
-	{
-		printf("tok: %d\t", trav->tok);
-		if (trav->cmd)
-		{
-			printf("s: ");
-			int i = -1;
-			while (trav->cmd[++i])
-				printf("-%s-\t", trav->cmd[i]);
-		}
-		if (trav->redirections)
-		{
-			printf("redirections: ");
-			while (trav->redirections)
-			{
-				printf("%d\t-%s-\t", trav->redirections->tok, trav->redirections->file);
-				trav->redirections = trav->redirections->rchild;
-			}
-		}
-		puts("\n");
-		trav = trav->rchild;
-	}
+	// t_node *trav = head;
+	// while (trav)
+	// {
+	// 	printf("tok: %d\t", trav->tok);
+	// 	if (trav->pre_cmd)
+	// 		printf("s: %s\n", trav->pre_cmd);
+	// 	if (trav->redirections)
+	// 	{
+	// 		printf("redirections: ");
+	// 		while (trav->redirections)
+	// 		{
+	// 			printf("%d\t-%s-\t", trav->redirections->tok, trav->redirections->file);
+	// 			trav->redirections = trav->redirections->rchild;
+	// 		}
+	// 	}
+	// 	puts("\n");
+	// 	trav = trav->rchild;
+	// }
 	return (head);
 }

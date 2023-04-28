@@ -44,13 +44,31 @@
 //     printf(". %s\n", getcwd(s, PATH_MAX));
 // }
 
-int main(int ac, char **av, char **env)
-{
-	(void)ac;
-	(void)av;
+// int main(int ac, char **av, char **env)
+// {
+// 	(void)ac;
+// 	(void)av;
 
-	char *s = getenv("");
-	puts("bash: getenv: \n");
-	perror("");
-	printf("%s\n", s);
+// 	char *s = getenv("");
+// 	puts("bash: getenv: \n");
+// 	perror("");
+// 	printf("%s\n", s);
+// }
+
+void	fc(char *s)
+{
+	int i = 0;
+	while (i < 6)
+	{
+		*s++ = 'h';
+		i++;
+	}
+	*s = '\0';
+}
+
+int main()
+{
+	char *s = malloc(sizeof(char) * 6);
+	fc(s);
+	printf("%s\n",s);
 }
