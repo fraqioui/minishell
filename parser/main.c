@@ -6,33 +6,36 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 14:01:45 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/04/16 21:13:33 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/02 08:31:43 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../headers/minishell.h"
 
-// void	sigint_handler(int signo)
-// {
-// 	(void)signo;
-// }
+t_gb	g_gb;
 
 int	main(int ac, char **av, char **env)
 {
-	char				*input;
+	char	*input;
+	int		fd_in;
+	int		fd_out;
 
 	(void)ac;
 	(void)av;
-	(void)env;
+	initialize(env, &fd_in, &fd_out);
 	while (1)
 	{
+		_signal_start();
 		input = readline("minibash$ ");
 		if (!input)
 			break ;
-		printf("--%s--\n", input);
+		g_gb.under_exec = 1;
+		add_history(input);
 		executing(parsing(input));
+		g_gb.under_exec = 0;
 		free(input);
 	}
+	//free under exec
 }
 
 	// struct sigaction	s;

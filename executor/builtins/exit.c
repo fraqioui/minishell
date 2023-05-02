@@ -6,8 +6,13 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 10:32:01 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/04/17 10:32:25 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/02 11:57:39 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../../headers/minishell.h"
+
+void    _exit_(t_node *root)
+{
+    
+}

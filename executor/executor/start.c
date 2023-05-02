@@ -6,13 +6,13 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:11:22 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/04/28 12:13:44 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/02 11:55:35 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../../headers/minishell.h"
 
-int	executing(t_node *root)
+void	executing(t_node *root)
 {
 	if (!root)
 		return (-1);
@@ -20,8 +20,8 @@ int	executing(t_node *root)
 	// 	return (_and_(root));
 	// if (root->tok == OR)
 	// 	return (_or_(root));
-	// if (root->tok == PIPE)
-	// 	return (_pipe_(root));
+	if (root->tok == PIPE)
+		return (_pipe_(root));
 	if (root->tok == NOT)
 		return (exec_cmd(root));
 	return (-1);

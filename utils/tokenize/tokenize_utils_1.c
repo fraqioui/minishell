@@ -6,32 +6,29 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 16:32:44 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/04/28 10:42:01 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/04/28 16:21:53 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../../headers/minishell.h"
 
-static	char	**cmd_prepa(char *s, int *i, int flg, t_token tok)
+static	char	**cmd_prepa(char *s, ssize_t *i, ssize_t flg, t_token tok)
 {
-	if (!flg)
+	s[*i] = 127;
+	(*i)++;
+	if (tok == HEREDOC || tok == APPEND)
 	{
 		s[*i] = 127;
 		(*i)++;
-		if (tok == HEREDOC || tok == APPEND)
-		{
-			s[*i] = 127;
-			(*i)++;
-		}
-		while (check_spaces(s[*i]))
-			(*i)++;
-		if (!check_syntax(tok, &s[*i]))
-			return (NULL);
 	}
+	while (check_spaces(s[*i]))
+		(*i)++;
+	if (!check_syntax(tok, &s[*i]))
+		return (NULL);
 	return (fill_cmd(s, not_len(s, *i, flg), i, flg));
 }
 
-int	check_tok_syntax(t_token tok, char *s, int *i, int *par)
+bool	check_tok_syntax(t_token tok, char *s, ssize_t *i, ssize_t *par)
 {
 	(*i)++;
 	if (tok == OR || tok == AND || tok == HEREDOC || tok == APPEND)
@@ -46,7 +43,8 @@ int	check_tok_syntax(t_token tok, char *s, int *i, int *par)
 	}
 	else if (tok == RPR && *i > *par)
 	{
-		ft_putstr_fd("bash: syntax error near unexpected token `)'\n", 2);
+		print_error(UNEXPECTED_TOK, NULL, INCORRECT_USAGE, 0);
+		ft_putstr_fd(" `)'\n", 2);
 		return (0);
 	}
 	while (check_spaces(s[*i]))
@@ -56,18 +54,18 @@ int	check_tok_syntax(t_token tok, char *s, int *i, int *par)
 	return (1);
 }
 
-static	void	incre(char *s, int *i)
+static	void	incre(char *s, ssize_t *i)
 {
-	int	l;
+	ssize_t	l;
 
 	l = not_len(s, *i, 1);
 	while (l--)
 		(*i)++;
 }
 
-t_node	*which_token_2(char	*s, t_token tok, int *i)
+t_node	*which_token_2(char	*s, t_token tok, ssize_t *i)
 {
-	int		save;
+	ssize_t	save;
 	char	*str;
 	t_redir	*redir;
 

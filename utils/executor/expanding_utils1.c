@@ -6,91 +6,34 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:18:14 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/04/28 14:27:02 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/02 11:21:56 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../../headers/minishell.h"
 
-static void	replace_cmd(char *ret, char *s)
+static	ssize_t	calc_len(char *s)
 {
-	static int	i;
-	char		*var;
+	ssize_t	l;
 
-	while (s[i])
-	{
-		if (s[i] == 39)
-		{
-			while (s[i])
-			{
-				*ret++ = s[i++];
-				if (s[i] == 39)
-				{
-					*ret++ = s[i++];
-					*ret = '\0';
-					break ;
-				}
-			}
-		}
-		else if (s[i] == 34)
-		{
-			*ret++ = s[i++];
-			while (s[i])
-			{
-				if (s[i] == '$' && is_identifier(s[i + 1]))
-				{
-					i++;
-					var = expand_var(s, &i);
-					if (!var)
-						return ;
-					while (*var)
-						*ret++ = *var++;
-				}
-				else if (s[i] == 34)
-				{
-					*ret++ = s[i++];
-					*ret = '\0';
-					break ;
-				}
-				else
-					*ret++ = s[i++];
-			}
-		}
-		else if (s[i] == '$' && is_identifier(s[i + 1]))
-		{
-			i++;
-			var = expand_var(s, &i);
-			if (!var)
-				return ;
-			while (*var)
-				*ret++ = *var++;
-			*ret = '\0';
-		}
-		else
-			*ret++ = s[i++];
-	}
-	*ret = '\0';
-}
-
-static	int calc_len(char *s)
-{
-	int	l;
-	
 	l = 0;
 	while (*s)
 	{
 		if (*s == 34 || *s == 39)
+		{
+			s++;
 			continue ;
+		}
 		s++;
 		l++;
 	}
 	return (l);
 }
 
-static	char *new_cmd(char *s)
+char	*new_cmd(char *s, bool *flg)
 {
 	char	*new;
-	int		l;
+	ssize_t	l;
 
 	l = calc_len(s);
 	new = malloc(sizeof(char) * (l + 1));
@@ -102,12 +45,13 @@ static	char *new_cmd(char *s)
 		if (*s == 34 || *s == 39)
 		{
 			s++;
-			continue;
+			if (flg)
+				*flg = 0;
+			continue ;
 		}
 		new[l++] = *s++;
 	}
 	new[l] = '\0';
-	printf("==%s\n", new);
 	return (new);
 }
 
@@ -115,33 +59,54 @@ static	void	eliminate_quotes_phase(char **args)
 {
 	while (*args)
 	{
-		*args = new_cmd(*args);
+		*args = new_cmd(*args, NULL);
 		args++;
 	}
 }
 
-char	**eliminate_quotes(char *s)
+char	**parse_cmd(char *s)
 {
-	int		l;
+	ssize_t	l;
 	char	*cmd;
 	char	**args;
-	int		i;
+	ssize_t	i;
 
 	i = 0;
 	l = var_len(s);
-	printf("l: %d\n", l);
+	if (l < 0)
+		return (NULL);
 	cmd = malloc(sizeof(char) * (l + 1));
 	if (!cmd)
 		return (NULL);
 	replace_cmd(cmd, s);
 	printf("%s\n", cmd);
 	args = fill_cmd(cmd, l, &i, 1);
-	i =0;
+	i = 0;
 	while (args[i])
-		printf("%s\n", args[i++]);
+		printf("args: %s\n", args[i++]);
+	args = handle_wildcard_cmd(args);
 	eliminate_quotes_phase(args);
-	i =0;
+	i = 0;
 	while (args[i])
 		printf("%s\n", args[i++]);
+	puts("here");
+	exit(0);
 	return (args);
+}
+
+char	*parse_redir(char *s, bool *flg)
+{
+	ssize_t	l;
+	char	*cmd;
+	ssize_t	i;
+
+	i = 0;
+	l = var_len(s);
+	if (l < 0)
+		return (NULL);
+	cmd = malloc(sizeof(char) * (l + 1));
+	if (!cmd)
+		return (NULL);
+	replace_cmd(cmd, s);
+	return (new_cmd(cmd, flg));
 }

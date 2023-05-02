@@ -6,28 +6,28 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 14:02:04 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/04/28 13:46:58 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/01 16:26:09 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../../headers/minishell.h"
 
-int	is_identifier(int c)
+bool	is_identifier(int c)
 {
 	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
 		|| (c >= '0' && c <= '9') || c == '_');
 }
 
-char	*expand_var(char *s, int *i)
+char	*expand_var(char *s, ssize_t *i)
 {
-	int		keep;
+	ssize_t	keep;
 	char	*var;
 
 	keep = *i;
 	while (is_identifier(s[keep]))
 		keep++;
 	keep -= *i;
-	var = getenv(ft_substr(s, *i, keep));
+	var = get_env(ft_substr(s, *i, keep));
 	if (!var)
 		return (NULL);
 	*i += keep;
@@ -35,63 +35,21 @@ char	*expand_var(char *s, int *i)
 	return (var);
 }
 
-int	look_for_quo(char *s, int *i, char c)
+static	ssize_t	value_len(char *s, ssize_t *i)
 {
-	int	l;
-
-	l = 0;
-	while (s[*i])
-	{
-		(*i)++;
-		l++;
-		if (s[*i] == c)
-		{
-			(*i)++;
-			l++;
-			printf("single quo: %d\n", l);
-			return (l);
-		}
-	}
-	return (-1);
-}
-
-int	inside_quo(char *s, int *i)
-{
-	int		l;
 	char	*var;
 
-	l = 0;
-	while (s[*i])
-	{
-		if (s[*i] == '$' && is_identifier(s[(*i) + 1]))
-		{
-			(*i)++;
-			var = expand_var(s, i);
-			if (!var)
-				break ;
-			l += ft_strlen(var);
-		}
-		else if (s[*i] == 34)
-		{
-			(*i)++;
-			l++;
-			printf("double: %d\n", l);
-			return (l);
-		}
-		else
-		{
-			(*i)++;
-			l++;
-		}
-	}
-	return (-1);
+	(*i)++;
+	var = expand_var(s, i);
+	if (!var)
+		return (-1);
+	return (ft_strlen(var));
 }
 
-int	var_len(char *s)
+ssize_t	var_len(char *s)
 {
-	int			l;
-	int			i;
-	char		*var;
+	ssize_t		l;
+	ssize_t		i;
 
 	l = 0;
 	i = 0;
@@ -102,19 +60,13 @@ int	var_len(char *s)
 		else if (s[i] == 34)
 			l += inside_quo(s, &i);
 		else if (s[i] == '$' && is_identifier(s[i + 1]))
-		{
-			i++;
-			var = expand_var(s, &i);
-			if (!var)
-				return (-1);
-			l += ft_strlen(var);
-		}
+			l += value_len(s, &i);
 		else
 		{
 			i++;
 			l++;
 		}
 	}
-	printf("last len: %d\n", l);
+	printf("last len: %zd\n", l);
 	return (l);
 }

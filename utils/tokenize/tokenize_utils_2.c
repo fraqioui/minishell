@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 16:33:06 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/04/18 10:36:05 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/04/28 16:13:57 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,10 @@ t_token	check_token(char c1, char c2)
 	return (NOT);
 }
 
-int	check_true(t_token tok)
+char	*cmd_help(char *s, ssize_t l, ssize_t *k, bool flg)
 {
-	return (tok == NOT || tok == IN || tok == OUT
-		|| tok == APPEND || tok == HEREDOC);
-}
-
-char	*cmd_help(char *s, int l, int *k, int flg)
-{
-	int		i;
-	int		j;
+	ssize_t	i;
+	ssize_t	j;
 	char	*ret;
 
 	ret = malloc(sizeof(char) * (l + 1));
@@ -75,7 +69,7 @@ char	*cmd_help(char *s, int l, int *k, int flg)
 	return (ret);
 }
 
-char	**fill_cmd(char *s, int l, int *k, int flg)
+char	**fill_cmd(char *s, ssize_t l, ssize_t *k, bool flg)
 {
 	if (l < 0)
 		return (NULL);

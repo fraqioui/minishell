@@ -1,23 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strcmp.c                                           :+:      :+:    :+:   */
+/*   strdup.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/25 10:30:17 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/03/28 16:36:11 by fraqioui         ###   ########.fr       */
+/*   Created: 2022/10/07 07:22:36 by fraqioui          #+#    #+#             */
+/*   Updated: 2023/04/29 13:19:21 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../../headers/minishell.h"
 
-int	ft_strcmp(char *s1, char *s2)
+char	*ft_strdup(const char *s)
 {
-	while (*s1 && *s2 && *s1 == *s2)
+	char	*arr;
+	size_t	n;
+	int		i;
+
+	n = ft_strlen(s);
+	i = 0;
+	arr = malloc(sizeof(char) * (n + 1));
+	if (!arr)
+		return (NULL);
+	while (n--)
 	{
-		s1++;
-		s2++;
+		arr[i] = s[i];
+		i++;
 	}
-	return (*s1 - *s2);
+	arr[i] = '\0';
+	return (arr);
 }

@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:49:47 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/04/28 13:05:27 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/04/28 15:13:43 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,6 @@ static void	print(t_node *root)
 	else
 		printf("%d\n", root->tok);
 	return ;
-}
-
-static	int	check_tok(char *s)
-{
-	t_token	tok;
-
-	tok = check_token(s[0], s[1]);
-	if (tok == OR || tok == AND)
-	{
-		ft_printf("bash: syntax error near unexpected token `%c%c'\n",
-			s[0], s[1]);
-		return (0);
-	}
-	else if (tok == PIPE || tok == RPR)
-	{
-		ft_printf("bash: syntax error near unexpected token `%c'\n", s[0]);
-		return (0);
-	}
-	return (1);
 }
 
 t_node	*parsing(char *input)

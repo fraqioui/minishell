@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:07:32 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/04/28 11:40:39 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/04/28 16:19:05 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static	void	_push_(t_node **top, t_node *to_add)
 	}
 }
 
-void	push(t_node **a_head, t_node **b_head, int flg)
+void	push(t_node **a_head, t_node **b_head, bool flg)
 {
 	t_node	*sep;
 

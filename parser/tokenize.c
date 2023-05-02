@@ -6,13 +6,13 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 13:08:36 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/04/28 11:30:33 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/04/28 16:10:32 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../headers/minishell.h"
 
-static	int	which_token_1(t_node **head, char *s, int *i, int *par)
+static	bool	which_token_1(t_node **head, char *s, ssize_t *i, ssize_t *par)
 {
 	t_token	tok;
 	t_node	*node;
@@ -35,8 +35,8 @@ static	int	which_token_1(t_node **head, char *s, int *i, int *par)
 t_node	*tokenize(char *s)
 {
 	t_node	*head;
-	int		par;
-	int		i;
+	ssize_t	par;
+	ssize_t	i;
 
 	par = 0;
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 14:02:38 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/04/28 13:01:47 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/02 11:57:30 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,61 +15,85 @@
 
 # include"minishell_defines.h"
 
-//parser
-t_node	*parsing(char *s);
-t_node	*tokenize(char *input);
-void	*ft_calloc(size_t count, size_t size);
+void	_cd_(char *path, char **env);
+void	_pwd_(void);
+void	_and_(t_node *root);
+void	_or_(t_node *root);
+void	_pipe_(t_node *root);
+void	_exit_(t_node *root);
+void	exec_cmd(t_node *root);
+void	executing(t_node *root);
+
+void	initialize(char **env, int *fd_in, int *fd_out);
+t_node	*tokenize(char *s);
+t_node	*parsing(char *input);
 t_token	check_token(char c1, char c2);
-int		check_syntax(t_token tok, char *s);
-t_node	*which_token_2(char	*s, t_token tok, int *i);
-int	check_tok_syntax(t_token tok, char *s, int *i, int *par);
-int	check_true(t_token tok);
-//executing
-int	executing(t_node *root);
-//tree
-t_node	*re_order_command(t_node **head);
-t_node	*list_to_tree(t_node *root);
-t_node	*node_creation_cmd(char *s, t_redir *redir, t_token tok, int precedence);
-t_redir	*node_creation_redir(char **s, t_token tok);
-int 	list_build_cmd(t_node **head, t_node *add);
-int 	list_build_redir(t_redir **head, t_redir *add);
-int	check_next_quote(char *s, char c);
-int		check_rpr(char *s, int i);
-int		check_spaces(char c);
-char	**fill_cmd(char *s, int l, int *k, int flg);
-char	*cmd_help(char *s, int l, int *k, int flg);
+char	*cmd_help(char *s, ssize_t l, ssize_t *k, bool flg);
+char	**fill_cmd(char *s, ssize_t l, ssize_t *k, bool flg);
+bool	check_tok_syntax(t_token tok, char *s, ssize_t *i, ssize_t *par);
+t_node	*which_token_2(char	*s, t_token tok, ssize_t *i);
+bool	check_syntax(t_token tok, char *s);
+void	_signal_start(void);
+void	_signal_middle_exec(void);
+
+bool	_expanding_(t_node *node);
+char	**parse_cmd(char *s);
+char	*parse_redir(char *s, bool *flg);
+ssize_t	inside_quo(char *s, ssize_t *i);
+ssize_t	look_for_quo(char *s, ssize_t *i, char c);
+ssize_t	var_len(char *s);
+char	*expand_var(char *s, ssize_t *i);
+bool	is_identifier(int c);
+void	replace_cmd(char *ret, char *s);
+char	**handle_wildcard_cmd(char **args);
+void	checking(char *s, int *flg);
+char	*new_cmd(char *s, bool *flg);
+bool	check_patterns(char *d_name, char *pattern);
+char	**separate_env(t_env *env);
+char	*find_path(char *cmd);
+void	handle_redirections(t_redir *redir);
+
+bool	check_tok(char *s);
+bool	check_true(t_token tok);
+bool	check_spaces(char c);
+bool	choose_str(char c, bool flg);
 int		check_pre(t_token tok);
-int	choose_str(char c, int flg);
-int	not_len(char *s, int i, int flg);
-void	push(t_node **a_head, t_node **b_head, int flg);
-//builtins
-//points to a string containing an ``='' character.
-int		_cd_(char *path, char **env);
-int		_pwd_(void);
-int     _and_(t_node *root);
-int     _or_(t_node *root);
-int     _pipe_(t_node *root);
-int     exec_cmd(t_node *root);
-int 	_expanding_(t_node *node);
-char	**eliminate_quotes(char *s);
-int	var_c(char c);
-//utils
+void	print_error(char *mes1, char *mes2, int exit_status, bool flg);
+ssize_t	check_next_quote(char *s, char c);
+ssize_t	check_rpr(char *s, ssize_t i);
+ssize_t	not_len(char *s, ssize_t i, bool flg);
+int		pipe_sc(int ends[2]);
+pid_t	_fork_(void);
+int		dup_2(int fild1, int fild2);
+int		_close_(char *num, ...);
+int		executing_cmd(t_node *root);
+
+t_node	*re_order_command(t_node **head);
+void	push(t_node **a_head, t_node **b_head, bool flg);
+t_node	*list_to_tree(t_node *root);
+int		list_build_cmd(t_node **head, t_node *add);
+int		list_build_redir(t_redir **head, t_redir *add);
+t_node	*node_creation_cmd(char *s, t_redir *redir,
+			t_token tok, int precedence);
+t_redir	*node_creation_redir(char **s, t_token tok);
+t_env	*node_creation_env(char *env, char *var, char *value);
+
 void	ft_putstr_fd(char *s, int fd);
 char	*ft_strtrim(char const *s1, char const *set);
-int	ft_strlen(const char *s);
+size_t	ft_strlen(const char *s);
 char	**ft_split(char const *s, char c);
 char	**ft_alloc_fail(char **arr);
 int		ft_strcmp(char *s1, char *s2);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-int 	num_words(const char *s2, char c);
+int		num_words(const char *s2, char c);
+void	*ft_calloc(size_t count, size_t size);
+bool	ft_memcmp(const void *s1, const void *s2, size_t n);
+char	*ft_strdup(const char *s);
+void	lstadd_front_env(t_env **lst, t_env *new);
+void	lstadd_back_env(t_env **lst, t_env *new);
+void	lstadd_front_mem(t_mem **lst, t_mem *new);
+void	lstadd_back_mem(t_mem **lst, t_mem *new);
+char	*get_env(const char *name);
 
-int	num_args(char **s);
-int	check_var(char *s, int *l);
-int	look_for_quo(char *s, int *i, char c);
-int	analy_var(char *s, int *i, int *l);
-char    *expand_var(char *s, int *i);
-int	is_identifier(int c);
-int	var_len(char *s);
-int	inside_quo(char *s, int *i);
 #endif

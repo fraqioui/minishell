@@ -6,13 +6,13 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 13:41:32 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/04/13 13:42:18 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/02 11:56:13 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../../headers/minishell.h"
 
-int	_echo_(char *s)
+void	_echo_(char *s)
 {
 	
 }

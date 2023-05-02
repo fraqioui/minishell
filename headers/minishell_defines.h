@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:34:46 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/04/28 09:49:26 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/02 11:17:55 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <string.h>
+# include <stdbool.h>
+# include <dirent.h>
+# include <fcntl.h>
 # include"../utils/ft_printf/ft_printf.h"
 
 # define READ_END 0
@@ -30,6 +34,7 @@
 # define CMD_N_FOUND 127
 # define NOT_EXEC 126
 # define INCORRECT_USAGE 2
+# define UNEXPECTED_TOK "syntax error near unexpected token"
 
 typedef enum e_token
 {
@@ -50,6 +55,8 @@ typedef struct s_redir
 {
 	t_token			tok;
 	char			*file;
+	bool			flg;
+	int				fd;
 	struct s_redir	*lchild;
 	struct s_redir	*rchild;
 }t_redir;
@@ -61,6 +68,7 @@ typedef struct s_node
 	t_token			tok;
 	int				precedence;
 	t_redir			*redirections;
+	int				fd[2];
 	struct s_node	*lchild;
 	struct s_node	*rchild;
 }t_node;
@@ -88,6 +96,6 @@ typedef struct s_gb
 	t_mem	*mem;
 }	t_gb;
 
-extern	t_gb	gb;
+extern	t_gb	g_gb;
 
 #endif

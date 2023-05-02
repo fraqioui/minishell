@@ -6,19 +6,19 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 21:28:01 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/04/13 13:40:07 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/02 11:56:05 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../../headers/minishell.h"
 
-int	_cd_(char *path, char **env)
+void	_cd_(char *path, char **env)
 {
 	char	s[PATH_MAX];
 
 	if (!path)
 	{
-		path = getenv("HOME");
+		path = get_env("HOME");
 		if (!path)
 		{
 			ft_putstr_fd("bash: cd: HOME not set\n", 2);
