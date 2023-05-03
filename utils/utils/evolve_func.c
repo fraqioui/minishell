@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 15:10:04 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/02 10:47:07 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/03 10:10:12 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,20 +63,6 @@ int	_open_(const char *path, int oflag, mode_t mode)
 	fd = open(path, oflag, mode);
 	if (fd)
 		return (fd);
-	print_error(path, strerror(errno), 1, 1);
+	print_error((char *)path, strerror(errno), 1, 1);
 	return (-1);
-}
-
-int	executing_cmd(t_node *root)
-{
-	char	**env;
-
-	env = separate_env(g_gb.env);
-	execve(find_path(root->cmd[0]), root->cmd, env);
-	//free
-	if (errno == ENOENT)
-		exit(CMD_N_FOUND);
-	if (errno == EACCES)
-		exit(NOT_EXEC);
-	exit(1);
 }

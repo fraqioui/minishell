@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:18:14 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/02 11:21:56 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/03 10:37:31 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,6 @@ char	**parse_cmd(char *s)
 	i = 0;
 	while (args[i])
 		printf("%s\n", args[i++]);
-	puts("here");
-	exit(0);
 	return (args);
 }
 

@@ -6,11 +6,26 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:53:32 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/04/14 10:54:00 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/03 10:28:21 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../../headers/minishell.h"
+
+static	void	*ft_memcpy(void *dst, const void *src, size_t n)
+{
+	size_t	i;
+
+	if (!dst && !src)
+		return (NULL);
+	i = 0;
+	while (i < n)
+	{
+		*((unsigned char *)dst + i) = *((unsigned char *)src + i);
+		i++;
+	}
+	return (dst);
+}
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {

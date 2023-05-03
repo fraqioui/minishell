@@ -77,22 +77,28 @@
 // 	printf("%s\n",s);
 // }
 
- #include <dirent.h>
+//  #include <dirent.h>
 
-int seardir(void)
-{
-	DIR *dp = opendir(".");
-	struct dirent *entry;
+// int seardir(void)
+// {
+// 	DIR *dp = opendir(".");
+// 	struct dirent *entry;
 
-	for (entry=readdir(dp);entry!=NULL;entry=readdir(dp))
-		printf("%s\n", entry->d_name);
-	closedir(dp);
-	return (1);
-}
+// 	for (entry=readdir(dp);entry!=NULL;entry=readdir(dp))
+// 		printf("%s\n", entry->d_name);
+// 	closedir(dp);
+// 	return (1);
+// }
+
+// int main()
+// {
+// 	seardir();
+// }
 
 int main()
 {
-	seardir();
+	printf("%d\n", atoi("9223372036854775807"));
+	exit (-1);
 }
 
 /*

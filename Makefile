@@ -6,7 +6,7 @@
 #    By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/18 14:02:45 by fraqioui          #+#    #+#              #
-#    Updated: 2023/05/02 08:18:00 by fraqioui         ###   ########.fr        #
+#    Updated: 2023/05/03 10:16:03 by fraqioui         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,9 +25,19 @@ FILES = parser/main \
 		parser/syntax \
 		parser/re_order \
 		parser/finalize \
+		executor/builtins/exit \
+		executor/builtins/cd \
+		executor/builtins/echo \
+		executor/builtins/env \
+		executor/builtins/export \
+		executor/builtins/pwd \
+		executor/builtins/unset \
 		executor/executor/start \
 		executor/executor/cmd \
+		executor/executor/cmd_helper \
 		executor/executor/pipe \
+		executor/executor/and_or \
+		executor/executor/redirections \
 		executor/expander/expanding \
 		executor/expander/wildcard \
 		executor/expander/wildcard_utils \
@@ -38,9 +48,12 @@ FILES = parser/main \
 		utils/libft/split \
 		utils/libft/substr \
 		utils/libft/memcmp \
+		utils/libft/strcmp \
 		utils/libft/strdup \
 		utils/libft/lstadd \
 		utils/libft/get_env \
+		utils/libft/atoi \
+		utils/libft/strjoin \
 		utils/build/list_build \
 		utils/build/node_creation \
 		utils/build/tree_build \
@@ -55,18 +68,12 @@ FILES = parser/main \
 		utils/executor/expanding_utils2 \
 		utils/executor/expanding_utils3 \
 		utils/utils/checks \
+		utils/utils/checks_ \
 		utils/utils/errors \
 		utils/utils/evolve_func \
+		utils/utils/evolve_func_ \
 		utils/utils/lengths \
 		utils/utils/memory \
-		#executor/executor/and_or \
-		executor/builtins/cd \
-		executor/builtins/echo \
-		executor/builtins/env \
-		executor/builtins/exit \
-		executor/builtins/export \
-		executor/builtins/pwd \
-		executor/builtins/unset \
 
 FOBJ = ${FILES:=.o}
 

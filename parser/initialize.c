@@ -6,17 +6,13 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 10:37:04 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/02 08:31:22 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/02 22:29:42 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../headers/minishell.h"
 
-//insitialize list
-//get_env imple
-//export
-
-static	ssize_t	find_c(char *s)
+ssize_t	find_c(char *s)
 {
 	ssize_t	i;
 

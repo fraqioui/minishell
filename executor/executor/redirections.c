@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:51:40 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/02 11:40:19 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/03 10:21:52 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static	char	*expand_in_doc(char *s)
 	ssize_t	i;
 
 	ret = malloc(sizeof(char) * (calc_ll(s) + 1));
+	i = 0;
 	while (s[i])
 	{
 		if (s[i] == '$' && is_identifier(s[i + 1]))
@@ -77,7 +78,7 @@ static	int	handle_heredoc(char *delim, bool flg)
 		if (flg)
 			input = expand_in_doc(input);
 		if (write(fd[1], input, ft_strlen(input)) < 0)
-			(print_error("write", strerror(errno), 1, 1), return (-1));
+			return (print_error("write", strerror(errno), 1, 1), -1);
 		free(input);
 	}
 	if (_close_("a", fd[1]) < 0)

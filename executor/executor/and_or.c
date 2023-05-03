@@ -6,22 +6,22 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 10:31:26 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/04/17 10:50:25 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/02 13:45:36 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../../headers/minishell.h"
 
-int	_and_(t_node *root)
+void	_and_(t_node *root)
 {
-	if (executing(root->lchild))
+	executing(root->lchild);
+	if (!g_gb.exit_st)
 		return (executing(root->rchild));
-	//return
 }
 
-int	_or_(t_node *root)
+void	_or_(t_node *root)
 {
-	if (!executing(root->lchild))
+	executing(root->lchild);
+	if (g_gb.exit_st)
 		return (executing(root->rchild));
-	//return
 }

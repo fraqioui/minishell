@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 13:03:55 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/01 17:39:27 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/03 10:29:58 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static	int	besides_wild(char *s, ssize_t *i)
 	while (s[*i])
 	{
 		if (s[*i] == '*' && !s[(*i) + 1] && !keep)
-				return (-1);
+			return (-1);
 		if (s[*i] == '*')
 			return (1);
 		(*i)++;
@@ -82,7 +82,7 @@ bool	check_patterns(char *d_name, char *pattern)
 	part = 1;
 	i = -1;
 	save_2 = 0;
-	new = new_cmd(pattern);
+	new = new_cmd(pattern, 0);
 	while (new[++i])
 	{
 		save_1 = i;
