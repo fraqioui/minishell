@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 17:05:14 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/02/26 11:47:13 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:14:14 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_puthex(unsigned int num, char alpha)
 	table = "0123456789abcdef0123456789ABCDEF";
 	capital = 0;
 	len = ft_len(num);
-	h = malloc(sizeof(char) * (len + 1));
+	h = _malloc_(sizeof(char) * (len + 1));
 	if (!h)
 		return (0);
 	if (alpha == 'X')
@@ -65,7 +65,7 @@ int	ft_puthex_uns(unsigned long num)
 
 	table = "0123456789abcdef";
 	len = ft_len(num);
-	h = malloc(sizeof(char) * (len + 1));
+	h = _malloc_(sizeof(char) * (len + 1));
 	if (!h)
 		return (0);
 	tmp = len;

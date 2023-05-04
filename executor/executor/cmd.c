@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 10:31:29 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/03 10:39:29 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/03 15:45:39 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	exec_cmd(t_node *root)
 {
 	pid_t	pid;
 	int		status;
-//redir before builtin
+
 	if (!_expanding_(root))
 		return ;
 	if (root->redirections)
@@ -45,6 +45,7 @@ void	exec_cmd(t_node *root)
 			|| dup_2(root->fd[1], STDOUT_FILENO) < 0)
 			return ;
 	}
+	puts("from");
 	if (!is_builtin(root->cmd))
 	{
 		_signal_middle_exec();

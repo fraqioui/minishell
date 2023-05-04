@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:53:32 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/03 10:28:21 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:14:14 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);
-	new_s = malloc(sizeof(char) * (s1_len + s2_len + 1));
+	new_s = _malloc_(sizeof(char) * (s1_len + s2_len + 1));
 	if (!new_s)
 		return (NULL);
 	ft_memcpy(new_s, s1, s1_len);

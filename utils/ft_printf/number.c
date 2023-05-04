@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 17:04:12 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/02/26 11:47:09 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:14:14 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	ft_putnbr(int n)
 	int				tmp;
 
 	num = n;
-	h = malloc(sizeof(char) * (ft_len(n) + 1));
+	h = _malloc_(sizeof(char) * (ft_len(n) + 1));
 	if (!h)
 		return (0);
 	if (n < 0)
@@ -66,7 +66,7 @@ int	ft_putuns(unsigned int num)
 
 	table = "0123456789";
 	len = ft_len(num);
-	h = malloc(sizeof(char) * (len + 1));
+	h = _malloc_(sizeof(char) * (len + 1));
 	if (!h)
 		return (0);
 	tmp = len;

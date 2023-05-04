@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 13:41:32 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/02 14:36:19 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:52:29 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static	bool	check_option(char *s)
 {
 	if (*s == '-')
 	{
+		s++;
 		while (*s == 'n')
 			s++;
 	}
@@ -29,12 +30,16 @@ void	_echo_(char **cmd)
 	bool	flg;
 
 	cmd++;
-	while (check_option(*cmd++))
+	flg = false;
+	while (*cmd && check_option(*cmd))
+	{
 		flg = true;
+		cmd++;
+	}
 	while (*cmd)
 	{
-		ft_printf("%s", *cmd);
-		if (*++cmd)
+		ft_putstr_fd(*cmd++, 1);
+		if (*cmd)
 			ft_putstr_fd(" ", 1);
 	}
 	if (!flg)

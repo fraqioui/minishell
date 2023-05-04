@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 09:04:30 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/04/29 09:43:10 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:49:07 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ void	replace_cmd(char *ret, char *s)
 			fill_between_quo_2(&ret, s, &i);
 		else if (s[i] == '$' && is_identifier(s[i + 1]))
 			replace_var(&ret, s, &i);
+		else if (s[i] == '$' && (s[i + 1] == 34 || s[i + 1] == 39))
+			i++;
 		else
 			*ret++ = s[i++];
 	}

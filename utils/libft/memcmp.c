@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 11:58:54 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/01 16:34:07 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:15:29 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,3 @@ bool	ft_memcmp(const void *s1, const void *s2, size_t n)
 	}
 	return (0);
 }
-
-/*
-export ""
-
-unset ""
-
-export test=
-
-export =test
-
-export =
-
-export "==="
-
-export '= = ='
-*/

@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:34:46 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/02 11:17:55 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/04 12:58:11 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,7 @@ typedef struct s_env
 
 typedef struct s_mem
 {
-	char			*s;
-	char			**str;
+	void			*ptr;
 	struct s_mem	*next;
 }	t_mem;
 

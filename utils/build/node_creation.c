@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:37:39 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/02 11:21:29 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:21:10 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,9 @@ t_node	*node_creation_cmd(char *s, t_redir *redir, t_token tok, int precedence)
 {
 	t_node	*node;
 
-	node = malloc(sizeof(t_node));
+	node = _malloc_(sizeof(t_node));
 	if (!node)
-	{
-		ft_putstr_fd("allocation failed\n", 2);
 		return (NULL);
-	}
 	node->pre_cmd = s;
 	node->cmd = NULL;
 	node->tok = tok;
@@ -38,12 +35,9 @@ t_redir	*node_creation_redir(char **s, t_token tok)
 
 	if (!s)
 		return (NULL);
-	node = malloc(sizeof(t_redir));
+	node = _malloc_(sizeof(t_redir));
 	if (!node)
-	{
-		ft_putstr_fd("allocation failed\n", 2);
 		return (NULL);
-	}
 	node->tok = tok;
 	node->file = s[0];
 	node->flg = 1;
@@ -56,14 +50,35 @@ t_env	*node_creation_env(char *env, char *var, char *value)
 {
 	t_env	*node;
 
-	if (!env || !var || !value)
-		return (NULL);
-	node = malloc(sizeof(t_env));
+	node = _malloc_(sizeof(t_env));
 	if (!node)
 		return (NULL);
 	node->env = env;
 	node->var = var;
 	node->value = value;
+	node->next = NULL;
+	return (node);
+}
+
+static	void	*_malloc_mem(size_t size)
+{
+	void	*ptr;
+
+	ptr = _malloc_(size);
+	if (!ptr)
+		return (print_error("_malloc_", strerror(errno)),
+			exit_with_status(1), NULL);
+	return (ptr);
+}
+
+t_mem	*node_creation_mem(void	*ptr)
+{
+	t_mem	*node;
+
+	node = _malloc_mem(sizeof(t_mem));
+	if (!node)
+		return (NULL);
+	node->ptr = ptr;
 	node->next = NULL;
 	return (node);
 }

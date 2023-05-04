@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 16:32:44 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/04/28 16:21:53 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/04 14:11:59 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ bool	check_tok_syntax(t_token tok, char *s, ssize_t *i, ssize_t *par)
 	}
 	else if (tok == RPR && *i > *par)
 	{
-		print_error(UNEXPECTED_TOK, NULL, INCORRECT_USAGE, 0);
-		ft_putstr_fd(" `)'\n", 2);
+		ft_printf("bash: syntax error near unexpected token `)'\n");
+		exit_with_status(INCORRECT_USAGE);
 		return (0);
 	}
 	while (check_spaces(s[*i]))
@@ -84,6 +84,8 @@ t_node	*which_token_2(char	*s, t_token tok, ssize_t *i)
 		tok = check_token(s[save], s[save + 1]);
 	}
 	str = ft_substr(s, *i, not_len(s, *i, 1));
+	if (!str)
+		return (NULL);
 	incre(s, i);
 	return (node_creation_cmd(str, redir, NOT, 0));
 }

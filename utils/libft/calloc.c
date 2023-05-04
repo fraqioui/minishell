@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 08:06:42 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/03/28 16:36:00 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:14:14 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	*ft_calloc(size_t count, size_t size)
 	n = count * size;
 	if (n != 0 && (n / count) != size)
 		return (NULL);
-	array = malloc(size * count);
+	array = _malloc_(size * count);
 	if (!array)
 		return (NULL);
 	ft_bzero(array, count * size);

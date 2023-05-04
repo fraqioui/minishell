@@ -6,11 +6,30 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 10:31:59 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/03 09:23:54 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:15:34 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../../headers/minishell.h"
+
+static	void	_export_help(char *s)
+{
+	ssize_t	l;
+	char	*save;
+
+	l = 0;
+	save = s;
+	while (identifier_front(*save))
+	{
+		l++;
+		save++;
+	}
+	while (is_identifier(*save))
+		save++;
+	if (!l || (!(*save == '+' && *(save + 1) == '=') && *save != '=' && *save))
+		return (print_error("export", "invalid indentifier", 1, 1));
+	_export_var(s, *save);
+}
 
 static	void	sort_env(t_env *env)
 {
@@ -49,7 +68,8 @@ static	t_env	*copy_env(void)
 	ret = NULL;
 	while (env)
 	{
-		lstadd_back_env(&ret, node_creation_env(NULL, env->var, env->value));
+		lstadd_back_env(&ret, node_creation_env
+			(env->env, env->var, env->value));
 		env = env->next;
 	}
 	return (ret);
@@ -64,35 +84,17 @@ static	void	print_env(void)
 	while (env)
 	{
 		ft_putstr_fd("declare -x ", 1);
-		ft_printf("%s", env->var);
-		ft_putstr_fd("=\"", 1);
-		ft_printf("%s", env->value);
-		ft_putstr_fd("\"\n", 1);
+		ft_putstr_fd(env->var, 1);
+		if (find_c(env->env, '=') != -1)
+		{
+			ft_putstr_fd("=\"", 1);
+			ft_putstr_fd(env->value, 1);
+			ft_putstr_fd("\"\n", 1);
+		}
+		else
+			ft_putstr_fd("\n", 1);
 		env = env->next;
 	}
-}
-
-static	bool	identifier_front(int c)
-{
-	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_');
-}
-
-static	void	_export_help(char *s)
-{
-	ssize_t	l;
-	ssize_t	index;
-
-	l = 0;
-	while (identifier_front(*s++))
-		l++;
-	if (!l)
-		print_error("export", NULL, 1, 1);
-	while (is_identifier(*s++))
-		l++;
-	index = find_c(s);
-	lstadd_back_env(&g_gb.env, node_creation_env(s,
-			ft_substr(s, 0, index), ft_substr(s, index + 1,
-				ft_strlen(s) - index)));
 }
 
 void	_export_(char **cmd)
@@ -101,11 +103,8 @@ void	_export_(char **cmd)
 		print_env();
 	else
 	{
-		while (*cmd)
-		{
-			cmd++;
+		while (*++cmd)
 			_export_help(*cmd);
-		}
 	}
 }
 

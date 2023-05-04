@@ -68,7 +68,7 @@
 
 // int main()
 // {
-// 	char *s = malloc(sizeof(char) * 6);
+// 	char *s = _malloc_(sizeof(char) * 6);
 // 	*s++ = 'h';
 // 	fc(&s);
 // 	*s++ = 'h';

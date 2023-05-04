@@ -68,7 +68,7 @@
 
 // int main()
 // {
-// 	char *s = malloc(sizeof(char) * 6);
+// 	char *s = _malloc_(sizeof(char) * 6);
 // 	*s++ = 'h';
 // 	fc(&s);
 // 	*s++ = 'h';
@@ -95,10 +95,15 @@
 // 	seardir();
 // }
 
-int main()
+// int main()
+// {
+// 	printf("%d\n", atoi("9223372036854775807"));
+// 	exit (-1);
+// }
+
+int	main()
 {
-	printf("%d\n", atoi("9223372036854775807"));
-	exit (-1);
+	printf("%s\n", getenv(NULL));
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 17:55:25 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/02 17:58:25 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/03 15:38:01 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,13 @@ int	_chdir_(const char *path)
 int	executing_cmd(t_node *root)
 {
 	char	**env;
+	char	*path;
 
 	env = separate_env(g_gb.env);
-	execve(find_path(root->cmd[0]), root->cmd, env);
+	path = find_path(root->cmd[0]);
+	printf("path: %s\n", path);
+	execve(path, root->cmd, env);
+	puts("gh");
 	//free
 	if (errno == ENOENT)
 		exit(CMD_N_FOUND);

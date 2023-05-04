@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 14:02:04 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/01 16:26:09 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:48:01 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ char	*expand_var(char *s, ssize_t *i)
 	if (!var)
 		return (NULL);
 	*i += keep;
-	printf("var: %s\n", var);
 	return (var);
 }
 
@@ -61,12 +60,13 @@ ssize_t	var_len(char *s)
 			l += inside_quo(s, &i);
 		else if (s[i] == '$' && is_identifier(s[i + 1]))
 			l += value_len(s, &i);
+		else if (s[i] == '$' && (s[i + 1] == 34 || s[i + 1] == 39))
+			i++;
 		else
 		{
 			i++;
 			l++;
 		}
 	}
-	printf("last len: %zd\n", l);
 	return (l);
 }

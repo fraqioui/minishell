@@ -6,7 +6,7 @@
 #    By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/18 14:02:45 by fraqioui          #+#    #+#              #
-#    Updated: 2023/05/03 10:16:03 by fraqioui         ###   ########.fr        #
+#    Updated: 2023/05/04 13:43:14 by fraqioui         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ I = -I/Users/fraqioui/.brew/opt/readline/include
 
 FILES = parser/main \
 		parser/initialize \
+		parser/initialize_hlp \
 		parser/parser \
 		parser/tokenize \
 		parser/syntax \
@@ -30,6 +31,7 @@ FILES = parser/main \
 		executor/builtins/echo \
 		executor/builtins/env \
 		executor/builtins/export \
+		executor/builtins/export_help \
 		executor/builtins/pwd \
 		executor/builtins/unset \
 		executor/executor/start \
@@ -63,7 +65,6 @@ FILES = parser/main \
 		utils/ft_printf/start \
 		utils/tokenize/tokenize_utils_1 \
 		utils/tokenize/tokenize_utils_2 \
-		utils/tokenize/tokenize_utils_3 \
 		utils/executor/expanding_utils1 \
 		utils/executor/expanding_utils2 \
 		utils/executor/expanding_utils3 \

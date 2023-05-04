@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:18:14 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/03 10:37:31 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:45:01 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*new_cmd(char *s, bool *flg)
 	ssize_t	l;
 
 	l = calc_len(s);
-	new = malloc(sizeof(char) * (l + 1));
+	new = _malloc_(sizeof(char) * (l + 1));
 	if (!new)
 		return (NULL);
 	l = 0;
@@ -75,20 +75,13 @@ char	**parse_cmd(char *s)
 	l = var_len(s);
 	if (l < 0)
 		return (NULL);
-	cmd = malloc(sizeof(char) * (l + 1));
+	cmd = _malloc_(sizeof(char) * (l + 1));
 	if (!cmd)
 		return (NULL);
 	replace_cmd(cmd, s);
-	printf("%s\n", cmd);
 	args = fill_cmd(cmd, l, &i, 1);
-	i = 0;
-	while (args[i])
-		printf("args: %s\n", args[i++]);
 	args = handle_wildcard_cmd(args);
 	eliminate_quotes_phase(args);
-	i = 0;
-	while (args[i])
-		printf("%s\n", args[i++]);
 	return (args);
 }
 
@@ -102,7 +95,7 @@ char	*parse_redir(char *s, bool *flg)
 	l = var_len(s);
 	if (l < 0)
 		return (NULL);
-	cmd = malloc(sizeof(char) * (l + 1));
+	cmd = _malloc_(sizeof(char) * (l + 1));
 	if (!cmd)
 		return (NULL);
 	replace_cmd(cmd, s);

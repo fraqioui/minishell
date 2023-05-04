@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:45:59 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/04/28 16:17:36 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/04 14:11:40 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ bool	check_syntax(t_token tok, char *s)
 	if (check_syntax_help(tok, next))
 		return (1);
 	if (next == END)
-		(print_error(UNEXPECTED_TOK, NULL, INCORRECT_USAGE, 0),
-			ft_printf(" `newline'\n"));
+		(ft_printf("bash: %s `newline'\n", UNEXPECTED_TOK),
+			exit_with_status(INCORRECT_USAGE));
 	else if (next == AND || next == OR || next == APPEND || next == HEREDOC)
-		(print_error(UNEXPECTED_TOK, NULL, INCORRECT_USAGE, 0),
-			ft_printf(" `%c%c'\n", *s, *(s + 1)));
+		(ft_printf("bash: %s `%c%c'\n", UNEXPECTED_TOK, *s, *(s + 1)),
+			exit_with_status(INCORRECT_USAGE));
 	else
-		(print_error(UNEXPECTED_TOK, NULL, INCORRECT_USAGE, 0),
-			ft_printf(" `%c'\n", *s));
+		(ft_printf("bash: %s `%c'\n", UNEXPECTED_TOK, *s),
+			exit_with_status(INCORRECT_USAGE));
 	return (0);
 }

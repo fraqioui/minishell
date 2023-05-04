@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:51:40 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/03 10:21:52 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:14:14 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static	char	*expand_in_doc(char *s)
 	char	*var;
 	ssize_t	i;
 
-	ret = malloc(sizeof(char) * (calc_ll(s) + 1));
+	ret = _malloc_(sizeof(char) * (calc_ll(s) + 1));
 	i = 0;
 	while (s[i])
 	{

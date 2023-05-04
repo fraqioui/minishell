@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:38:39 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/04/25 10:57:37 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:14:14 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static char	*ft_fillout(const char *s1, int *j, char c)
 		len++;
 		i++;
 	}
-	new = malloc(sizeof(char) * (len + 1));
+	new = _malloc_(sizeof(char) * (len + 1));
 	if (!new)
 		return (NULL);
 	i = 0;
@@ -81,7 +81,7 @@ char	**ft_split(char const *s, char c)
 	if (!s)
 		return (NULL);
 	wc = num_words(s, c);
-	t_arr = malloc(sizeof(char *) * (wc + 1));
+	t_arr = _malloc_(sizeof(char *) * (wc + 1));
 	if (!t_arr)
 		return (NULL);
 	while (j < wc)

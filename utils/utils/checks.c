@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 15:10:07 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/04/28 17:07:02 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/04 14:14:40 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ bool	check_tok(char *s)
 	tok = check_token(s[0], s[1]);
 	if (tok == OR || tok == AND)
 	{
-		print_error(UNEXPECTED_TOK, NULL, INCORRECT_USAGE, 0);
-		ft_printf(" `%c%c'\n", s[0], s[1]);
+		ft_printf("bash: %s `%c%c'\n", UNEXPECTED_TOK, s[0], s[1]);
+		exit_with_status(INCORRECT_USAGE);
 		return (0);
 	}
 	else if (tok == PIPE || tok == RPR)
 	{
-		print_error(UNEXPECTED_TOK, NULL, INCORRECT_USAGE, 0);
-		ft_printf(" `%c'\n", s[0]);
+		ft_printf("bash: %s `%c'\n", UNEXPECTED_TOK, s[0]);
+		exit_with_status(INCORRECT_USAGE);
 		return (0);
 	}
 	return (1);

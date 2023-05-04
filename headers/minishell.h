@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 14:02:38 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/03 10:23:03 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:14:14 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	_pipe_(t_node *root);
 void	exec_cmd(t_node *root);
 void	executing(t_node *root);
 
+void	*__malloc__(size_t size);
+void	get_mem_back(void);
 void	initialize(char **env, int *fd_in, int *fd_out);
 t_node	*tokenize(char *s);
 t_node	*parsing(char *input);
@@ -62,7 +64,8 @@ bool	check_true(t_token tok);
 bool	check_spaces(char c);
 bool	choose_str(char c, bool flg);
 int		check_pre(t_token tok);
-void	print_error(char *mes1, char *mes2, int exit_status, bool flg);
+void	print_error(int n, ...);
+void	exit_with_status(int exit_status);
 ssize_t	check_next_quote(char *s, char c);
 ssize_t	check_rpr(char *s, ssize_t i);
 ssize_t	not_len(char *s, ssize_t i, bool flg);
@@ -82,6 +85,7 @@ t_node	*node_creation_cmd(char *s, t_redir *redir,
 			t_token tok, int precedence);
 t_redir	*node_creation_redir(char **s, t_token tok);
 t_env	*node_creation_env(char *env, char *var, char *value);
+t_mem	*node_creation_mem(void *ptr);
 
 void	ft_putstr_fd(char *s, int fd);
 char	*ft_strtrim(char const *s1, char const *set);
@@ -102,6 +106,8 @@ char	*get_env(const char *name);
 ssize_t	calc_args(char **av);
 int		ft_atoi(const char *str);
 int		ft_strcmp(const char *s1, const char *s2);
-ssize_t	find_c(char *s);
+ssize_t	find_c(char *s, char c);
+void	_export_var(char *s, char c);
+bool	identifier_front(int c);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 16:33:06 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/04/28 16:13:57 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:42:38 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,19 @@ t_token	check_token(char c1, char c2)
 	return (NOT);
 }
 
+static	void	check_flg(bool flg, char *s, int *k)
+{
+	if (!flg)
+		s[(*k) - 1] = 127;
+}
+
 char	*cmd_help(char *s, ssize_t l, ssize_t *k, bool flg)
 {
 	ssize_t	i;
 	ssize_t	j;
 	char	*ret;
 
-	ret = malloc(sizeof(char) * (l + 1));
+	ret = _malloc_(sizeof(char) * (l + 1));
 	if (!ret)
 		return (NULL);
 	i = 0;
@@ -55,18 +61,15 @@ char	*cmd_help(char *s, ssize_t l, ssize_t *k, bool flg)
 			while (i < j)
 			{
 				ret[i++] = s[(*k)++];
-				if (!flg)
-					s[(*k) - 1] = 127;
+				check_flg(flg, s, k);
 			}
 		}
 		if (s[*k] == 32)
 			s[*k] = 127;
 		ret[i++] = s[(*k)++];
-		if (!flg)
-			s[(*k) - 1] = 127;
+		check_flg(flg, s, k);
 	}
-	ret[i] = 0;
-	return (ret);
+	return (ret[i] = 0, ret);
 }
 
 char	**fill_cmd(char *s, ssize_t l, ssize_t *k, bool flg)

@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 21:28:01 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/03 09:21:36 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:52:20 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static	void	update_pwd(char **cmd, char *old_pwd)
 		trav = trav->next;
 	}
 }
+
 //still a test
 void	_cd_(char **cmd)
 {
