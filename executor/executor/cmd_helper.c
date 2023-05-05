@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 08:48:54 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/04 13:14:14 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/04 14:35:36 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ static	int	_access_(char *path, char *cmd)
 	{
 		if (!access(path, X_OK))
 			return (0);
-		print_error(cmd, strerror(errno), NOT_EXEC, 1);
-		return (1);
+		return (print_error(2, cmd, strerror(errno)),
+			exit_with_status(NOT_EXEC), 1);
 	}
 	else
 		return (-1);
@@ -81,8 +81,8 @@ static	char	*find_path_help(char **to_sear, char *cmd)
 			to_sear++;
 		}
 	}
-	print_error(cmd, strerror(ENOENT), CMD_N_FOUND, 1);
-	return (NULL);
+	return (print_error(2, cmd, strerror(ENOENT)),
+		exit_with_status(CMD_N_FOUND), NULL);
 }
 
 char	*find_path(char *cmd)

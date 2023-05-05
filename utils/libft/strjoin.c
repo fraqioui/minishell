@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 10:53:32 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/04 13:14:14 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/05 09:48:14 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,5 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	ft_memcpy(new_s, s1, s1_len);
 	ft_memcpy(new_s + s1_len, s2, s2_len);
 	new_s[s2_len + s1_len] = '\0';
-	return (new_s);
+	return (free((char *)s1), free((char *)s2), s1 = NULL, s2 = NULL, new_s);
 }

@@ -100,10 +100,10 @@
 // 	printf("%d\n", atoi("9223372036854775807"));
 // 	exit (-1);
 // }
-
+#include<fcntl.h>
 int	main()
 {
-	printf("%s\n", getenv(NULL));
+	int fd = open("hi", O_RDWR);
 }
 
 /*

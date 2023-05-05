@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 16:33:06 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/04 13:42:38 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/04 14:46:30 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_token	check_token(char c1, char c2)
 	return (NOT);
 }
 
-static	void	check_flg(bool flg, char *s, int *k)
+static	void	check_flg(bool flg, char *s, ssize_t *k)
 {
 	if (!flg)
 		s[(*k) - 1] = 127;

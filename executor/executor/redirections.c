@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:51:40 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/04 13:14:14 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/05 09:14:19 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static	ssize_t	calc_ll(char *s)
 {
 	ssize_t	l;
 	ssize_t	i;
+	char	*var;
 
 	l = 0;
 	i = 0;
@@ -27,7 +28,9 @@ static	ssize_t	calc_ll(char *s)
 		if (s[i] == '$' && is_identifier(s[i + 1]))
 		{
 			i++;
-			l += ft_strlen(expand_var(s, &i));
+			var = expand_var(s, &i);
+			l += ft_strlen(var);
+			(free(var), var = NULL);
 		}
 		else
 		{
@@ -78,10 +81,11 @@ static	int	handle_heredoc(char *delim, bool flg)
 		if (flg)
 			input = expand_in_doc(input);
 		if (write(fd[1], input, ft_strlen(input)) < 0)
-			return (print_error("write", strerror(errno), 1, 1), -1);
-		free(input);
+			return (print_error(2, "write", strerror(errno)),
+				exit_with_status(1), -1);
+		(free(input), input = NULL);
 	}
-	if (_close_("a", fd[1]) < 0)
+	if (_close_(1, fd[1]) < 0)
 		return (-1);
 	return (fd[0]);
 }

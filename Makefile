@@ -6,7 +6,7 @@
 #    By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/18 14:02:45 by fraqioui          #+#    #+#              #
-#    Updated: 2023/05/04 13:43:14 by fraqioui         ###   ########.fr        #
+#    Updated: 2023/05/04 14:43:03 by fraqioui         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,6 @@ FILES = parser/main \
 		parser/tokenize \
 		parser/syntax \
 		parser/re_order \
-		parser/finalize \
 		executor/builtins/exit \
 		executor/builtins/cd \
 		executor/builtins/echo \

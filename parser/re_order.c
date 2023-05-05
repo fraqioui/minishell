@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:07:32 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/04/28 16:19:05 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/05 08:45:03 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static	void	pop(t_node **tok_s)
 	}
 }
 
-static	void	re_order_help(t_node **head, t_node **tok_stack,
+static	void	shunting_yard(t_node **head, t_node **tok_stack,
 t_node **new_stack)
 {
 	while (*head)
@@ -91,7 +91,7 @@ t_node	*re_order_command(t_node **head)
 
 	tok_stack = NULL;
 	new_stack = NULL;
-	re_order_help(head, &tok_stack, &new_stack);
+	shunting_yard(head, &tok_stack, &new_stack);
 	while (tok_stack)
 		push(&tok_stack, &new_stack, 0);
 	return (new_stack);

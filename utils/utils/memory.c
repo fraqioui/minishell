@@ -6,38 +6,65 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 15:09:57 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/04 13:14:14 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/05 10:08:52 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../../headers/minishell.h"
 
-void	*__malloc__(size_t size)
+void	*_malloc_(size_t size)
 {
 	void	*ptr;
 
-	ptr = _malloc_(size);
+	ptr = malloc(size);
 	if (!ptr)
-		return (print_error("_malloc_", strerror(errno)),
+		return (print_error(2, "malloc", strerror(errno)),
 			exit_with_status(1), NULL);
-	lstadd_front_mem(&g_gb.mem, node_creation_mem(ptr));
 	return (ptr);
 }
 
-void	get_mem_back(void)
+static	void	free_tree(t_node *root)
 {
-	t_mem	*trav;
+	if (root->tok != NOT)
+	{
+		free_tree(root->lchild);
+		free_tree(root->rchild);
+	}
+	if (root->tok == NOT)
+	{
+		ft_alloc_fail(root->cmd);
+		if (root->redirections)
+		{
+			while (root->redirections)
+			{
+				free(root->redirections->file);
+				root->redirections = root->redirections->rchild;
+				if (root->redirections)
+					free(root->redirections->lchild);
+			}
+		}
+	}
+	(free(root), root = NULL);
+	return ;
+}
 
-	trav = g_gb.mem;
-	while (trav)
+void	ret_mem_back(t_node *root)
+{
+	free_tree(root);
+}
+
+void	free_env(void)
+{
+	t_env	*env;
+	t_env	*keep;
+
+	env = g_gb.env;
+	keep = env;
+	while (env)
 	{
-		free(trav->ptr);
-		trav = trav->next;
+		keep = env;
+		env = env->next;
+		(free(keep), keep = NULL);
 	}
-	trav = g_gb.mem;
-	while (trav)
-	{
-		free(trav);
-		trav = trav->next;
-	}
+	g_gb.env = NULL;
 }

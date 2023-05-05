@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:34:46 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/04 12:58:11 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/05 08:26:54 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,18 +81,11 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-typedef struct s_mem
-{
-	void			*ptr;
-	struct s_mem	*next;
-}	t_mem;
-
 typedef struct s_gb
 {
 	int		under_exec;
 	int		exit_st;
 	t_env	*env;
-	t_mem	*mem;
 }	t_gb;
 
 extern	t_gb	g_gb;

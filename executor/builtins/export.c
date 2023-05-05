@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 10:31:59 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/04 11:15:34 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/05 09:23:17 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static	void	_export_help(char *s)
 	while (is_identifier(*save))
 		save++;
 	if (!l || (!(*save == '+' && *(save + 1) == '=') && *save != '=' && *save))
-		return (print_error("export", "invalid indentifier", 1, 1));
+		return (print_error(3, "export", s, "not a valid identifier"),
+			exit_with_status(1));
 	_export_var(s, *save);
 }
 
@@ -95,6 +96,7 @@ static	void	print_env(void)
 			ft_putstr_fd("\n", 1);
 		env = env->next;
 	}
+	_free_(env);
 }
 
 void	_export_(char **cmd)

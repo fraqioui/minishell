@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 09:51:20 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/04 13:14:14 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/05 09:46:23 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,13 @@ static	bool	access_env(char *var, char *s, ssize_t index, char c)
 					s = eliminate_plus(s);
 					trav->value = ft_strjoin(trav->value, ft_substr
 							(s, index + 1, ft_strlen(s) - index));
+					(free(s), s = NULL);
 				}
 				else
 					trav->value = ft_substr(s, index + 1, ft_strlen(s) - index);
-				trav->env = ft_strjoin(ft_strjoin(trav->var, "="),
-						trav->value);
+				trav->env = ft_strjoin(ft_strjoin(ft_strdup(trav->var), ft_strdup("=")),
+						ft_strdup(trav->value));
+				(free(var), var = NULL);
 			}
 			return (true);
 		}
@@ -66,13 +68,13 @@ static	bool	access_env(char *var, char *s, ssize_t index, char c)
 static	void	_export_var_help(char *s, char *var, char c, ssize_t index)
 {
 	if (c == '=')
-		lstadd_back_env(&g_gb.env, node_creation_env(s,
+		lstadd_back_env(&g_gb.env, node_creation_env(ft_strdup(s),
 				var, ft_substr(s, index + 1,
 					ft_strlen(s) - index)));
 	else if (c == '+')
 	{
 		s = eliminate_plus(s);
-		lstadd_back_env(&g_gb.env, node_creation_env(s,
+		lstadd_back_env(&g_gb.env, node_creation_env(ft_strdup(s),
 				var, ft_substr(s, index + 1,
 					ft_strlen(s) - index)));
 	}

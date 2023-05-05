@@ -77,23 +77,23 @@
 // 	printf("%s\n",s);
 // }
 
- #include <dirent.h>
+//  #include <dirent.h>
 
-int seardir(void)
-{
-	DIR *dp = opendir(".");
-	struct dirent *entry;
+// int seardir(void)
+// {
+// 	DIR *dp = opendir(".");
+// 	struct dirent *entry;
 
-	for (entry=readdir(dp);entry!=NULL;entry=readdir(dp))
-		printf("%s\n", entry->d_name);
-	closedir(dp);
-	return (1);
-}
+// 	for (entry=readdir(dp);entry!=NULL;entry=readdir(dp))
+// 		printf("%s\n", entry->d_name);
+// 	closedir(dp);
+// 	return (1);
+// }
 
-int main()
-{
-	seardir();
-}
+// int main()
+// {
+// 	seardir();
+// }
 
 /*
 EACCES
@@ -124,3 +124,13 @@ executing. It is not permitted to modify (i.e., open for writing) the
 executable file associated with a running program. (We must first terminate
 the program in order to be able to modify the executable file.)
 */
+
+
+/*
+1. env + str in env list
+2. built the list of cmd, (pre_cmd, **cmd)
+3. built redirections (*file)
+4. 
+*/
+
+//var +new s 

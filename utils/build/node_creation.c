@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:37:39 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/04 13:21:10 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/05 09:49:01 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_redir	*node_creation_redir(char **s, t_token tok)
 	node->flg = 1;
 	node->lchild = NULL;
 	node->rchild = NULL;
-	return (node);
+	return (free(s), s = NULL, node);
 }
 
 t_env	*node_creation_env(char *env, char *var, char *value)
@@ -56,29 +56,6 @@ t_env	*node_creation_env(char *env, char *var, char *value)
 	node->env = env;
 	node->var = var;
 	node->value = value;
-	node->next = NULL;
-	return (node);
-}
-
-static	void	*_malloc_mem(size_t size)
-{
-	void	*ptr;
-
-	ptr = _malloc_(size);
-	if (!ptr)
-		return (print_error("_malloc_", strerror(errno)),
-			exit_with_status(1), NULL);
-	return (ptr);
-}
-
-t_mem	*node_creation_mem(void	*ptr)
-{
-	t_mem	*node;
-
-	node = _malloc_mem(sizeof(t_mem));
-	if (!node)
-		return (NULL);
-	node->ptr = ptr;
 	node->next = NULL;
 	return (node);
 }

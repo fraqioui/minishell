@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 10:31:35 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/03 16:29:36 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/04 16:27:09 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static	void	left_side(t_node *root, int ends[2])
 {
 	if (dup_2(ends[WRITE_END], STDOUT_FILENO) < 0)
 		return ;
-	_close_("ab", ends[WRITE_END], ends[READ_END]);
+	_close_(2, ends[WRITE_END], ends[READ_END]);
 	executing(root);
 }
 
@@ -24,7 +24,7 @@ static	void	right_side(t_node *root, int ends[2])
 {
 	if (dup_2(ends[READ_END], STDIN_FILENO) < 0)
 		return ;
-	_close_("ab", ends[WRITE_END], ends[READ_END]);
+	_close_(2, ends[WRITE_END], ends[READ_END]);
 	executing(root);
 }
 

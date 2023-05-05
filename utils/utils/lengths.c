@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 15:10:01 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/01 11:23:23 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/04 14:41:43 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ ssize_t	check_next_quote(char *s, char c)
 		i++;
 		s++;
 	}
-	print_error("syntax error: unclosed quotes", NULL, INCORRECT_USAGE, 1);
+	print_error(1, "syntax error: unclosed quotes");
+	exit_with_status(INCORRECT_USAGE);
 	return (-1);
 }
 
@@ -37,7 +38,8 @@ ssize_t	check_rpr(char *s, ssize_t i)
 		i++;
 		s++;
 	}
-	print_error("syntax error: unclosed parentheses", NULL, INCORRECT_USAGE, 1);
+	print_error(1, "syntax error: unclosed parentheses");
+	exit_with_status(INCORRECT_USAGE);
 	return (-1);
 }
 
@@ -79,7 +81,6 @@ ssize_t	look_for_quo(char *s, ssize_t *i, char c)
 		{
 			(*i)++;
 			l++;
-			printf("single quo: %zd\n", l);
 			return (l);
 		}
 	}
@@ -104,16 +105,12 @@ ssize_t	inside_quo(char *s, ssize_t *i)
 				break ;
 			l += ft_strlen(var);
 		}
-		else if (s[*i] == 34)
-		{
-			(*i)++;
-			l++;
-			return (l);
-		}
 		else
 		{
 			(*i)++;
 			l++;
+			if (s[(*i) - 1] == 34)
+				return (l);
 		}
 	}
 	return (-1);

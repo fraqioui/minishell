@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 21:51:26 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/03 16:30:03 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/04 14:33:11 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	_pwd_(void)
 	char	s[PATH_MAX];
 
 	if (!getcwd(s, PATH_MAX))
-		return (print_error("pwd", strerror(errno), 1, 1));
+		return (print_error(2, "pwd", strerror(errno)), exit_with_status(1));
 	ft_putstr_fd(getcwd(s, PATH_MAX), 1);
 	ft_putstr_fd("\n", 1);
 	exit(0);

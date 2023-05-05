@@ -6,12 +6,12 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 11:25:04 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/04 13:50:00 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/05 09:19:22 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../../headers/minishell.h"
-
+//handle ?
 char	*get_env(const char *name)
 {
 	int		i;

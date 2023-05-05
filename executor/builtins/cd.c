@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 21:28:01 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/04 13:52:20 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/05 09:18:31 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,21 @@ static	void	update_pwd(char **cmd, char *old_pwd)
 		if (!ft_memcmp(trav->var, "PWD", 4))
 		{
 			trav->value = cmd[1];
+			(free(trav->env), trav->env = NULL);
 			trav->env = ft_strdup(ft_strjoin(ft_strjoin(trav->var, "="),
 						trav->value));
 		}
 		else if (!ft_memcmp(trav->var, "OLDPWD", 7))
 		{
 			trav->value = old_pwd;
+			(free(trav->env), trav->env = NULL);
 			trav->env = ft_strdup(ft_strjoin(ft_strjoin(trav->var, "="),
 						trav->value));
 		}
 		trav = trav->next;
 	}
 }
-
+//still update pwd oldpwd if they don't exist
 //still a test
 void	_cd_(char **cmd)
 {
@@ -48,6 +50,7 @@ void	_cd_(char **cmd)
 		if (!path)
 		{
 			ft_putstr_fd("bash: cd: HOME not set\n", 2);
+			exit_with_status(1);
 			return ;
 		}
 	}
@@ -56,7 +59,7 @@ void	_cd_(char **cmd)
 	{
 		ft_putstr_fd("cd: error retrieving current directory: getcwd: cannot \
 		access parent directories: No such file or directory\n", 2);
-		print_error(NULL, NULL, 1, 0);
+		exit_with_status(1);
 		return ;
 	}
 	path = cmd[1];

@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:18:14 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/04 13:45:01 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/05 09:11:18 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*new_cmd(char *s, bool *flg)
 		new[l++] = *s++;
 	}
 	new[l] = '\0';
-	return (new);
+	return (free(s), s = NULL, new);
 }
 
 static	void	eliminate_quotes_phase(char **args)
@@ -82,7 +82,7 @@ char	**parse_cmd(char *s)
 	args = fill_cmd(cmd, l, &i, 1);
 	args = handle_wildcard_cmd(args);
 	eliminate_quotes_phase(args);
-	return (args);
+	return (free(cmd), free(s), s = NULL, cmd = NULL, args);
 }
 
 char	*parse_redir(char *s, bool *flg)
@@ -99,5 +99,5 @@ char	*parse_redir(char *s, bool *flg)
 	if (!cmd)
 		return (NULL);
 	replace_cmd(cmd, s);
-	return (new_cmd(cmd, flg));
+	return (free(s), s = NULL, new_cmd(cmd, flg));
 }

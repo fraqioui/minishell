@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 17:55:25 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/03 15:38:01 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/04 14:41:23 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int	_chdir_(const char *path)
 {
 	if (!chdir(path))
 		return (0);
-	print_error("cd", strerror(errno), 1, 1);
+	print_error(2, "cd", strerror(errno));
+	exit_with_status(1);
 	return (-1);
 }
 

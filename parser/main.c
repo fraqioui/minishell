@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 14:01:45 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/02 08:31:43 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/05 10:06:53 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	main(int ac, char **av, char **env)
 	char	*input;
 	int		fd_in;
 	int		fd_out;
+	t_node	*root;
 
 	(void)ac;
 	(void)av;
@@ -31,15 +32,11 @@ int	main(int ac, char **av, char **env)
 			break ;
 		g_gb.under_exec = 1;
 		add_history(input);
-		executing(parsing(input));
+		root = parsing(input);
+		executing(root);
 		g_gb.under_exec = 0;
-		free(input);
+		ret_mem_back(root);
 	}
+	free_env();
 	//free under exec
 }
-
-	// struct sigaction	s;
-	// s.sa_handler = sigint_handler;
-	// sigemptyset(&s.sa_mask);
-	// s.sa_flags = SA_RESTART;
-	// sigaction(SIGINT, &s, NULL);

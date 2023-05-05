@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 13:03:55 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/03 10:29:58 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/05 09:08:36 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,5 +124,6 @@ bool	check_patterns(char *d_name, char *pattern)
 				return (0);
 		}
 	}
+	//free substr
 	return (part);
 }

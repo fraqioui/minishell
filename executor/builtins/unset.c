@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 10:31:54 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/03 18:31:27 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/05 09:47:29 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,19 @@
 
 static	void	delete_node(t_env *node, int keep)
 {
+	t_env	*save;
+
 	if (!keep)
+	{
+		save = g_gb.env;
 		g_gb.env = g_gb.env->next;
+	}
 	else
+	{
+		save = node->next;
 		node->next = node->next->next;
+	}
+	(free(save), save = NULL);
 }
 
 void	_unset_(char **cmd)
@@ -41,5 +50,17 @@ void	_unset_(char **cmd)
 			trav = trav->next;
 			keep++;
 		}
+	}
+}
+
+void	_free_(t_env *env)
+{
+	t_env	*keep;
+
+	while (env)
+	{
+		keep = env;
+		env = env->next;
+		(free(keep), keep = NULL);
 	}
 }

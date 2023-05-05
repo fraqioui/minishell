@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 14:02:38 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/04 13:14:14 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/05 10:07:19 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ void	_pipe_(t_node *root);
 void	exec_cmd(t_node *root);
 void	executing(t_node *root);
 
-void	*__malloc__(size_t size);
-void	get_mem_back(void);
+void	*_malloc_(size_t size);
 void	initialize(char **env, int *fd_in, int *fd_out);
 t_node	*tokenize(char *s);
 t_node	*parsing(char *input);
@@ -72,7 +71,7 @@ ssize_t	not_len(char *s, ssize_t i, bool flg);
 int		pipe_sc(int ends[2]);
 pid_t	_fork_(void);
 int		dup_2(int fild1, int fild2);
-int		_close_(char *num, ...);
+int		_close_(int n, ...);
 int		_open_(const char *path, int oflag, mode_t mode);
 int		executing_cmd(t_node *root);
 
@@ -85,7 +84,6 @@ t_node	*node_creation_cmd(char *s, t_redir *redir,
 			t_token tok, int precedence);
 t_redir	*node_creation_redir(char **s, t_token tok);
 t_env	*node_creation_env(char *env, char *var, char *value);
-t_mem	*node_creation_mem(void *ptr);
 
 void	ft_putstr_fd(char *s, int fd);
 char	*ft_strtrim(char const *s1, char const *set);
@@ -100,8 +98,6 @@ bool	ft_memcmp(const void *s1, const void *s2, size_t n);
 char	*ft_strdup(const char *s);
 void	lstadd_front_env(t_env **lst, t_env *new);
 void	lstadd_back_env(t_env **lst, t_env *new);
-void	lstadd_front_mem(t_mem **lst, t_mem *new);
-void	lstadd_back_mem(t_mem **lst, t_mem *new);
 char	*get_env(const char *name);
 ssize_t	calc_args(char **av);
 int		ft_atoi(const char *str);
@@ -109,5 +105,8 @@ int		ft_strcmp(const char *s1, const char *s2);
 ssize_t	find_c(char *s, char c);
 void	_export_var(char *s, char c);
 bool	identifier_front(int c);
+void	_free_(t_env *env);
+void	ret_mem_back(t_node *root);
+void	free_env(void);
 
 #endif
