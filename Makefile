@@ -6,11 +6,11 @@
 #    By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/18 14:02:45 by fraqioui          #+#    #+#              #
-#    Updated: 2023/05/04 14:43:03 by fraqioui         ###   ########.fr        #
+#    Updated: 2023/05/05 22:02:12 by fraqioui         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME =minishell
+NAME = minishell
 CC = cc
 FALGS = -Wall -Wextra -Werror
 HEADER = headers/minishell.h
@@ -25,6 +25,7 @@ FILES = parser/main \
 		parser/tokenize \
 		parser/syntax \
 		parser/re_order \
+		parser/signals \
 		executor/builtins/exit \
 		executor/builtins/cd \
 		executor/builtins/echo \
@@ -39,6 +40,7 @@ FILES = parser/main \
 		executor/executor/pipe \
 		executor/executor/and_or \
 		executor/executor/redirections \
+		executor/executor/redir_hlp \
 		executor/expander/expanding \
 		executor/expander/wildcard \
 		executor/expander/wildcard_utils \

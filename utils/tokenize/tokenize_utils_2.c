@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 16:33:06 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/04 14:46:30 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/05 14:26:23 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ char	*cmd_help(char *s, ssize_t l, ssize_t *k, bool flg)
 	ssize_t	j;
 	char	*ret;
 
-	ret = _malloc_(sizeof(char) * (l + 1));
+	ret = malloc(sizeof(char) * (l + 1));
 	if (!ret)
-		return (NULL);
+		return (malloc_error(errno));
 	i = 0;
 	while (i < l)
 	{
@@ -74,7 +74,12 @@ char	*cmd_help(char *s, ssize_t l, ssize_t *k, bool flg)
 
 char	**fill_cmd(char *s, ssize_t l, ssize_t *k, bool flg)
 {
+	char	*ret;
+	char	**sp;
+
 	if (l < 0)
 		return (NULL);
-	return (ft_split(cmd_help(s, l, k, flg), 127));
+	ret = cmd_help(s, l, k, flg);
+	sp = ft_split(ret, 127);
+	return (free(ret), ret = NULL, sp);
 }

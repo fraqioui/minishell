@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 07:22:36 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/04 15:54:41 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/05 14:25:30 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ char	*ft_strdup(const char *s)
 		return (NULL);
 	n = ft_strlen(s);
 	i = 0;
-	arr = _malloc_(sizeof(char) * (n + 1));
+	arr = malloc(sizeof(char) * (n + 1));
 	if (!arr)
-		return (NULL);
+		return (malloc_error(errno));
 	while (n--)
 	{
 		arr[i] = s[i];

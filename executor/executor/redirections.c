@@ -6,14 +6,13 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:51:40 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/05 09:14:19 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/05 13:41:18 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../../headers/minishell.h"
 #define IN 0
 #define OUT 1
-#define APPEND 2
 
 static	ssize_t	calc_ll(char *s)
 {
@@ -30,7 +29,6 @@ static	ssize_t	calc_ll(char *s)
 			i++;
 			var = expand_var(s, &i);
 			l += ft_strlen(var);
-			(free(var), var = NULL);
 		}
 		else
 		{
@@ -47,7 +45,9 @@ static	char	*expand_in_doc(char *s)
 	char	*var;
 	ssize_t	i;
 
-	ret = _malloc_(sizeof(char) * (calc_ll(s) + 1));
+	ret = malloc(sizeof(char) * (calc_ll(s) + 1));
+	if (!ret)
+		return (malloc_error(errno));
 	i = 0;
 	while (s[i])
 	{
@@ -77,7 +77,7 @@ static	int	handle_heredoc(char *delim, bool flg)
 			break ;
 		input = readline("> ");
 		if (!input)
-			return (-1);//close
+			return (-1);
 		if (flg)
 			input = expand_in_doc(input);
 		if (write(fd[1], input, ft_strlen(input)) < 0)
@@ -85,7 +85,7 @@ static	int	handle_heredoc(char *delim, bool flg)
 				exit_with_status(1), -1);
 		(free(input), input = NULL);
 	}
-	if (_close_(1, fd[1]) < 0)
+	if (close(fd[1]) < 0)
 		return (-1);
 	return (fd[0]);
 }
@@ -93,30 +93,10 @@ static	int	handle_heredoc(char *delim, bool flg)
 static	void	handle_in_out(t_node *root)
 {
 	t_redir		*trav;
-	int			fd[2];
-	mode_t		mode;
-	int			rwx[3];
 
-	mode = 00644;
-	rwx[OUT] = (O_CREAT | O_WRONLY | O_TRUNC);
-	rwx[APPEND] = (O_CREAT | O_WRONLY | O_APPEND);
 	trav = root->redirections;
-	while (trav)
-	{
-		if (trav->tok == IN)
-			fd[IN] = _open_(trav->file, O_RDONLY, mode);
-		else if (trav->tok == OUT)
-			fd[OUT] = _open_(trav->file, rwx[OUT], mode);
-		else if (fd[IN] > 0 && trav->tok == APPEND)
-			fd[IN] = _open_(trav->file, rwx[APPEND], mode);
-		else if (fd[IN] > 0 && trav->tok == HEREDOC)
-			fd[IN] = trav->fd;
-		if (fd[IN] < 0 || fd[OUT] < 0)
-			return ;
-		trav = trav->rchild;
-	}
-	root->fd[IN] = fd[IN];
-	root->fd[OUT] = fd[OUT];
+	root->fd[IN] = ret_fd_in(trav);
+	root->fd[OUT] = ret_fd_out(trav);
 }
 
 void	handle_redirections(t_node *root)

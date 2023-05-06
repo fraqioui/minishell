@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:11:01 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/05 08:47:10 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/05 21:56:31 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ bool	_expanding_(t_node *node)
 	node->cmd = parse_cmd(node->pre_cmd);
 	if (!node->cmd)
 		return (0);
+	node->pre_cmd = NULL;
 	if (node->redirections)
 	{
 		while (node->redirections)

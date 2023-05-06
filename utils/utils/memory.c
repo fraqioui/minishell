@@ -6,21 +6,17 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 15:09:57 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/05 10:08:52 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/05 21:55:20 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../../headers/minishell.h"
 
-void	*_malloc_(size_t size)
+void	*malloc_error(int errnum)
 {
-	void	*ptr;
-
-	ptr = malloc(size);
-	if (!ptr)
-		return (print_error(2, "malloc", strerror(errno)),
-			exit_with_status(1), NULL);
-	return (ptr);
+	print_error(2, "malloc", strerror(errnum));
+	exit_with_status(1);
+	return (NULL);
 }
 
 static	void	free_tree(t_node *root)
@@ -32,7 +28,10 @@ static	void	free_tree(t_node *root)
 	}
 	if (root->tok == NOT)
 	{
-		ft_alloc_fail(root->cmd);
+		if (root->cmd)
+			ft_alloc_fail(root->cmd);
+		if (root->pre_cmd)
+			free(root->pre_cmd);
 		if (root->redirections)
 		{
 			while (root->redirections)
@@ -51,6 +50,7 @@ static	void	free_tree(t_node *root)
 void	ret_mem_back(t_node *root)
 {
 	free_tree(root);
+	root = NULL;
 }
 
 void	free_env(void)

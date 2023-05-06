@@ -68,7 +68,7 @@
 
 // int main()
 // {
-// 	char *s = _malloc_(sizeof(char) * 6);
+// 	char *s = malloc(sizeof(char) * 6);
 // 	*s++ = 'h';
 // 	fc(&s);
 // 	*s++ = 'h';
@@ -132,5 +132,5 @@ the program in order to be able to modify the executable file.)
 3. built redirections (*file)
 4. 
 */
-
+//check leaks
 //var +new s 

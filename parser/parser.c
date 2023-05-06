@@ -6,25 +6,11 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:49:47 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/05 08:33:52 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/05 15:27:21 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../headers/minishell.h"
-
-static void	print(t_node *root)
-{
-	if (root->tok != NOT)
-	{
-		print(root->lchild);
-		print(root->rchild);
-	}
-	if (root->tok == NOT)
-		printf("%d\t%s\n", root->tok, root->pre_cmd);
-	else
-		printf("%d\n", root->tok);
-	return ;
-}
 
 t_node	*parsing(char *input)
 {
@@ -42,6 +28,5 @@ t_node	*parsing(char *input)
 	while (head->rchild)
 		head = head->rchild;
 	head = list_to_tree(head);
-	print(head);
 	return (head);
 }

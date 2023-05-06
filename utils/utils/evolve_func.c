@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 15:10:04 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/05 08:28:59 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/05 11:30:19 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,12 @@ int	pipe_sc(int ends[2])
 
 int	dup_2(int filde1, int filde2)
 {
-	if (dup2(filde1, filde2) > 0)
-		return (filde2);
-	print_error(2, "dup", strerror(errno));
+	int	fd;
+
+	fd = dup2(filde1, filde2);
+	if (fd != -1)
+		return (fd);
+	print_error(2, "dup2", strerror(errno));
 	exit_with_status(1);
 	return (-1);
 }

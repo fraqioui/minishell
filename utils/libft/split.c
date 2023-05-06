@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:38:39 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/05 08:38:00 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/05 17:52:12 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@ char	**ft_alloc_fail(char **arr)
 	unsigned int	i;
 
 	i = 0;
+	fprintf(stderr, "seg1\n");
 	while (arr[i])
 		free(arr[i++]);
 	free(arr);
+	fprintf(stderr, "seg2\n");
 	return (NULL);
 }
 
@@ -59,9 +61,9 @@ static char	*ft_fillout(const char *s1, int *j, char c)
 		len++;
 		i++;
 	}
-	new = _malloc_(sizeof(char) * (len + 1));
+	new = malloc(sizeof(char) * (len + 1));
 	if (!new)
-		return (NULL);
+		return (malloc_error(errno));
 	i = 0;
 	while (s1[*j] && s1[*j] != c)
 		new[i++] = s1[(*j)++];
@@ -81,9 +83,9 @@ char	**ft_split(char const *s, char c)
 	if (!s)
 		return (NULL);
 	wc = num_words(s, c);
-	t_arr = _malloc_(sizeof(char *) * (wc + 1));
+	t_arr = malloc(sizeof(char *) * (wc + 1));
 	if (!t_arr)
-		return (NULL);
+		return (malloc_error(errno));
 	while (j < wc)
 	{
 		t_arr[j] = ft_fillout(s, &i, c);

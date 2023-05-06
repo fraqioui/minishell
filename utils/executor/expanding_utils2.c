@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 14:02:04 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/05 08:56:24 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/05 11:39:26 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static	ssize_t	value_len(char *s, ssize_t *i)
 	var = expand_var(s, i);
 	if (!var)
 		return (-1);
-	return (free(var), var = NULL, ft_strlen(var));
+	return (ft_strlen(var));
 }
 
 ssize_t	var_len(char *s)

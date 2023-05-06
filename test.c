@@ -68,7 +68,7 @@
 
 // int main()
 // {
-// 	char *s = _malloc_(sizeof(char) * 6);
+// 	char *s = malloc(sizeof(char) * 6);
 // 	*s++ = 'h';
 // 	fc(&s);
 // 	*s++ = 'h';
@@ -103,7 +103,7 @@
 #include<fcntl.h>
 int	main()
 {
-	int fd = open("hi", O_RDWR);
+	printf("%d\n", close(-2));
 }
 
 /*

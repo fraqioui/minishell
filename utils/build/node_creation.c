@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:37:39 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/05 09:49:01 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/05 13:44:11 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ t_node	*node_creation_cmd(char *s, t_redir *redir, t_token tok, int precedence)
 {
 	t_node	*node;
 
-	node = _malloc_(sizeof(t_node));
+	node = malloc(sizeof(t_node));
 	if (!node)
-		return (NULL);
+		return (malloc_error(errno));
 	node->pre_cmd = s;
 	node->cmd = NULL;
 	node->tok = tok;
@@ -35,9 +35,9 @@ t_redir	*node_creation_redir(char **s, t_token tok)
 
 	if (!s)
 		return (NULL);
-	node = _malloc_(sizeof(t_redir));
+	node = malloc(sizeof(t_redir));
 	if (!node)
-		return (NULL);
+		return (malloc_error(errno));
 	node->tok = tok;
 	node->file = s[0];
 	node->flg = 1;
@@ -50,9 +50,9 @@ t_env	*node_creation_env(char *env, char *var, char *value)
 {
 	t_env	*node;
 
-	node = _malloc_(sizeof(t_env));
+	node = malloc(sizeof(t_env));
 	if (!node)
-		return (NULL);
+		return (malloc_error(errno));
 	node->env = env;
 	node->var = var;
 	node->value = value;

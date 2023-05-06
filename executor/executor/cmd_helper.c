@@ -6,11 +6,14 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 08:48:54 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/04 14:35:36 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/05 15:08:28 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../../headers/minishell.h"
+#define IN 0
+#define OUT 1
+#define APPEND 2
 
 char	**separate_env(t_env *env)
 {
@@ -27,7 +30,9 @@ char	**separate_env(t_env *env)
 		l++;
 		tmp = tmp->next;
 	}
-	the_env = _malloc_(sizeof(char) * (l + 1));
+	the_env = malloc(sizeof(char) * (l + 1));
+	if (!the_env)
+		return (malloc_error(errno));
 	while (env)
 	{
 		the_env[i++] = env->env;
@@ -63,8 +68,9 @@ static	int	_access_(char *path, char *cmd)
 
 static	char	*find_path_help(char **to_sear, char *cmd)
 {
-	char	*save;
+	char	*save0;
 	int		ret;
+	char	*save1;
 
 	if (search_c(cmd, '/'))
 		return (_access_(cmd, cmd), cmd);
@@ -72,12 +78,14 @@ static	char	*find_path_help(char **to_sear, char *cmd)
 	{
 		while (*to_sear)
 		{
-			save = ft_strjoin(ft_strjoin(*to_sear, "/"), cmd);
-			ret = _access_(save, cmd);
+			save0 = ft_strjoin(*to_sear, "/");
+			save1 = ft_strjoin(save0, cmd);
+			ret = _access_(save1, cmd);
 			if (!ret)
-				return (save);
+				return (save1);
 			else if (ret == 1)
 				return (NULL);
+			(free(save0), free(save1));
 			to_sear++;
 		}
 	}
@@ -88,7 +96,10 @@ static	char	*find_path_help(char **to_sear, char *cmd)
 char	*find_path(char *cmd)
 {
 	char	**path;
+	char	*ret;
 
 	path = ft_split(get_env("PATH"), ':');
-	return (find_path_help(path, cmd));
+	ret = find_path_help(path, cmd);
+	ft_alloc_fail(path);
+	return (ret);
 }

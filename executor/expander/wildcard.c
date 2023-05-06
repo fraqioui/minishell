@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 11:30:11 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/04 13:14:14 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/05 13:43:16 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,9 @@ char	**handle_wildcard_cmd(char **args)
 	char	**new;
 
 	l = new_args_l(args);
-	new = _malloc_(sizeof(char *) * (l + 1));
+	new = malloc(sizeof(char *) * (l + 1));
+	if (!new)
+		return (malloc_error(errno));
 	expand_wild(new, args);
 	return (new);
 }

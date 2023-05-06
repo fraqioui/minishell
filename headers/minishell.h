@@ -6,13 +6,13 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 14:02:38 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/05 10:07:19 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/05 20:14:17 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
+//strjoin not freed
 # include"minishell_defines.h"
 
 void	_cd_(char **cmd);
@@ -28,7 +28,6 @@ void	_pipe_(t_node *root);
 void	exec_cmd(t_node *root);
 void	executing(t_node *root);
 
-void	*_malloc_(size_t size);
 void	initialize(char **env, int *fd_in, int *fd_out);
 t_node	*tokenize(char *s);
 t_node	*parsing(char *input);
@@ -73,7 +72,7 @@ pid_t	_fork_(void);
 int		dup_2(int fild1, int fild2);
 int		_close_(int n, ...);
 int		_open_(const char *path, int oflag, mode_t mode);
-int		executing_cmd(t_node *root);
+int		executing_cmd(t_node *root, char *path);
 
 t_node	*re_order_command(t_node **head);
 void	push(t_node **a_head, t_node **b_head, bool flg);
@@ -108,5 +107,10 @@ bool	identifier_front(int c);
 void	_free_(t_env *env);
 void	ret_mem_back(t_node *root);
 void	free_env(void);
+int		ret_fd_in(t_redir *node);
+int		ret_fd_out(t_redir *node);
+void	*malloc_error(int errnum);
+void	set_in_out(int in, int out);
+int		update_exit_st(int status);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 09:51:20 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/05 09:46:23 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/05 13:40:09 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ static	char	*eliminate_plus(char *s)
 	int		i;
 
 	i = 0;
-	ret = _malloc_(sizeof(char) * ft_strlen(s));
+	ret = malloc(sizeof(char) * ft_strlen(s));
+	if (!ret)
+		return (malloc_error(errno));
 	while (*s)
 	{
 		if (*s == '+')
