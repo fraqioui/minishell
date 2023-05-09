@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 10:31:29 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/05 22:43:31 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/09 11:21:10 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,65 @@ static	bool	is_builtin(char **cmd)
 	return (false);
 }
 
+static	char	*find_path(char *cmd)
+{
+	char		**path;
+	char		*ret;
+	struct stat	sb;
+
+	path = ft_split(get_env("PATH"), ':');
+	if (!path)
+		return (print_error(2, cmd, strerror(ENOENT)),
+			exit_with_status(CMD_N_FOUND), NULL);
+	ret = find_path_help(path, cmd);
+	if (ret)
+	{
+		stat(ret, &sb);
+		if (S_ISDIR(sb.st_mode))
+			return (ft_alloc_fail(path), free(ret),
+				print_error(2, cmd, "is a directory"),
+				exit_with_status(NOT_EXEC), NULL);
+	}
+	ft_alloc_fail(path);
+	return (ret);
+}
+
+int	executing_cmd(t_node *root, char *path)
+{
+	char	**env;
+
+	env = separate_env(g_gb.env);
+	execve(path, root->cmd, env);
+	print_error(2, "execve", strerror(errno));
+	ret_mem_back();
+	free_env();
+	if (errno == ENOENT)
+		exit(CMD_N_FOUND);
+	if (errno == EACCES)
+		exit(NOT_EXEC);
+	exit(1);
+}
+
+static	bool	deal_w_redir(t_node *root)
+{
+	if (root->redirections)
+	{
+		if (handle_redirections(root) < 0)
+			return (0);
+		if (root->fd[0] != 0)
+			if (dup_2(root->fd[0], STDIN_FILENO) < 0)
+				return (0);
+		if (root->fd[1] != 1)
+			if (dup_2(root->fd[1], STDOUT_FILENO) < 0)
+				return (0);
+		if (root->fd[0] != 0)
+			close(root->fd[0]);
+		if (root->fd[1] != 1)
+			close(root->fd[1]);
+	}
+	return (1);
+}
+
 void	exec_cmd(t_node *root)
 {
 	pid_t	pid;
@@ -39,24 +98,23 @@ void	exec_cmd(t_node *root)
 
 	if (!_expanding_(root))
 		return ;
-	if (root->redirections)
+	if (!deal_w_redir(root))
+		return ;
+	if (root->cmd[0] && !is_builtin(root->cmd))
 	{
-		handle_redirections(root);
-		if (dup_2(root->fd[0], STDIN_FILENO) < 0
-			|| dup_2(root->fd[1], STDOUT_FILENO) < 0)
-			return ;
-		_close_(2, root->fd[0], root->fd[1]);
-	}
-	if (!is_builtin(root->cmd))
-	{
-		_signal_middle_exec();
 		path = find_path(root->cmd[0]);
-		pid = _fork_();
-		if (pid < 0)
-			return ;
-		if (pid == 0)
-			executing_cmd(root, path);
-		waitpid(pid, &status, WCONTINUED);
-		exit_with_status(update_exit_st(status));
+		if (path)
+		{
+			pid = _fork_();
+			if (pid < 0)
+				return ;
+			if (pid == 0)
+			{
+				_signal_middle_exec();
+				executing_cmd(root, path);
+			}
+			waitpid(pid, &status, WCONTINUED);
+			(free(path), exit_with_status(update_exit_st(status)));
+		}
 	}
 }

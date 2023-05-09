@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:11:01 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/05 21:56:31 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/08 19:18:39 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,24 @@
 bool	_expanding_(t_node *node)
 {
 	bool	flg;
+	t_redir	*redir;
 
+	flg = 1;
 	node->cmd = parse_cmd(node->pre_cmd);
 	if (!node->cmd)
 		return (0);
 	node->pre_cmd = NULL;
-	if (node->redirections)
+	redir = node->redirections;
+	if (redir)
 	{
-		while (node->redirections)
+		while (redir)
 		{
-			node->redirections->file
-				= parse_redir(node->redirections->file, &flg);
-			if (!node->redirections->file)
+			redir->file
+				= parse_redir(redir, redir->file, &flg);
+			if (!redir->file)
 				return (0);
-			node->redirections->flg = flg;
-			node->redirections = node->redirections->rchild;
+			redir->flg = flg;
+			redir = redir->rchild;
 		}
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 10:37:04 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/05 14:43:02 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/07 21:34:21 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ static	void	initialize_env(char **env)
 		lstadd_back_env(&g_gb.env, node_creation_env(ft_strdup(*env),
 				ft_substr(*env, 0, index), ft_substr(*env, index + 1,
 					ft_strlen(*env) - index)));
+		if (g_gb.exit_st)
+			return (free_env());
 		env++;
 	}
 }
@@ -57,12 +59,14 @@ static	void	keep_in_out(int *fd_in, int *fd_out)
 void	initialize(char **env, int *fd_in, int *fd_out)
 {
 	g_gb.under_exec = 0;
-	initialize_env(env);
+	g_gb.exit_st = 0;
 	keep_in_out(fd_in, fd_out);
+	if (!g_gb.exit_st)
+		initialize_env(env);
 }
 
 void	set_in_out(int in, int out)
 {
-	dup_2(STDIN_FILENO, in);
-	dup_2(STDOUT_FILENO, out);
+	dup_2(in, STDIN_FILENO);
+	dup_2(out, STDOUT_FILENO);
 }

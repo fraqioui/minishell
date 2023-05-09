@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 17:55:25 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/05 22:27:51 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/08 11:52:06 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,10 @@ int	_chdir_(const char *path)
 	return (-1);
 }
 
-int	executing_cmd(t_node *root, char *path)
+ssize_t	_write_(int fildes, const char *buf, size_t nbyte)
 {
-	char	**env;
-
-	env = separate_env(g_gb.env);
-	execve(path, root->cmd, env);
-	puts("gh");
-	//free
-	if (errno == ENOENT)
-		exit(CMD_N_FOUND);
-	if (errno == EACCES)
-		exit(NOT_EXEC);
-	exit(1);
+	if (write(fildes, buf, nbyte) < 0)
+		return (print_error(2, "write", strerror(errno)),
+			exit_with_status(1), -1);
+	return (0);
 }

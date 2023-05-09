@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 16:32:44 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/04 14:11:59 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/09 08:28:40 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,11 @@ t_node	*which_token_2(char	*s, t_token tok, ssize_t *i)
 			save++;
 		tok = check_token(s[save], s[save + 1]);
 	}
-	str = ft_substr(s, *i, not_len(s, *i, 1));
+	save = not_len(s, *i, 1);
+	if (save < 0)
+		return (NULL);
+	str = ft_substr(s, *i, save);
 	if (!str)
 		return (NULL);
-	incre(s, i);
-	return (node_creation_cmd(str, redir, NOT, 0));
+	return (incre(s, i), node_creation_cmd(str, redir, NOT, 0));
 }

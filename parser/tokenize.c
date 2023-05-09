@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 13:08:36 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/05 08:42:13 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/07 11:23:22 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_node	*tokenize(char *s)
 	while (s[i])
 	{
 		if (!which_token_1(&head, s, &i, &par))
-			return (NULL);
+			return (_free_head(head), free(s), NULL);
 	}
 	return (free(s), s = NULL, head);
 }

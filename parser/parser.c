@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:49:47 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/05 15:27:21 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/08 13:14:36 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_node	*parsing(char *input)
 	s = ft_strtrim(input, " \t\n\v\r\f");
 	free(input);
 	if (!s || !check_tok(s))
-		return (NULL);
+		return (free(s), NULL);
 	head = tokenize(s);
 	if (!head)
 		return (NULL);

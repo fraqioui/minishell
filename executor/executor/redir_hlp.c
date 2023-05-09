@@ -6,59 +6,65 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 10:36:49 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/05 11:05:52 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/08 13:12:36 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../../headers/minishell.h"
-#define IN 0
-#define OUT 1
 
-int ret_fd_in(t_redir *node)
+int	ret_fd_in(t_node *node)
 {
-	mode_t	mode;
-	int		rwx;
+	t_redir	*trav;
 	int		fd;
-	
-	mode = 00644;
-	rwx = (O_CREAT | O_WRONLY | O_APPEND);
-	fd = -2;
-	while (node)
+
+	fd = 0;
+	trav = node->redirections;
+	while (trav)
 	{
-		if (node->rchild && (node->rchild->tok == IN || node->rchild->tok == APPEND ||
-			node->rchild->tok == HEREDOC))
-			close(fd);
-		if (node->tok == IN)
-			fd = _open_(node->file, O_RDONLY, mode);
-		else if (node->tok == APPEND)
-			fd = _open_(node->file, rwx, mode);
-		else if (node->tok == HEREDOC)
-			fd = node->fd;
+		if (trav->tok == IN)
+		{
+			if (fd)
+				close(fd);
+			fd = _open_(trav->file, O_RDONLY, 00644);
+		}
+		else if (trav->tok == HEREDOC)
+		{
+			if (fd)
+				close(fd);
+			fd = trav->fd;
+		}
 		if (fd < 0)
 			return (-1);
-		node = node->rchild;
+		trav = trav->rchild;
 	}
-	return (fd);
+	return (node->fd[0] = fd, 0);
 }
 
-int ret_fd_out(t_redir *node)
+int	ret_fd_out(t_node *node)
 {
-	mode_t	mode;
-	int		rwx;
+	t_redir	*trav;
 	int		fd;
 
-	mode = 00644;
-	rwx = (O_CREAT | O_WRONLY | O_TRUNC);
-	fd = -2;
-	while (node)
+	fd = 1;
+	trav = node->redirections;
+	while (trav)
 	{
-		if (node->rchild && node->rchild->tok == OUT)
-			close(fd);
-		if (node->tok == OUT)
-			fd = open(node->file, rwx, mode);
+		if (trav->tok == OUT)
+		{
+			if (fd != 1)
+				close(fd);
+			fd = _open_(trav->file, (O_CREAT | O_WRONLY | O_TRUNC), 00644);
+		}
+		else if (trav->tok == APPEND)
+		{
+			if (fd != 1)
+				close(fd);
+			fd = _open_(trav->file, (O_CREAT | O_WRONLY | O_APPEND), 00644);
+		}
 		if (fd < 0)
 			return (-1);
-		node = node->rchild;
+		trav = trav->rchild;
 	}
-	return (fd);
+	node->fd[1] = fd;
+	return (0);
 }

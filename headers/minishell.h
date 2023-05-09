@@ -6,13 +6,13 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 14:02:38 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/05 20:14:17 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/09 10:35:40 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-//strjoin not freed
+
 # include"minishell_defines.h"
 
 void	_cd_(char **cmd);
@@ -27,7 +27,7 @@ void	_or_(t_node *root);
 void	_pipe_(t_node *root);
 void	exec_cmd(t_node *root);
 void	executing(t_node *root);
-
+int		_chdir_(const char *path);
 void	initialize(char **env, int *fd_in, int *fd_out);
 t_node	*tokenize(char *s);
 t_node	*parsing(char *input);
@@ -39,10 +39,12 @@ t_node	*which_token_2(char	*s, t_token tok, ssize_t *i);
 bool	check_syntax(t_token tok, char *s);
 void	_signal_start(void);
 void	_signal_middle_exec(void);
+bool	update_pwd(char *pwd);
+bool	update_oldpwd(char *old_pwd);
 
 bool	_expanding_(t_node *node);
 char	**parse_cmd(char *s);
-char	*parse_redir(char *s, bool *flg);
+char	*parse_redir(t_redir *red, char *s, bool *flg);
 ssize_t	inside_quo(char *s, ssize_t *i);
 ssize_t	look_for_quo(char *s, ssize_t *i, char c);
 ssize_t	var_len(char *s);
@@ -54,9 +56,8 @@ void	checking(char *s, int *flg);
 char	*new_cmd(char *s, bool *flg);
 bool	check_patterns(char *d_name, char *pattern);
 char	**separate_env(t_env *env);
-char	*find_path(char *cmd);
-void	handle_redirections(t_node *root);
-
+char	*find_path_help(char **to_sear, char *cmd);
+int		handle_redirections(t_node *root);
 bool	check_tok(char *s);
 bool	check_true(t_token tok);
 bool	check_spaces(char c);
@@ -105,12 +106,17 @@ ssize_t	find_c(char *s, char c);
 void	_export_var(char *s, char c);
 bool	identifier_front(int c);
 void	_free_(t_env *env);
-void	ret_mem_back(t_node *root);
+void	ret_mem_back(void);
 void	free_env(void);
-int		ret_fd_in(t_redir *node);
-int		ret_fd_out(t_redir *node);
+int		ret_fd_in(t_node *node);
+int		ret_fd_out(t_node *node);
 void	*malloc_error(int errnum);
 void	set_in_out(int in, int out);
 int		update_exit_st(int status);
+char	*ft_itoa(int n);
+void	_free_head(t_node *head);
+void	free_space(void);
+ssize_t	_write_(int fildes, const char *buf, size_t nbyte);
+void	calc_files(char *s, ssize_t *l);
 
 #endif

@@ -6,17 +6,23 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 15:09:57 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/05 21:55:20 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/08 11:30:29 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../../headers/minishell.h"
 
-void	*malloc_error(int errnum)
+static	void	_free_redir(t_redir *trav)
 {
-	print_error(2, "malloc", strerror(errnum));
-	exit_with_status(1);
-	return (NULL);
+	t_redir	*save;
+
+	while (trav)
+	{
+		free(trav->file);
+		save = trav;
+		trav = trav->rchild;
+		free(save);
+	}	
 }
 
 static	void	free_tree(t_node *root)
@@ -33,24 +39,17 @@ static	void	free_tree(t_node *root)
 		if (root->pre_cmd)
 			free(root->pre_cmd);
 		if (root->redirections)
-		{
-			while (root->redirections)
-			{
-				free(root->redirections->file);
-				root->redirections = root->redirections->rchild;
-				if (root->redirections)
-					free(root->redirections->lchild);
-			}
-		}
+			_free_redir(root->redirections);
 	}
 	(free(root), root = NULL);
 	return ;
 }
 
-void	ret_mem_back(t_node *root)
+void	ret_mem_back(void)
 {
-	free_tree(root);
-	root = NULL;
+	if (g_gb.root)
+		free_tree(g_gb.root);
+	g_gb.root = NULL;
 }
 
 void	free_env(void)
@@ -62,9 +61,28 @@ void	free_env(void)
 	keep = env;
 	while (env)
 	{
+		free(env->var);
+		free(env->value);
+		free(env->env);
 		keep = env;
 		env = env->next;
 		(free(keep), keep = NULL);
 	}
 	g_gb.env = NULL;
+}
+
+void	_free_head(t_node *head)
+{
+	t_node	*save;
+
+	while (head)
+	{
+		if (head->pre_cmd)
+			free(head->pre_cmd);
+		if (head->redirections)
+			_free_redir(head->redirections);
+		save = head;
+		head = head->rchild;
+		free(save);
+	}
 }

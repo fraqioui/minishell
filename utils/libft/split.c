@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:38:39 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/05 17:52:12 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/07 12:37:00 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,9 @@ char	**ft_alloc_fail(char **arr)
 	unsigned int	i;
 
 	i = 0;
-	fprintf(stderr, "seg1\n");
 	while (arr[i])
 		free(arr[i++]);
 	free(arr);
-	fprintf(stderr, "seg2\n");
 	return (NULL);
 }
 

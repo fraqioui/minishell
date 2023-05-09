@@ -5,32 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/29 11:30:11 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/05 13:43:16 by fraqioui         ###   ########.fr       */
+/*   Created: 2023/05/07 15:09:18 by fraqioui          #+#    #+#             */
+/*   Updated: 2023/05/09 10:35:25 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../../headers/minishell.h"
-
-static	void	calc_files(char *s, ssize_t *l)
-{
-	DIR				*dp;
-	struct dirent	*entry;
-	ssize_t			save;
-
-	dp = opendir(".");
-	entry = readdir(dp);
-	save = *l;
-	while (entry)
-	{
-		if (check_patterns(entry->d_name, s))
-			(*l)++;
-		entry = readdir(dp);
-	}
-	if (save == *l)
-		(*l)++;
-	closedir(dp);
-}
 
 static	ssize_t	new_args_l(char **args)
 {
@@ -50,26 +30,36 @@ static	ssize_t	new_args_l(char **args)
 	return (l);
 }
 
+static	void	fnl(ssize_t save, char **new, char *args, ssize_t *index)
+{
+	if (save == *index)
+		new[(*index)++] = args;
+	else
+		free(args);
+}
+
 static	void	_scan_dir_(char **new, char *args, ssize_t *index)
 {
 	DIR				*dp;
 	struct dirent	*entry;
-	bool			flg;
+	ssize_t			save;
 
-	flg = 0;
 	dp = opendir(".");
 	entry = readdir(dp);
+	save = *index;
 	while (entry)
 	{
-		if (check_patterns(entry->d_name, args))
+		if (*args != '.')
 		{
-			new[(*index)++] = ft_strdup(entry->d_name);
-			flg++;
+			if (entry->d_name[0] != '.' && check_patterns(entry->d_name, args))
+				new[(*index)++] = ft_strdup(entry->d_name);
 		}
+		else
+			if (check_patterns(entry->d_name, args))
+				new[(*index)++] = ft_strdup(entry->d_name);
 		entry = readdir(dp);
 	}
-	if (!flg)
-		new[(*index)++] = args;
+	fnl(save, new, args, index);
 	closedir(dp);
 }
 
@@ -100,5 +90,5 @@ char	**handle_wildcard_cmd(char **args)
 	if (!new)
 		return (malloc_error(errno));
 	expand_wild(new, args);
-	return (new);
+	return (free(args), new);
 }

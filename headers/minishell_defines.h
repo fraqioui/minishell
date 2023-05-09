@@ -6,13 +6,15 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:34:46 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/05 08:26:54 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/09 08:46:32 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_DEFINES_H
 # define MINISHELL_DEFINES_H
 
+# include <sys/types.h>
+# include <sys/stat.h>
 # include <stdio.h>
 # include <unistd.h>
 # include <signal.h>
@@ -33,7 +35,7 @@
 # define FATAL_SIGNAL 128
 # define CMD_N_FOUND 127
 # define NOT_EXEC 126
-# define INCORRECT_USAGE 2
+# define INCORRECT_USAGE 258
 # define UNEXPECTED_TOK "syntax error near unexpected token"
 
 typedef enum e_token
@@ -86,8 +88,9 @@ typedef struct s_gb
 	int		under_exec;
 	int		exit_st;
 	t_env	*env;
+	t_node	*root;
 }	t_gb;
 
-extern	t_gb	g_gb;
+extern t_gb	g_gb;
 
 #endif

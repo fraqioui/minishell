@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 15:13:23 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/04 14:46:56 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/08 14:12:11 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,11 @@ void	print_error(int n, ...)
 void	exit_with_status(int exit_status)
 {
 	g_gb.exit_st = exit_status;
+}
+
+void	*malloc_error(int errnum)
+{
+	print_error(2, "malloc", strerror(errnum));
+	exit_with_status(1);
+	return (NULL);
 }

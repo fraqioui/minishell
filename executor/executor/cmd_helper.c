@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 08:48:54 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/05 15:08:28 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/09 10:21:10 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,40 +66,49 @@ static	int	_access_(char *path, char *cmd)
 		return (-1);
 }
 
-static	char	*find_path_help(char **to_sear, char *cmd)
+static	char	*path_hlp(char **to_sear, char *cmd, bool *flg)
 {
 	char	*save0;
-	int		ret;
 	char	*save1;
+	int		ret;
+
+	*flg = 1;
+	while (*to_sear)
+	{
+		save0 = ft_strjoin(*to_sear, "/");
+		save1 = ft_strjoin(save0, cmd);
+		ret = _access_(save1, cmd);
+		if (!ret)
+			return (free(save0), save1);
+		else if (ret == 1)
+			return (free(save0), free(save1), NULL);
+		(free(save0), free(save1));
+		to_sear++;
+	}
+	*flg = 0;
+	return (NULL);
+}
+
+char	*find_path_help(char **to_sear, char *cmd)
+{
+	char	*save;
+	bool	flg;
+	int		ret;
 
 	if (search_c(cmd, '/'))
-		return (_access_(cmd, cmd), cmd);
+	{
+		ret = _access_(cmd, cmd);
+		if (!ret)
+			return (cmd);
+		else if (ret == 1)
+			return (NULL);
+	}
 	else
 	{
-		while (*to_sear)
-		{
-			save0 = ft_strjoin(*to_sear, "/");
-			save1 = ft_strjoin(save0, cmd);
-			ret = _access_(save1, cmd);
-			if (!ret)
-				return (save1);
-			else if (ret == 1)
-				return (NULL);
-			(free(save0), free(save1));
-			to_sear++;
-		}
+		save = path_hlp(to_sear, cmd, &flg);
+		if (flg)
+			return (save);
 	}
 	return (print_error(2, cmd, strerror(ENOENT)),
 		exit_with_status(CMD_N_FOUND), NULL);
-}
-
-char	*find_path(char *cmd)
-{
-	char	**path;
-	char	*ret;
-
-	path = ft_split(get_env("PATH"), ':');
-	ret = find_path_help(path, cmd);
-	ft_alloc_fail(path);
-	return (ret);
 }

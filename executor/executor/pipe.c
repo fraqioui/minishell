@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 10:31:35 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/05 22:48:39 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/09 11:20:07 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,13 @@ static	pid_t	left_side(t_node *root, int ends[2])
 			return (-1);
 		_close_(2, ends[WRITE_END], ends[READ_END]);
 		executing(root);
+		ret_mem_back();
+		free_env();
 		exit(g_gb.exit_st);
 	}
 	return (pd);
 }
-//y 3wn
+
 static	pid_t	right_side(t_node *root, int ends[2])
 {
 	pid_t	pd;
@@ -43,6 +45,8 @@ static	pid_t	right_side(t_node *root, int ends[2])
 			return (-1);
 		_close_(2, ends[WRITE_END], ends[READ_END]);
 		executing(root);
+		ret_mem_back();
+		free_env();
 		exit(g_gb.exit_st);
 	}
 	return (pd);
@@ -68,7 +72,3 @@ void	_pipe_(t_node *root)
 	waitpid(pid_read, &status, 0);
 	exit_with_status(update_exit_st(status));
 }
-
-// sf kml7 minishell . thni7 guis
-// iskidyagh ? ri7 adidi tzrt kra
-// issitomkan adidi tpochit ?

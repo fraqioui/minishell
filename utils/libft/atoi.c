@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 14:19:05 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/04 14:39:43 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/07 21:53:07 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,10 @@ int	ft_atoi(const char *str)
 		prev = res;
 		res = res * 10 + (*s - 48);
 		if (prev != res / 10)
-			return (-1);
+			(ft_putstr_fd("exit\n", 2), print_error(3, "exit", save,
+					"numeric argument required"), exit_with_status(255),
+				exit(-1));
 		s++;
 	}
-	if (*s && (!(*s >= '0' && *s <= '9')))
-		(ft_putstr_fd("exit\n", 2), print_error(3, "exit", save,
-				"numeric argument required\n"), exit_with_status(255), exit(-1));
 	return (sign * res);
 }

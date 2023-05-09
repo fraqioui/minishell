@@ -6,13 +6,13 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 10:31:59 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/05 09:23:17 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/09 09:07:39 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../../headers/minishell.h"
 
-static	void	_export_help(char *s)
+static	bool	_export_help(char *s)
 {
 	ssize_t	l;
 	char	*save;
@@ -28,8 +28,8 @@ static	void	_export_help(char *s)
 		save++;
 	if (!l || (!(*save == '+' && *(save + 1) == '=') && *save != '=' && *save))
 		return (print_error(3, "export", s, "not a valid identifier"),
-			exit_with_status(1));
-	_export_var(s, *save);
+			exit_with_status(1), false);
+	return (_export_var(s, *save), true);
 }
 
 static	void	sort_env(t_env *env)
@@ -79,9 +79,11 @@ static	t_env	*copy_env(void)
 static	void	print_env(void)
 {
 	t_env	*env;
+	t_env	*save;
 
 	env = copy_env();
 	sort_env(env);
+	save = env;
 	while (env)
 	{
 		ft_putstr_fd("declare -x ", 1);
@@ -96,7 +98,7 @@ static	void	print_env(void)
 			ft_putstr_fd("\n", 1);
 		env = env->next;
 	}
-	_free_(env);
+	_free_(save);
 }
 
 void	_export_(char **cmd)
@@ -106,47 +108,8 @@ void	_export_(char **cmd)
 	else
 	{
 		while (*++cmd)
-			_export_help(*cmd);
+			if (!_export_help(*cmd))
+				return ;
 	}
+	exit_with_status(0);
 }
-
-/*
-# ENV EXPANSIONS
-ENV_SHOW="env | sort | grep -v SHLVL | grep -v _="
-EXPORT_SHOW="export | sort | grep -v SHLVL | grep -v _= | grep -v OLDPWD"
-exec_test 'export ='
-exec_test 'export 1TEST= ;' $ENV_SHOW
-exec_test 'export TEST ;' $EXPORT_SHOW
-exec_test 'export ""="" ; ' $ENV_SHOW
-exec_test 'export TES=T="" ;' $ENV_SHOW
-exec_test 'export TE+S=T="" ;' $ENV_SHOW
-exec_test 'export TEST=LOL ; echo $TEST ;' $ENV_SHOW
-exec_test 'export TEST=LOL ; echo $TEST$TEST$TEST=lol$TEST'
-exec_test 'export TEST=LOL; export TEST+=LOL ; echo $TEST ;' $ENV_SHOW
-exec_test $ENV_SHOW
-exec_test $EXPORT_SHOW
-exec_test 'export TEST="ls       -l     - a" ; echo $TEST ; $LS ; ' $ENV_SHOW
-
-export ""
-
-unset ""
-
-export test=
-
-export =test
-
-export =
-
-export "==="
-
-export '= = ='
- export "" et unset ""
-	export var; export var=test
-	 export var ="cat Makefile | grep >"
- export "test=ici"=coucou
-	export LOL=lala ROR=rara
- unset LOL ROR
- export "HI= hi"
- export "HI =hi"
- 
-*/

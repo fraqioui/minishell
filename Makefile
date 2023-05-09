@@ -6,7 +6,7 @@
 #    By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/18 14:02:45 by fraqioui          #+#    #+#              #
-#    Updated: 2023/05/05 22:02:12 by fraqioui         ###   ########.fr        #
+#    Updated: 2023/05/09 11:14:58 by fraqioui         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ FILES = parser/main \
 		parser/signals \
 		executor/builtins/exit \
 		executor/builtins/cd \
+		executor/builtins/cd_hlp \
 		executor/builtins/echo \
 		executor/builtins/env \
 		executor/builtins/export \
@@ -56,6 +57,7 @@ FILES = parser/main \
 		utils/libft/lstadd \
 		utils/libft/get_env \
 		utils/libft/atoi \
+		utils/libft/itoa \
 		utils/libft/strjoin \
 		utils/build/list_build \
 		utils/build/node_creation \

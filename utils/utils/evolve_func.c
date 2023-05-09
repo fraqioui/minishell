@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 15:10:04 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/05 11:30:19 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/09 09:09:16 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	_open_(const char *path, int oflag, mode_t mode)
 	int	fd;
 
 	fd = open(path, oflag, mode);
-	if (fd)
+	if (fd != -1)
 		return (fd);
 	print_error(2, (char *)path, strerror(errno));
 	exit_with_status(1);
