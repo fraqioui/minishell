@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:18:14 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/10 01:37:43 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/10 09:08:56 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ char	*new_cmd(char *s, bool *flg)
 	char	cmp;
 	ssize_t	l;
 
-	l = calc_len(s);
-	new = malloc(sizeof(char) * (l + 1));
+	new = malloc(sizeof(char) * (calc_len(s) + 1));
 	if (!new)
 		return (malloc_error(errno));
 	l = 0;
@@ -50,8 +49,7 @@ char	*new_cmd(char *s, bool *flg)
 	{
 		if (*s == 34 || *s == 39)
 		{
-			if (flg)
-				*flg = 0;
+			should_expnd(flg);
 			cmp = *s;
 			s++;
 			while (*s != cmp)

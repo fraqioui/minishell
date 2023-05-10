@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 14:02:38 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/09 17:52:19 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/10 09:08:26 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,5 +118,6 @@ void	_free_head(t_node *head);
 void	free_space(void);
 ssize_t	_write_(int fildes, const char *buf, size_t nbyte);
 void	calc_files(char *s, ssize_t *l);
+void	should_expnd(bool *flg);
 
 #endif

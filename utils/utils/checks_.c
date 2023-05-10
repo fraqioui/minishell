@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 13:01:11 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/07 16:18:41 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/10 09:09:57 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,10 @@ ssize_t	calc_args(char **av)
 bool	identifier_front(int c)
 {
 	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_');
+}
+
+void	should_expnd(bool *flg)
+{
+	if (flg)
+		*flg = 0;
 }

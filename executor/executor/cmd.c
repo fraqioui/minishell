@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 10:31:29 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/10 00:28:47 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/10 09:05:39 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static	char	*find_path(char *cmd)
 	{
 		stat(ret, &sb);
 		if (S_ISDIR(sb.st_mode))
-			return (ft_alloc_fail(path), free(ret),
+			return (ft_alloc_fail(path), free(keep), free(ret),
 				print_error(2, cmd, "is a directory"),
 				exit_with_status(NOT_EXEC), NULL);
 	}
@@ -101,8 +101,8 @@ void	exec_cmd(t_node *root)
 	if (!_expanding_(root) || !deal_w_redir(root))
 		return ;
 	if (root->cmd && !root->cmd[0])
-		free(root->cmd);
-	if (root->cmd[0] && !is_builtin(root->cmd))
+		(free(root->cmd), root->cmd = NULL);
+	if (root->cmd && root->cmd[0] && !is_builtin(root->cmd))
 	{
 		path = find_path(root->cmd[0]);
 		if (path)
