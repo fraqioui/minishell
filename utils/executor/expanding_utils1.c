@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:18:14 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/09 10:29:35 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/10 01:37:43 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,16 @@
 static	ssize_t	calc_len(char *s)
 {
 	ssize_t	l;
+	ssize_t	save;
 
 	l = 0;
 	while (*s)
 	{
 		if (*s == 34 || *s == 39)
 		{
-			s++;
+			save = check_next_quote(s, *s);
+			s += save + 2;
+			l += save;
 			continue ;
 		}
 		s++;
@@ -34,6 +37,7 @@ char	*new_cmd(char *s, bool *flg)
 {
 	char	*new;
 	char	*save;
+	char	cmp;
 	ssize_t	l;
 
 	l = calc_len(s);
@@ -46,15 +50,18 @@ char	*new_cmd(char *s, bool *flg)
 	{
 		if (*s == 34 || *s == 39)
 		{
-			s++;
 			if (flg)
 				*flg = 0;
+			cmp = *s;
+			s++;
+			while (*s != cmp)
+				new[l++] = *s++;
+			s++;
 			continue ;
 		}
 		new[l++] = *s++;
 	}
-	new[l] = '\0';
-	return (free(save), new);
+	return (new[l] = '\0', free(save), new);
 }
 
 static	void	eliminate_quotes_phase(char **args)

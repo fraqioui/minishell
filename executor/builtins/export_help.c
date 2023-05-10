@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 09:51:20 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/09 11:58:35 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/09 22:09:58 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static	char	*eliminate_plus(char *s)
 	return (ret);
 }
 
-static	void	env_hlp(t_env *trav, char	*s, ssize_t index, char c)
+static	void	env_hlp(t_env *trav, char *s, ssize_t index, char c)
 {
 	char	*tmp;
 	char	*save;
@@ -51,6 +51,7 @@ static	void	env_hlp(t_env *trav, char	*s, ssize_t index, char c)
 	}
 	save = ft_strjoin(trav->var, "=");
 	(free(trav->env), trav->env = ft_strjoin(save, trav->value));
+	free(trav->var);
 	free(save);
 }
 
@@ -65,7 +66,9 @@ static	bool	access_env(char *var, char *s, ssize_t index, char c)
 		{
 			if (c)
 				env_hlp(trav, s, index, c);
-			return (free(var), true);
+			else
+				(free(trav->var), trav->var = NULL);
+			return (trav->var = var, true);
 		}
 		trav = trav->next;
 	}
@@ -86,8 +89,9 @@ static	void	_export_var_help(char *s, char *var, char c, ssize_t index)
 					ft_strlen(s) - index)));
 	}
 	else
-		lstadd_back_env(&g_gb.env,
-			node_creation_env(var, var, NULL));
+		(lstadd_back_env(&g_gb.env,
+				node_creation_env(ft_strdup(var), ft_strdup(var), NULL)),
+			free(var));
 }
 
 void	_export_var(char *s, char c)

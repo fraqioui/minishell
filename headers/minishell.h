@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 14:02:38 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/09 10:35:40 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/09 17:52:19 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ ssize_t	find_c(char *s, char c);
 void	_export_var(char *s, char c);
 bool	identifier_front(int c);
 void	_free_(t_env *env);
-void	ret_mem_back(void);
+void	ret_mem_back(t_node *root);
 void	free_env(void);
 int		ret_fd_in(t_node *node);
 int		ret_fd_out(t_node *node);

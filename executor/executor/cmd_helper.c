@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 08:48:54 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/09 10:21:10 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/09 20:52:21 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ char	*find_path_help(char **to_sear, char *cmd)
 	{
 		ret = _access_(cmd, cmd);
 		if (!ret)
-			return (cmd);
+			return (ft_strdup(cmd));
 		else if (ret == 1)
 			return (NULL);
 	}

@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 15:09:57 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/08 11:30:29 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/10 00:27:36 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ static	void	free_tree(t_node *root)
 	}
 	if (root->tok == NOT)
 	{
-		if (root->cmd)
+		if (root->cmd && root->cmd[0])
 			ft_alloc_fail(root->cmd);
-		if (root->pre_cmd)
+		if (root->pre_cmd && root->pre_cmd[0])
 			free(root->pre_cmd);
 		if (root->redirections)
 			_free_redir(root->redirections);
@@ -45,11 +45,11 @@ static	void	free_tree(t_node *root)
 	return ;
 }
 
-void	ret_mem_back(void)
+void	ret_mem_back(t_node *root)
 {
-	if (g_gb.root)
-		free_tree(g_gb.root);
-	g_gb.root = NULL;
+	if (root)
+		free_tree(root);
+	root = NULL;
 }
 
 void	free_env(void)

@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 10:31:35 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/09 11:20:07 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/09 22:48:58 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ static	pid_t	left_side(t_node *root, int ends[2])
 			return (-1);
 		_close_(2, ends[WRITE_END], ends[READ_END]);
 		executing(root);
-		ret_mem_back();
-		free_env();
 		exit(g_gb.exit_st);
 	}
 	return (pd);
@@ -45,8 +43,6 @@ static	pid_t	right_side(t_node *root, int ends[2])
 			return (-1);
 		_close_(2, ends[WRITE_END], ends[READ_END]);
 		executing(root);
-		ret_mem_back();
-		free_env();
 		exit(g_gb.exit_st);
 	}
 	return (pd);

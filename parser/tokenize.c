@@ -6,11 +6,21 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 13:08:36 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/07 11:23:22 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/10 01:03:37 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../headers/minishell.h"
+
+static	bool	check_left(t_node *head)
+{
+	while (head->rchild)
+		head = head->rchild;
+	if (head->tok == NOT)
+		return (ft_putstr_fd("bash: syntax error near unexpected token `('\n",
+				2), exit_with_status(INCORRECT_USAGE), false);
+	return (true);
+}
 
 static	bool	which_token_1(t_node **head, char *s, ssize_t *i, ssize_t *par)
 {
@@ -26,6 +36,9 @@ static	bool	which_token_1(t_node **head, char *s, ssize_t *i, ssize_t *par)
 	}
 	else
 		node = which_token_2(s, tok, i);
+	if (node->tok == RPR)
+		if (!check_left(*head))
+			return (free(node), 0);
 	if (!node)
 		return (0);
 	list_build_cmd(head, node);

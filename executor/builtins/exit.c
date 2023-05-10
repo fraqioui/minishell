@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 10:32:01 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/07 21:50:05 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/09 14:07:44 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static	bool	is_digit(char *s)
 
 void	_exit_(char **cmd)
 {
-	if (!is_digit(cmd[1]))
+	if (cmd[1] && !is_digit(cmd[1]))
 		(ft_putstr_fd("exit\n", 2), print_error(3, "exit", cmd[1],
 				"numeric argument required"), exit_with_status(255), exit(-1));
 	if (calc_args(cmd) > 2)

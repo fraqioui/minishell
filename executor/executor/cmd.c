@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 10:31:29 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/09 11:21:10 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/10 00:28:47 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,15 @@ static	char	*find_path(char *cmd)
 {
 	char		**path;
 	char		*ret;
+	char		*keep;
 	struct stat	sb;
 
 	path = ft_split(get_env("PATH"), ':');
 	if (!path)
 		return (print_error(2, cmd, strerror(ENOENT)),
 			exit_with_status(CMD_N_FOUND), NULL);
-	ret = find_path_help(path, cmd);
+	keep = ft_strdup(cmd);
+	ret = find_path_help(path, keep);
 	if (ret)
 	{
 		stat(ret, &sb);
@@ -51,6 +53,7 @@ static	char	*find_path(char *cmd)
 				exit_with_status(NOT_EXEC), NULL);
 	}
 	ft_alloc_fail(path);
+	free(keep);
 	return (ret);
 }
 
@@ -61,8 +64,7 @@ int	executing_cmd(t_node *root, char *path)
 	env = separate_env(g_gb.env);
 	execve(path, root->cmd, env);
 	print_error(2, "execve", strerror(errno));
-	ret_mem_back();
-	free_env();
+	ft_alloc_fail(env);
 	if (errno == ENOENT)
 		exit(CMD_N_FOUND);
 	if (errno == EACCES)
@@ -96,10 +98,10 @@ void	exec_cmd(t_node *root)
 	int		status;
 	char	*path;
 
-	if (!_expanding_(root))
+	if (!_expanding_(root) || !deal_w_redir(root))
 		return ;
-	if (!deal_w_redir(root))
-		return ;
+	if (root->cmd && !root->cmd[0])
+		free(root->cmd);
 	if (root->cmd[0] && !is_builtin(root->cmd))
 	{
 		path = find_path(root->cmd[0]);

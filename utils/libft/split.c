@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 15:38:39 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/07 12:37:00 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/09 23:38:02 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,12 @@ char	**ft_alloc_fail(char **arr)
 	unsigned int	i;
 
 	i = 0;
-	while (arr[i])
-		free(arr[i++]);
+	while (arr && arr[i])
+	{
+		free(arr[i]);
+		arr[i] = NULL;
+		i++;
+	}
 	free(arr);
 	return (NULL);
 }

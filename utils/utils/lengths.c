@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 15:10:01 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/06 22:05:44 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/09 16:12:15 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,8 @@ ssize_t	inside_quo(char *s, ssize_t *i)
 		{
 			(*i)++;
 			var = expand_var(s, i);
-			if (!var)
-				break ;
-			l += ft_strlen(var);
+			if (var)
+				l += ft_strlen(var);
 		}
 		else
 		{

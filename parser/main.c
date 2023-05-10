@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 14:01:45 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/09 11:21:33 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/10 01:36:49 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,10 @@ int	main(int ac, char **av, char **env)
 		g_gb.under_exec = 1;
 		add_history(input);
 		root = parsing(input);
-		g_gb.root = root;
 		executing(root);
 		g_gb.under_exec = 0;
-		ret_mem_back();
-	system("leaks minishell");
+		ret_mem_back(root);
+		system("leaks minishell");
 		set_in_out(fd_in, fd_out);
 	}
 	free_space();

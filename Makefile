@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/02/18 14:02:45 by fraqioui          #+#    #+#              #
-#    Updated: 2023/05/09 11:14:58 by fraqioui         ###   ########.fr        #
+#    Created: 2023/05/09 23:42:15 by fraqioui          #+#    #+#              #
+#    Updated: 2023/05/10 00:16:07 by fraqioui         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -95,6 +95,6 @@ clean:
 fclean: clean
 	${RM} ${NAME}
 
-re: all fclean
+re: fclean all
 
 .PHONY = all clean fclean re

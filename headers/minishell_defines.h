@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 11:34:46 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/09 08:46:32 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/09 17:52:37 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ typedef struct s_gb
 	int		under_exec;
 	int		exit_st;
 	t_env	*env;
-	t_node	*root;
 }	t_gb;
 
 extern t_gb	g_gb;
