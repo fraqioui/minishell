@@ -36,7 +36,6 @@ int	main(int ac, char **av, char **env)
 		executing(root);
 		g_gb.under_exec = 0;
 		ret_mem_back(root);
-		system("leaks minishell");
 		set_in_out(fd_in, fd_out);
 	}
 	free_space();
