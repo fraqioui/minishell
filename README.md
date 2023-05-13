@@ -15,7 +15,7 @@ Contents
 ========
 
  * [0. Algorithm/pseudocode](#Algorithm/pseudocode)
- * [1. Initializing](#1.Initializing)
+ * [1. Initializing](#Initializing)
  * [2. Parsing](#2.Parsing)
  * [2.1. Parser](#2.1.Parser)
  * [2.2. Tokenizer](#2.2.Tokenizer)
@@ -52,7 +52,7 @@ Contents
         -- 3. expand wildcard 4. eliminate main quotes 5. handle redirections 4. check if the cmd is a builtin 
         -- 5. if it is not a builtin, I fork and then execute the cmd using execve.
 
-### 1.Initializing
+###Initializing
 ---
 Put the environment variables into a linked list so you can delete or add to them later using export and unset builtins.
 In addition to display them using env or export (without arguments) builtins.
