@@ -45,7 +45,7 @@ Contents
       - Then I re-order the cmd using [Shunting yard algorithm](https://en.wikipedia.org/wiki/Shunting_yard_algorithm) that made it easy for me to build the tree recursively.
       - Building the tree.
 3. Executing:
-      - Executing the tree recursively bottom-up & from left to right.
+      - Executing the tree recursively bottom-up & from right to left.
       - If the token is and/or/pipe. (This would be explained later)
       - else, the token would be a command. 1. expand $ 2. split the cmd by spaces out of quotes
         -- 3. expand wildcard 4. eliminate main quotes 5. handle redirections 4. check if the cmd is a builtin 
@@ -244,5 +244,32 @@ t_node	*list_to_tree(t_node *root)
 ```
 
 The last shape of the command before execution:
+
+![](tree.png)
+
+## Executing
+
+### Builtins
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
