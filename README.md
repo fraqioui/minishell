@@ -60,6 +60,7 @@ In addition to display them using env or export (without arguments) builtins.
 
 ## Parsing
 ### Tokenizer
+---
 
 type of tokens:
 ```bash
@@ -164,25 +165,84 @@ If you look at the struct element of the command you can see a pointer to a link
 Since while traversing the command if I find one of the redirections, I save the type of it and the file name. and replace each character 
 in the command with the code ascii 127 because it is not a printable character. Ps: at the end I replace the spaces out of quotes with same code ascii and I split by this character.
 For the above example we will end up with a node like this:
-![]()
+![](redir.png)
 
+*/!\ I expand and split the command until execution phase.*
 
+### Re-order command
+---
+Let's take this command as example: 
+```bash
+0. $ ls && cat || ps && (top || head | more | cat)
+```
 
+I found it a bit confusing at first building the tree directly from the normal order of the command.
+After searching I found out this weki article that helped a lot: [Reverse Polish notation](https://en.wikipedia.org/wiki/Reverse_Polish_notation). Actually, It made it easy for me to build the tree recursively.
+And this article led to another more useful one: [Shunting yard algorithm](https://en.wikipedia.org/wiki/Shunting_yard_algorithm)
+This is a part of it:
+```
+In computer science, the shunting yard algorithm is a method for parsing arithmetical or logical expressions, 
+or a combination of both, specified in infix notation. It can produce either a postfix notation string, 
+also known as Reverse Polish notation (RPN), or an abstract syntax tree (AST).[1] 
+The algorithm was invented by Edsger Dijkstra and named the "shunting yard" algorithm because its operation 
+resembles that of a railroad shunting yard.
+```
+![](https://upload.wikimedia.org/wikipedia/commons/2/24/Shunting_yard.svg)
 
+There are just three tokens to take their precedence into consediration ("|" / "&&" / "||"). 
+The pipe has higher precedence than or/and that have the same precedence.
+This algorithm gives also the priority to parentheses so this command root :
+```
+1. $ ls || ls && ls
+```
+is not as this command root:
+```
+2. $ ls || (ls && ls)
+```
+This is the file where I implemented this algo: [Shunting yard algo implementation](https://github.com/fraqioui/minishell/blob/main/parser/re_order.c).
 
+after the application of the algo the commands will be like this:
+```
+0. $ ls cat && ps || top head more | cat | || &&
+```
+```
+1. $ ls ls || ls &&
+```
+```
+3. $ ls ls && ls ||
+```
+You could notice that the root is always the new last element of the command.
 
+### Build the tree
+---
 
+After re-ordering the command I've developed this function to build the tree:
+```bash
+t_node	*list_to_tree(t_node *root)
+{
+	if (!root)
+		return (NULL);
+	if (root->tok != NOT)
+	{
+		root->rchild = list_to_tree(root->lchild);
+		root->lchild = list_to_tree(root->lchild);
+	}
+	if (root->tok == NOT)
+	{
+		if (root->lchild && root->rchild)
+		{
+			root->lchild->rchild = root->rchild;
+			root->rchild->lchild = root->lchild;
+			if (root->rchild->rchild)
+				root->lchild->rchild = root->rchild->rchild;
+		}
+		root->rchild = NULL;
+		root->lchild = NULL;
+	}
+	return (root);
+}
+```
 
-
-
-
-
-
-
-
-
-
-
-
+The last shape of the command before execution:
 
 
