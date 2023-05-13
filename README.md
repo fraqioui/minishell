@@ -55,8 +55,7 @@ Contents
 ### 1.Initializing
 ---
 
-
-
+![](png)
 
 
 
