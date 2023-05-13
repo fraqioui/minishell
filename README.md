@@ -45,7 +45,7 @@ Contents
       - Then I re-order the cmd using [Shunting yard algorithm](https://en.wikipedia.org/wiki/Shunting_yard_algorithm) that made it easy for me to build the tree recursively.
       - Building the tree.
 3. Executing:
-      - Executing the tree recursively bottom-up & from right to left.
+      - Executing the tree recursively bottom-up & from left to right.
       - If the token is and/or/pipe. (This would be explained later)
       - else, the token would be a command. 1. expand $ 2. split the cmd by spaces out of quotes
         -- 3. expand wildcard 4. eliminate main quotes 5. handle redirections 4. check if the cmd is a builtin 
@@ -55,7 +55,7 @@ Contents
 ## Initializing
 
 Replace the environment variables into a linked list so you can delete or add to them later using export and unset builtins.
-In addition to display them using env or export (without arguments) builtins.
+In addition to displaying them using env or export (without arguments) builtins.
 ![](env.png)
 
 ## Parsing
@@ -163,7 +163,7 @@ Let's take this command as example:
 ```
 If you look at the struct element of the command you can see a pointer to a linked list for saving redirections.
 Since while traversing the command if I find one of the redirections, I save the type of it and the file name. and replace each character 
-in the command with the code ascii 127 because it is not a printable character. Ps: at the end I replace the spaces out of quotes with same code ascii and I split by this character.
+in the command with the code ascii 127 because it is not a printable character. Ps: at the end I replace the spaces out of quotetions with same code ascii and I split by that character.
 For the above example we will end up with a node like this:
 ![](redir.png)
 
