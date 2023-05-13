@@ -14,26 +14,26 @@
 Contents
 ========
 
- * [0. Algorithm/pseudocode](#0.Algorithm/pseudocode)
- * [1. Initializing](#1.-Initializing)
- * [2. Parsing](#2.-Parsing)
- * [2.1. Parser](#2.1.-Parser)
- * [2.2. Tokenizer](#2.2.-Tokenizer)
- * [2.3. Re-order command](#2.3.-Re-order-command)
- * [2.4. Build the tree](#2.4.-Build-the-tree)
- * [3. Executing](#3.-Executing)
- * [3.1. Builtins](#3.1.-Builtins)
- * [3.2. Executor](#3.2.-Executor)
- * [3.2.1. and/or](#3.2.1.-and/or)
- * [3.2.2. pipes](#3.2.2.-pipes)
- * [3.2.3. redirections](#3.2.3-redirections)
- * [3.2.4. command](#3.2.4.-command)
- * [3.2.4.1. Expanding](#3.2.4.1.-Expanding)
- * [3.2.4.2. Wildcard *](#3.2.4.2.-Wildcard)
- * [3.2.4.3. executing the command after forking](#3.2.4.3.-execution)
- * [4. Resources](#4.-Resources)
+ * [0. Algorithm/pseudocode](#Algorithm/pseudocode)
+ * [1. Initializing](#1.Initializing)
+ * [2. Parsing](#2.Parsing)
+ * [2.1. Parser](#2.1.Parser)
+ * [2.2. Tokenizer](#2.2.Tokenizer)
+ * [2.3. Re-order command](#2.3.Re-order-command)
+ * [2.4. Build the tree](#2.4.Build-the-tree)
+ * [3. Executing](#3.Executing)
+ * [3.1. Builtins](#3.1.Builtins)
+ * [3.2. Executor](#3.2.Executor)
+ * [3.2.1. and/or](#3.2.1.and/or)
+ * [3.2.2. pipes](#3.2.2.pipes)
+ * [3.2.3. redirections](#3.2.3redirections)
+ * [3.2.4. command](#3.2.4.command)
+ * [3.2.4.1. Expanding](#3.2.4.1.Expanding)
+ * [3.2.4.2. Wildcard *](#3.2.4.2.Wildcard)
+ * [3.2.4.3. executing the command after forking](#3.2.4.3.execution)
+ * [4. Resources](#4.Resources)
 
-### 0.Algorithm/pseudocode
+### Algorithm/pseudocode
 ---
 
 1. Initializing: 
@@ -54,10 +54,9 @@ Contents
 
 ### 1.Initializing
 ---
-
-![](png)
-
-
+Put the environment variables into a linked list so you can delete or add to them later using export and unset builtins.
+In addition to display them using env or export (without arguments) builtins.
+![](env.png)
 
 
 
