@@ -16,22 +16,22 @@ Contents
 
  * [0. Algorithm/pseudocode](#Algorithm-pseudocode)
  * [1. Initializing](#Initializing)
- * [2. Parsing](#2.Parsing)
- * [2.1. Parser](#2.1.Parser)
- * [2.2. Tokenizer](#2.2.Tokenizer)
- * [2.3. Re-order command](#2.3.Re-order-command)
- * [2.4. Build the tree](#2.4.Build-the-tree)
- * [3. Executing](#3.Executing)
- * [3.1. Builtins](#3.1.Builtins)
- * [3.2. Executor](#3.2.Executor)
- * [3.2.1. and/or](#3.2.1.and/or)
- * [3.2.2. pipes](#3.2.2.pipes)
- * [3.2.3. redirections](#3.2.3redirections)
- * [3.2.4. command](#3.2.4.command)
- * [3.2.4.1. Expanding](#3.2.4.1.Expanding)
- * [3.2.4.2. Wildcard *](#3.2.4.2.Wildcard)
- * [3.2.4.3. executing the command after forking](#3.2.4.3.execution)
- * [4. Resources](#4.Resources)
+ * [2. Parsing](#Parsing)
+ * [2.1. Parser](#Parser)
+ * [2.2. Tokenizer](#Tokenizer)
+ * [2.3. Re-order command](#Re-order-command)
+ * [2.4. Build the tree](#Build-the-tree)
+ * [3. Executing](#Executing)
+ * [3.1. Builtins](#Builtins)
+ * [3.2. Executor](#Executor)
+ * [3.2.1. and/or](#and/or)
+ * [3.2.2. pipes](#pipes)
+ * [3.2.3. redirections](#redirections)
+ * [3.2.4. command](#command)
+ * [3.2.4.1. Expanding](#Expanding)
+ * [3.2.4.2. Wildcard *](#Wildcard)
+ * [3.2.4.3. executing the command after forking](#execution)
+ * [4. Resources](#Resources)
 
 ### Algorithm pseudocode
 ---
@@ -52,14 +52,14 @@ Contents
         -- 3. expand wildcard 4. eliminate main quotes 5. handle redirections 4. check if the cmd is a builtin 
         -- 5. if it is not a builtin, I fork and then execute the cmd using execve.
 
-### Initializing
+
+## Initializing
 ---
-Put the environment variables into a linked list so you can delete or add to them later using export and unset builtins.
+Replace the environment variables into a linked list so you can delete or add to them later using export and unset builtins.
 In addition to display them using env or export (without arguments) builtins.
 ![](env.png)
 
-
-
+## Parsing
 
 
 
