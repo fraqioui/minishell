@@ -23,7 +23,7 @@ Contents
  * [3. Executing](#Executing)
  * [3.1. Builtins](#Builtins)
  * [3.2. Executor](#Executor)
- * [3.2.1. and/or](#and/or)
+ * [3.2.1. and/or](#and-or)
  * [3.2.2. pipes](#pipes)
  * [3.2.3. redirections](#redirections)
  * [3.2.4. command](#command)
@@ -251,25 +251,125 @@ The last shape of the command before execution:
 
 ### Builtins
 ---
+1. Export:
+	- When you run export on its own, you should display env variables sorted in this shape: 
+	```
+	$ declare -x HOME="/USER/fraqioui"
+	$ declare -x var1
+	$ declare -n var=""
+	```
+	- Export with a variable name should add this var to the environment variables which is the env linked list.
+	- The variable Should be an identifier which means that the var should start with an alphabet (uppercase/lowercase)
+		or underscore character. In addition the var could contain a number.
+		Examples of valid identifiers: Var12, _var12, v_1ar, var1_, _ , ...etc
+		Examples of invalid identifiers: 1Var, @var, v+ar, ...etc
+	- Before exporting the var you should check first if it already exists.
+	Ex:
+	```
+	$ export var
+	//now, var already exists in env variables
+	$ export var
+	//in this case you should not upadte this variable
+	$ export var=hello
+	//now, you should update the value of this variable.
+	```
+	- If there is a plus before an equal sign you should append the var value, if there is just an equal sign you should overwrite the var value.
+	- Examples of export:
+	```
+	$ export var
+	$ export =value
+	$ export var=
+	$ export var=""
+	$ export var====value
+	$ export var+=value
+	$ export var1 var2 var3 var4
+	```
+2. unset:
+	unset builtin deletes a variable from the env variables list.
+	Ex: unset var1 var2 var3
+3. env: displays the env varibles.
+4. pwd: displays the current working directory using getcwd. [man getcwd](https://linux.die.net/man/3/getcwd).
+5. exit: cause the shell to exit
+	- exit on its own exits the shell with status code 0.
+	- exit arguments should be numeric. If it is not, the shell exits with status code 255 after displaying the error message.
+	Ex:
+	```
+	$ exit 76 u74 
+	$ bash: exit: numeric argument required
+	```
+	- exit should not contain more than two arguments.
+	Ex:
+	```
+	$ exit 45 90
+	$ bash: exit: too many arguments
+	```
+	- else, you should exit using exit system call after applying atoi to the string containing exit code. if the exit code reaches long long max or long long min, it turns to exit by -1. 
+	- You could check the exit status by : $ echo $?
+6. echo with option -n:
+	- echo displays its arguments separated by one space.
+	- the option -n does not output the trailing newline.
+	- One additional case in echo is the several options case.
+	Ex:
+	```
+	$ echo hello "h     llo"      hello
+	$ hello h     llo hello
+	//////////////////////////
+	$ echo -n hello
+	$ hello$
+	/////////////////
+	$ echo "" hello
+	$  hello
+	///////////////////
+	$ echo "     " hello
+	$       hello
+	/////////////////////
+	$ echo -n -n -n hello
+	$ hello$
+	//////////////////
+	$ echo -nnnnnnnnnnnn hello
+	$ hello$
+	//////////////////////
+	$ echo -nnnnnnnnnnn -nnnnnnnnnn -nnnnnnnnn -nnnnnno hello
+	$ -nnnnnno hello$
+	/////////////////
+	$ echo - hello
+	$ - hello
+	////////////
+	```
+7. cd:
+	- change current working directory using chdir. [man chdir](https://linux.die.net/man/3/chdir).
+	- cd on its own leads to HOME. Check if HOME is set.
+	- cd with arguments leads to the specified directory.
+	- After changing directory you should update the OLDPWD and the PWD between env variables if they don't exist add them.
+	- strerror with errno will display the right error message. For example, if the path is not a directory or if the directory does not exist.
+
+### Executor
+### and or
+---
+1. AND: if the exit status of the left side of "&&" is 0, then display the right side.
+2. OR: if the exit status of the left side of "||" is different from 0, then display the right side.
+
+### pipes
+---
+I explained more the pipes in pipex project, check this linkk: [pipex](https://github.com/fraqioui/pipex).
+
+### redirections:
+---
 
 
+## Resources:
+- https://en.wikipedia.org/wiki/Shunting_yard_algorithm
+- https://www.engr.mun.ca/~theo/Misc/exp_parsing.htm
+- https://en.wikipedia.org/wiki/Reverse_Polish_notation
+- https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form
+- https://cs61.seas.harvard.edu/site/2019/Section7/
+- https://brilliantorg-infra-prod.brilliant.org/wiki/shunting-yard-algorithm/
+- https://www.codequoi.com/en/sending-and-intercepting-a-signal-in-c/
+- https://www.codequoi.com/en/errno-and-error-management-in-c/
+- https://www.codequoi.com/en/pipe-an-inter-process-communication-method/
+- https://www.gnu.org/software/bash/manual/html_node/Exit-Status.htm
+- https://www.gnu.org/software/bash/manual/html_node/Signals.html
+- https://www.ibm.com/docs/en/zos/2.3.0?topic=functions-waitpid-wait-specific-child-process-end
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+_ I hope this was a good starting point for you to start minishell with a clear mind. _
