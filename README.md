@@ -17,10 +17,9 @@ Contents
  * [0. Algorithm/pseudocode](#Algorithm-pseudocode)
  * [1. Initializing](#Initializing)
  * [2. Parsing](#Parsing)
- * [2.1. Parser](#Parser)
- * [2.2. Tokenizer](#Tokenizer)
- * [2.3. Re-order command](#Re-order-command)
- * [2.4. Build the tree](#Build-the-tree)
+ * [2.1. Tokenizer](#Tokenizer)
+ * [2.2. Re-order command](#Re-order-command)
+ * [2.3. Build the tree](#Build-the-tree)
  * [3. Executing](#Executing)
  * [3.1. Builtins](#Builtins)
  * [3.2. Executor](#Executor)
@@ -54,23 +53,118 @@ Contents
 
 
 ## Initializing
----
+
 Replace the environment variables into a linked list so you can delete or add to them later using export and unset builtins.
 In addition to display them using env or export (without arguments) builtins.
 ![](env.png)
 
 ## Parsing
+### Tokenizer
 
+type of tokens:
+```bash
+typedef enum e_token
+{
+	PIPE,     // |
+	HEREDOC,  // <<
+	LPR,      // (
+	RPR,      // )
+	AND,      // &&
+	OR,       // ||
+	APPEND,   // >>
+	OUT,      // >
+	IN,       // <
+	NOT,      // string
+	END       // end of cmd
+}t_token;
+```
+The grammar I used:
+```
+conditional ::=  pipeline
+          |   conditional "&&" pipeline
+          |   conditional "||" pipeline
 
+pipeline ::=  command
+          |   pipeline "|" command
 
+command  ::=  word
+          |   redirection
+          |   command word
+          |   command redirection
 
+redirection  ::=  redirectionop filename
+redirectionop  ::=  "<"  |  ">"  |  "2>"
+```
+- A conditional is a series of pipelines, concatenated by && or ||.
+- A pipeline is a series of commands, concatenated by |.
+- A redirection is one of <, >, >> or <<, followed by a filename.
 
+While tokenising the cmd I check for syntax errors:
 
+```
+Quotes and parentheses should be closed.
+if I find a token except a NOT I look for what token is next to it after skipping all wspaces, so that:
+after: 
 
+"|" / "&&" / "||" :: NOT / redirection / "("
+//EX: 
+// $ ls && && ls 
+// $ bash: syntax error near unexpected token `&&'
 
+redirection: NOT
+//EX:
+// $ cat > | head
+// $ bash: syntax error near unexpected token `>'
 
+"(" :: "(" / redirections / NOT  PS: before LPR should not be a string, and between parentheses should be a command.
+//EX:
+// $ ()
+// $ (                            )
+// $ ls (true && false)
+// $ (ls && false
+// $ (>file cat)
+All of the above examples are syntax errors.
 
+")" :: ")" / "|" / "&&" / "||" / END
+//EX:
+// $ (false || true))
+// $ bash: syntax error near unexpected token `)'
+```
 
+```
+typedef struct s_redir
+{
+	t_token			tok;
+	char			*file;
+	bool			flg;
+	int				fd;
+	struct s_redir	*lchild;
+	struct s_redir	*rchild;
+}t_redir;
+// struct of the doubly linked list nodes
+typedef struct s_node
+{
+	char			*pre_cmd;
+	char			**cmd;
+	t_token			tok;
+	int				precedence;
+	t_redir			*redirections;
+	int				fd[2];
+	struct s_node	*lchild;
+	struct s_node	*rchild;
+}t_node;
+```
+
+How I deal with redirections:
+Let's take this command as example:
+```bash
+<< delim head >file1>file2 -n 3 >>file3
+```
+If you look at the struct element of the command you can see a pointer to a linked list for saving redirections.
+Since while traversing the command if I find one of the redirections, I save the type of it and the file name. and replace each character 
+in the command with the code ascii 127 because it is not a printable character. Ps: at the end I replace the spaces out of quotes with same code ascii and I split by this character.
+For the above example we will end up with a node like this:
+![]()
 
 
 
