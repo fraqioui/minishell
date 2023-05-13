@@ -99,9 +99,7 @@ char	*parse_redir(t_redir *red, char *s, bool *flg)
 {
 	ssize_t	l;
 	char	*cmd;
-	ssize_t	i;
 
-	i = 0;
 	if (red->tok != HEREDOC)
 	{
 		l = var_len(s);
