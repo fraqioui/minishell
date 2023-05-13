@@ -14,7 +14,7 @@
 Contents
 ========
 
- * [0. Algorithm/pseudocode](#Algorithm/pseudocode)
+ * [0. Algorithm/pseudocode](#Algorithm-pseudocode)
  * [1. Initializing](#Initializing)
  * [2. Parsing](#2.Parsing)
  * [2.1. Parser](#2.1.Parser)
@@ -33,7 +33,7 @@ Contents
  * [3.2.4.3. executing the command after forking](#3.2.4.3.execution)
  * [4. Resources](#4.Resources)
 
-### Algorithm/pseudocode
+### Algorithm pseudocode
 ---
 
 1. Initializing: 
