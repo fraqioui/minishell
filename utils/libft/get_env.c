@@ -11,15 +11,13 @@
 /* ************************************************************************** */
 
 #include"../../headers/minishell.h"
-//handle ?
+
 char	*get_env(const char *name)
 {
-	int		i;
 	t_env	*tmp;
 
 	if (!g_gb.env || !name)
 		return (NULL);
-	i = 0;
 	tmp = g_gb.env;
 	while (tmp)
 	{
