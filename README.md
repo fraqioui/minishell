@@ -2,11 +2,8 @@
 `minishell` this project is about creating your own shell with the rules imposed in the subject (look for the subject between repo files).
 //example of the work
 
-> PS: In advance, I wanted to tell that I invested lots of time and energy on this project to make it easy for you to work on since I was 
-> too confused when I started it, I didn't know what to do or from where to start. I've read a lot of articles and went from all the resources 
-> that old students suggests in their articles, But always those articles weren't enough for me to have this general picture about the project.
-> Thus, I've decided to work on this project on my own besides knowing that it would consume a lot of blackhole days, but that was okay 
-> for me knowing that I would get out with a general picture of the project. So the people working on the project and the next promos wouldn't 
+> PS: Hope you are doing well, In advance, I wanted to tell that I invested lots of time and energy on this project to make it easy for you to work on since I was too confused when I started it, I didn't know what to do or where to start. I've read a lot of articles and went from all the resources that old students suggests in their articles, But they weren't enough for me to have this general picture about the project.
+> Thus, I've decided to work on this project on my own besides knowing that it would consume a lot of blackhole days, but it is okay
 > suffer from this, and instead of wasting time thinking about where to start, they would have enough to be creative and invent new ideas
 > I would be proud of them. This project is not perfect and I am totally aware of this, but I am sure it's gonna be a good starting point
 > Hope it is going to inspire you. You should not do none of the ideas if they didn't fit you but they just an inspiration.
@@ -30,6 +27,8 @@ Contents
  * [3.2.4.1. Expanding](#Expanding)
  * [3.2.4.2. Wildcard *](#Wildcard)
  * [3.2.4.3. executing the command after forking](#execution)
+ * [3.2.4. exit status](#exit-status)
+ * [3.2.4. Tests](#Tests)
  * [4. Resources](#Resources)
 
 ### Algorithm pseudocode
@@ -355,7 +354,171 @@ I explained more the pipes in pipex project, check this linkk: [pipex](https://g
 
 ### redirections:
 ---
+Traverse The redirections list and look for heredocs and open all of them firstly and read input using readline. The best way to save the input is by using pipe system call by writing to the writing end of the pipe and returning the fd of the reading end as an input file. If the delimiter does not include quotes you should expand inside heredoc, else you shouldn't.
+```C
+int	handle_heredoc(char *delim, bool flg)
+{
+	int	fd[2];
+	char	*input;
+	char	*save;
 
+	if (pipe_sc(fd) < 0)
+		return (-1);
+	while (1)
+	{
+		input = readline("> ");
+		if (!input || !ft_memcmp(input, delim, ft_strlen(input) + 1))
+		{
+			free(input);
+			break ;
+		}
+		if (flg)
+			input = expand_in_doc(input);
+		save = ft_strjoin(input, "\n");
+		(free(input), input = save);
+		if (_write_(fd[1], input, ft_strlen(input)) < 0)
+			return (free(input), -1);
+		(free(input), input = NULL);
+	}
+	return (close(fd[1]), fd[0]);
+}
+```
+Then, open other files.
+1. Input files for read only.
+2. Output files for create, write only, and truncate.
+3. Append files for create, write only, and append.
+
+## command
+### Expanding
+---
+1. Do not expand inside single quotes and do not expand heredoc delimiter.
+2. Expand in other cases.
+3. develop your own getenv function that gets variable value form the env list you would build.
+4. don't split command before expand.
+	- EX:
+	```bash
+	$ export var="ls -la"
+	$ $var
+	//it should work
+	```
+### Wildcard
+---
+DIRECTORY ACCESS
+In the Linux file system, a directory contains the names and i-numbers of files stored in it. Library functions are available for accessing directories. To use any of them, be sure to include these header files:
+#include <sys/types.h>
+#include <dirent.h>
+To open a directory, use either
+	DIR *opendir(const char *dir) (opens directory stream)
+or
+	DIR *fdopendir(int fd) (opens directory stream)
+I/O and Process Control System Calls to obtain a directory stream pointer (DIR *) for use in subsequent operations. If the named
+directory cannot be accessed, or if there is not enough memory to hold the contents of the directory, a NULL (invalid pointer) is returned. Once a directory stream is opened, the library function readdir is used to sequentially access its entries. The function
+#include <sys/types.h>
+#include <dirent.h>
+	struct dirent *readdir(DIR *dp) (returns next dir entry from dp)
+returns a pointer to the next directory entry. The pointer value becomes NULL on error or reaching the end of the directory.
+The directory entry structure struct dirent records information for any single file in a directory.
+```
+struct dirent
+{ 
+	ino_t d_ino; /* i-node number of file */
+	off_t d_off; /* offset to the next dirent */
+	unsigned short d_reclen; /* length of this record */
+	unsigned char d_type; /* file type */
+	char d_name[256]; /* filename */
+};
+```
+Each file in a filesystem also has a unique i-node number. The NAME_MAX constant, usually 255, gives the maxima length of a directory entry name. The data structure returned by readdir can be overwritten by a subsequent call to readdir.
+The function
+closedir(DIR *dp) (closes directory stream)
+closes the directory stream dp and frees the structure associated with the DIR pointer.
+
+Firstly, you open the current working directory ".", and read it. While reading the directory files, you should compare the pattern by those files. I used this algo which is an easy and effective algo. [Dynamic Programming | Wildcard Pattern Matching](https://www.geeksforgeeks.org/dynamic-programming-wildcard-pattern-matching-linear-time-constant-space/).
+PS: 
+1. you should not expand wildcard inside quotes.
+2. you should not display hidden files that starts with "." except for one case, if the pattern starts with a dot ".".
+
+EX:
+```bash
+$ ls *
+$ ls *****************
+$ ls "*.c" '*.c' *.c
+$ ls m*************n*l
+$ ls .*
+$ ls *.*********
+
+```
+### execution
+---
+After expanding, I split the command by 127 character. and then eleminate main quotes. Ex: "'don't' forget" becomes 'don't' forget.
+I check if the command is a builtin a run the specified builtin. else:
+1. Forking.
+2. looking for command path.
+3. executing command using execve system call.
+
+## exit status
+A command which exits with a zero exit status has succeeded. A non-zero exit status indicates failure.
+When a command terminates on a fatal signal whose number is N, Bash uses the value 128+N as the exit status.
+If a command is not found, the child process created to execute it returns a status of 127. If a command is found but is not executable, the return status is 126.
+In case of incorrect usagem the return status is 258.
+
+## Tests
+```bash
+$ ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls 
+$ ls" | cat"
+$ ls """
+$ ls "don't"
+$ l"s"""
+$ l"'s'"
+$ .
+$ ..
+$ export var0="head -"
+$ export var1="n 1"
+$ export var2="0"
+$ echo $var0$var1$var2
+$ head -n 10
+$ $var0$var1$var2 //it should work
+$ <<$x cat
+$ <<   l"" cat
+$ <<l cat
+$ cat >$x
+$ <file1
+$ <<delim
+$ cd
+$ /bin/ls
+// test this in bash
+1. $ mkdir test
+2. $ cd test
+3. $ rm -rf ../test
+4. $ pwd
+5. $ cd .
+//this is gonna display an error
+$ ls >file1>file2>>file3
+$ << l << delim << dl cat
+1. $ touch file1
+2. $ chmod 000 file1
+3. $ cat >file0>file1>file3
+//error
+4. cd file1
+//
+1. $ unset path
+2. $ ls
+3. $ /bin/ls
+//
+$ env -i minishell
+//
+1. $ grop
+2. $ echo $?
+//
+1. $ cc test.c
+2. $ chmod 000 a.out
+3. $ ./a.out
+4. $ echo $?
+//
+1. $ cat
+CTR ^C
+2. $ echo $?
+```
 
 ## Resources:
 - https://en.wikipedia.org/wiki/Shunting_yard_algorithm
@@ -372,4 +535,4 @@ I explained more the pipes in pipex project, check this linkk: [pipex](https://g
 - https://www.ibm.com/docs/en/zos/2.3.0?topic=functions-waitpid-wait-specific-child-process-end
 
 
-_ I hope this was a good starting point for you to start minishell with a clear mind. _
+I hope this was a good starting point for you to start minishell with a clear mind.
