@@ -52,7 +52,7 @@ Contents
         -- 3. expand wildcard 4. eliminate main quotes 5. handle redirections 4. check if the cmd is a builtin 
         -- 5. if it is not a builtin, I fork and then execute the cmd using execve.
 
-###Initializing
+### Initializing
 ---
 Put the environment variables into a linked list so you can delete or add to them later using export and unset builtins.
 In addition to display them using env or export (without arguments) builtins.
