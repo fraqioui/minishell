@@ -461,7 +461,7 @@ $ ls *.*********
 ### execution
 ---
 After expanding, I split the command by 127 character. and then eleminate main quotes. Ex: "'don't' forget" becomes 'don't' forget.
-I check if the command is a builtin a run the specified builtin. else:
+I check if the command is a builtin to run the specified builtin. else:
 1. Forking.
 2. looking for command path.
 3. executing command using execve system call.
