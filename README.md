@@ -135,7 +135,7 @@ typedef struct s_redir
 	int				fd;
 	struct s_redir	*lchild;
 	struct s_redir	*rchild;
-}t_redir;
+}t_redir; //no need to have this linked list doubly.
 // struct of the doubly linked list nodes
 typedef struct s_node
 {
@@ -157,7 +157,7 @@ Let's take this command as example:
 ```
 If you look at the struct element of the command you can see a pointer to a linked list for saving redirections.
 Since while traversing the command if I find one of the redirections, I save the type of it and the file name. and replace each character 
-in the command with the code ascii 127 because it is not a printable character. Ps: at the end I replace the spaces out of quotetions with same code ascii and I split by that character.
+in the command with the code ascii 127 because it is not a printable character. Ps: at the end I replace the spaces out of quotations with same code ascii and I split by that character.
 For the above example we will end up with a node like this:
 ![](redir.png)
 
@@ -170,7 +170,7 @@ Let's take this command as example:
 0. $ ls && cat || ps && (top || head | more | cat)
 ```
 
-I found it a bit confusing at first building the tree directly from the normal order of the command.
+I found it a little bit confusing at first building the tree directly from the normal order of the command.
 After searching I found out this weki article that helped a lot: [Reverse Polish notation](https://en.wikipedia.org/wiki/Reverse_Polish_notation). Actually, It made it easy for me to build the tree recursively.
 And this article led to another more useful one: [Shunting yard algorithm](https://en.wikipedia.org/wiki/Shunting_yard_algorithm)
 This is a part of it:
