@@ -250,7 +250,7 @@ The last shape of the command before execution:
 	```
 	$ declare -x HOME="/USER/fraqioui"
 	$ declare -x var1
-	$ declare -n var=""
+	$ declare -x var=""
 	```
 	- Export with a variable name should add this var to the environment variables which is the env linked list.
 	- The variable Should be an identifier which means that the var should start with an alphabet (uppercase/lowercase)
