@@ -31,7 +31,7 @@ Contents
 
 1. Initializing: 
       - The elements of the struct that is global: The status code + The environment variables. 
-      - Saving stander input / stander output using dup. [man dup](https://man7.org/linux/man-pages/man2/dup.2.html)
+      - Saving stdin/stdout using dup. [man dup](https://man7.org/linux/man-pages/man2/dup.2.html)
       - Reading user input command using readline function. [man readline](https://linux.die.net/man/3/readline)
 2. Parsing:
       - Building a doubly linked list that holds the command specifying it into tokens using [shell grammar](https://cs61.seas.harvard.edu/site/2019/Section7/).
