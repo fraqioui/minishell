@@ -399,18 +399,30 @@ Then, open other files.
 ### Wildcard
 ---
 DIRECTORY ACCESS
+
 In the Linux file system, a directory contains the names and i-numbers of files stored in it. Library functions are available for accessing directories. To use any of them, be sure to include these header files:
+
 #include <sys/types.h>
+
 #include <dirent.h>
+
 To open a directory, use either
+
 	DIR *opendir(const char *dir) (opens directory stream)
+
 or
+
 	DIR *fdopendir(int fd) (opens directory stream)
+
 I/O and Process Control System Calls to obtain a directory stream pointer (DIR *) for use in subsequent operations. If the named
 directory cannot be accessed, or if there is not enough memory to hold the contents of the directory, a NULL (invalid pointer) is returned. Once a directory stream is opened, the library function readdir is used to sequentially access its entries. The function
+
 #include <sys/types.h>
+
 #include <dirent.h>
+
 	struct dirent *readdir(DIR *dp) (returns next dir entry from dp)
+
 returns a pointer to the next directory entry. The pointer value becomes NULL on error or reaching the end of the directory.
 The directory entry structure struct dirent records information for any single file in a directory.
 ```
@@ -425,10 +437,13 @@ struct dirent
 ```
 Each file in a filesystem also has a unique i-node number. The NAME_MAX constant, usually 255, gives the maxima length of a directory entry name. The data structure returned by readdir can be overwritten by a subsequent call to readdir.
 The function
+
 closedir(DIR *dp) (closes directory stream)
+
 closes the directory stream dp and frees the structure associated with the DIR pointer.
 
 Firstly, you open the current working directory ".", and read it. While reading the directory files, you should compare the pattern by those files. I used this algo which is an easy and effective algo. [Dynamic Programming | Wildcard Pattern Matching](https://www.geeksforgeeks.org/dynamic-programming-wildcard-pattern-matching-linear-time-constant-space/).
+
 PS: 
 1. you should not expand wildcard inside quotes.
 2. you should not display hidden files that starts with "." except for one case, if the pattern starts with a dot ".".
