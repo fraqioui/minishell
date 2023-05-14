@@ -530,4 +530,4 @@ CTR ^C
 - https://www.ibm.com/docs/en/zos/2.3.0?topic=functions-waitpid-wait-specific-child-process-end
 
 
-I hope this was a good starting point for you to start minishell with a clear mind.
+I hope this was a good starting point for you to begin minishell with a clear mind.
