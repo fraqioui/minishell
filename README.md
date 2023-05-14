@@ -349,7 +349,7 @@ I explained more the pipes in pipex project, check this linkk: [pipex](https://g
 
 ### redirections:
 ---
-Traverse The redirections list and look for heredocs and open all of them firstly and read input using readline. The best way to save the input is by using pipe system call by writing to the writing end of the pipe and returning the fd of the reading end as an input file. If the delimiter does not include quotes you should expand inside heredoc, else you shouldn't.
+Traverse The redirections list, look for heredocs, open all of them firstly and read input using readline. The best way to save the input is by using pipe system call by writing to the writing end of the pipe and returning the fd of the reading end as an input file. If the delimiter does not include quotes you should expand inside heredoc, else you shouldn't.
 ```C
 int	handle_heredoc(char *delim, bool flg)
 {
