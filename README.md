@@ -263,11 +263,11 @@ The last shape of the command before execution:
 	$ export var
 	//now, var already exists in env variables
 	$ export var
-	//in this case you should not upadte this variable
+	//in this case you should not update this variable
 	$ export var=hello
 	//now, you should update the value of this variable.
 	```
-	- If there is a plus before an equal sign you should append the var value, if there is just an equal sign you should overwrite the var value.
+	- If there is a plus before an equal symbol you should append the var value, if there is just an equal symbol you should overwrite the var value.
 	- Examples of export:
 	```
 	$ export var
