@@ -340,8 +340,8 @@ The last shape of the command before execution:
 ### Executor
 ### and or
 ---
-1. AND: if the exit status of the left side of "&&" is 0, then display the right side.
-2. OR: if the exit status of the left side of "||" is different from 0, then display the right side.
+1. AND: if the exit status of the left side of "&&" is 0, then run the right side.
+2. OR: if the exit status of the left side of "||" is different from 0, then run the right side.
 
 ### pipes
 ---
