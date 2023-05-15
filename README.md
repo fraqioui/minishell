@@ -117,12 +117,12 @@ redirection: NOT
 // $ (                            )
 // $ ls (true && false)
 // $ (ls && false
-// $ (>file cat)
+// $ (>file cat))
 All of the above examples are syntax errors.
 
 ")" :: ")" / "|" / "&&" / "||" / END
 //EX:
-// $ (false || true))
+// $ (false || true)       (
 // $ bash: syntax error near unexpected token `)'
 ```
 
@@ -501,8 +501,8 @@ $ /bin/ls
 2. $ cd test
 3. $ rm -rf ../test
 4. $ pwd
-5. $ cd .
-//this is gonna display an error
+5. $ cd . //this is gonna display an error
+
 $ ls >file1>file2>>file3
 $ << l << delim << dl cat
 1. $ touch file1
@@ -528,6 +528,10 @@ $ env -i minishell
 1. $ cat
 CTR ^C
 2. $ echo $?
+//
+$ echo $HOME
+$ echo $HOMEsdjhfk$HOME
+$ echo $HOME.sdjhfk$HOME
 ```
 
 ## Resources:
