@@ -22,9 +22,9 @@ Contents
  * [3.2.4.1. Expanding](#Expanding)
  * [3.2.4.2. Wildcard *](#Wildcard)
  * [3.2.4.3. executing the command after forking](#execution)
- * [3.2.4. exit status](#exit-status)
- * [3.2.4. Tests](#Tests)
- * [4. Resources](#Resources)
+ * [3.2.5. exit status](#exit-status)
+ * [4. Tests](#Tests)
+ * [5. Resources](#Resources)
 
 ### Algorithm pseudocode
 ---
