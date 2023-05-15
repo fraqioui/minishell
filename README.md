@@ -40,7 +40,7 @@ Contents
       - Building the tree.
 3. Executing:
       - Executing the tree recursively bottom-up & from left to right.
-      - If the token is and/or/pipe. (This would be explained later)
+      - If the token is and/or/pipe. (This will be explained later)
       - else, the token would be a command. 1. expand $ 2. split the cmd by spaces out of quotes
         -- 3. expand wildcard 4. eliminate main quotes 5. handle redirections 4. check if the cmd is a builtin 
         -- 5. if it is not a builtin, I fork and then execute the cmd using execve.
