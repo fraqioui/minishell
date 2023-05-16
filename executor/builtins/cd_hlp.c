@@ -39,9 +39,11 @@ static bool	pwd_hlp(char *pwd, bool *flg)
 
 bool	update_pwd(char *pwd)
 {
+	t_env	*trav;
 	bool	flg;
 	char	*save;
 
+	trav = g_gb.env;
 	flg = 0;
 	save = NULL;
 	if (pwd_hlp(pwd, &flg))

@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 08:48:54 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/09 20:52:21 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/10 14:10:24 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	**separate_env(t_env *env)
 		l++;
 		tmp = tmp->next;
 	}
-	the_env = malloc(sizeof(char) * (l + 1));
+	the_env = malloc(sizeof(char *) * (l + 1));
 	if (!the_env)
 		return (malloc_error(errno));
 	while (env)

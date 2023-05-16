@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 11:25:04 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/07 11:02:48 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/10 17:12:31 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 
 char	*get_env(const char *name)
 {
+	int		i;
 	t_env	*tmp;
 
 	if (!g_gb.env || !name)
 		return (NULL);
+	i = 0;
 	tmp = g_gb.env;
 	while (tmp)
 	{

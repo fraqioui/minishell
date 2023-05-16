@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 14:02:38 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/10 09:08:26 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/10 14:32:24 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ pid_t	_fork_(void);
 int		dup_2(int fild1, int fild2);
 int		_close_(int n, ...);
 int		_open_(const char *path, int oflag, mode_t mode);
-int		executing_cmd(t_node *root, char *path);
 
 t_node	*re_order_command(t_node **head);
 void	push(t_node **a_head, t_node **b_head, bool flg);
@@ -119,5 +118,6 @@ void	free_space(void);
 ssize_t	_write_(int fildes, const char *buf, size_t nbyte);
 void	calc_files(char *s, ssize_t *l);
 void	should_expnd(bool *flg);
+bool	deal_w_redir(t_node *root);
 
 #endif

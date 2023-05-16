@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 10:31:29 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/10 09:05:39 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/10 16:00:36 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,10 @@ static	char	*find_path(char *cmd)
 	return (ret);
 }
 
-int	executing_cmd(t_node *root, char *path)
+static	int	executing_cmd(t_node *root, char *path, char **env)
 {
-	char	**env;
-
-	env = separate_env(g_gb.env);
 	execve(path, root->cmd, env);
 	print_error(2, "execve", strerror(errno));
-	ft_alloc_fail(env);
 	if (errno == ENOENT)
 		exit(CMD_N_FOUND);
 	if (errno == EACCES)
@@ -72,29 +68,28 @@ int	executing_cmd(t_node *root, char *path)
 	exit(1);
 }
 
-static	bool	deal_w_redir(t_node *root)
+static	void	child_exec(t_node *root, char *path, int *status)
 {
-	if (root->redirections)
+	char	**env;
+	pid_t	pid;
+
+	env = separate_env(g_gb.env);
+	if (!env)
+		return ;
+	pid = _fork_();
+	if (pid < 0)
+		return ;
+	if (pid == 0)
 	{
-		if (handle_redirections(root) < 0)
-			return (0);
-		if (root->fd[0] != 0)
-			if (dup_2(root->fd[0], STDIN_FILENO) < 0)
-				return (0);
-		if (root->fd[1] != 1)
-			if (dup_2(root->fd[1], STDOUT_FILENO) < 0)
-				return (0);
-		if (root->fd[0] != 0)
-			close(root->fd[0]);
-		if (root->fd[1] != 1)
-			close(root->fd[1]);
+		_signal_middle_exec();
+		executing_cmd(root, path, env);
 	}
-	return (1);
+	waitpid(pid, status, 0);
+	free(env);
 }
 
 void	exec_cmd(t_node *root)
 {
-	pid_t	pid;
 	int		status;
 	char	*path;
 
@@ -107,16 +102,9 @@ void	exec_cmd(t_node *root)
 		path = find_path(root->cmd[0]);
 		if (path)
 		{
-			pid = _fork_();
-			if (pid < 0)
-				return ;
-			if (pid == 0)
-			{
-				_signal_middle_exec();
-				executing_cmd(root, path);
-			}
-			waitpid(pid, &status, WCONTINUED);
-			(free(path), exit_with_status(update_exit_st(status)));
+			child_exec(root, path, &status);
+			free(path);
+			exit_with_status(update_exit_st(status));
 		}
 	}
 }

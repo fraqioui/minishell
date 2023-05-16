@@ -6,7 +6,7 @@
 /*   By: fraqioui <fraqioui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:18:14 by fraqioui          #+#    #+#             */
-/*   Updated: 2023/05/10 09:08:56 by fraqioui         ###   ########.fr       */
+/*   Updated: 2023/05/10 17:10:16 by fraqioui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,16 @@ static	ssize_t	calc_len(char *s)
 {
 	ssize_t	l;
 	ssize_t	save;
+	char	kp;
 
 	l = 0;
 	while (*s)
 	{
 		if (*s == 34 || *s == 39)
 		{
-			save = check_next_quote(s, *s);
-			s += save + 2;
+			kp = *s;
+			save = check_next_quote(++s, kp);
+			s += save + 1;
 			l += save;
 			continue ;
 		}
@@ -37,8 +39,8 @@ char	*new_cmd(char *s, bool *flg)
 {
 	char	*new;
 	char	*save;
-	char	cmp;
 	ssize_t	l;
+	char	kp;
 
 	new = malloc(sizeof(char) * (calc_len(s) + 1));
 	if (!new)
@@ -49,10 +51,9 @@ char	*new_cmd(char *s, bool *flg)
 	{
 		if (*s == 34 || *s == 39)
 		{
+			kp = *s++;
 			should_expnd(flg);
-			cmp = *s;
-			s++;
-			while (*s != cmp)
+			while (*s != kp)
 				new[l++] = *s++;
 			s++;
 			continue ;
@@ -99,7 +100,9 @@ char	*parse_redir(t_redir *red, char *s, bool *flg)
 {
 	ssize_t	l;
 	char	*cmd;
+	ssize_t	i;
 
+	i = 0;
 	if (red->tok != HEREDOC)
 	{
 		l = var_len(s);
