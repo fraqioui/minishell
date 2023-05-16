@@ -30,7 +30,7 @@ char	**separate_env(t_env *env)
 		l++;
 		tmp = tmp->next;
 	}
-	the_env = malloc(sizeof(char) * (l + 1));
+	the_env = malloc(sizeof(char *) * (l + 1));
 	if (!the_env)
 		return (malloc_error(errno));
 	while (env)
