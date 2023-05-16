@@ -14,7 +14,7 @@
 
 static	bool	check_left(t_node **head)
 {
-	if (!head)
+	if (!head || !*head)
 		return (true);
 	while (*head && (*head)->rchild)
 		*head = (*head)->rchild;
