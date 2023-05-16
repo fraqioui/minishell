@@ -16,9 +16,9 @@ static	bool	check_left(t_node **head)
 {
 	if (!head)
 		return (true);
-	while (head && head->rchild)
-		head = head->rchild;
-	if (head->tok == NOT)
+	while (*head && (*head)->rchild)
+		*head = (*head)->rchild;
+	if ((*head)->tok == NOT)
 		return (ft_putstr_fd("bash: syntax error near unexpected token `('\n",
 				2), exit_with_status(INCORRECT_USAGE), false);
 	return (true);
