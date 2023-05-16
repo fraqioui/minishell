@@ -12,8 +12,10 @@
 
 #include"../headers/minishell.h"
 
-static	bool	check_left(t_node *head)
+static	bool	check_left(t_node **head)
 {
+	if (!head)
+		return (true);
 	while (head && head->rchild)
 		head = head->rchild;
 	if (head->tok == NOT)
@@ -39,7 +41,7 @@ static	bool	which_token_1(t_node **head, char *s, ssize_t *i, ssize_t *par)
 	if (!node)
 		return (0);
 	if (node->tok == LPR)
-		if (!check_left(*head))
+		if (!check_left(head))
 			return (free(node), 0);
 	list_build_cmd(head, node);
 	return (1);
