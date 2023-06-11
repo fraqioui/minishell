@@ -515,7 +515,7 @@ $ << l << delim << dl cat
 2. $ ls
 3. $ /bin/ls
 //
-$ env -i minishell
+$ env -i ./minishell
 //
 1. $ grop
 2. $ echo $?
